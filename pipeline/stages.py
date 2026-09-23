@@ -202,7 +202,7 @@ def stage_concept(proj, cfg, api):
 
 def stage_world(proj, cfg, api):
     concept = read(proj.f_concept())
-    knowledge = kb.load(proj.root, kb.STAGE_MODULES["world"], cap=20000)
+    knowledge = kb.load(proj.root, kb.STAGE_MODULES["world"], cap=14000)
     user = (
         "请基于创作概念，写出完整「世界观设定文档」。\n\n"
         "【项目信息】\n%s\n\n【创作概念】\n%s\n\n【知识库参考】\n%s\n\n"
@@ -326,7 +326,7 @@ def stage_draft(proj, cfg, api, only=None, force=False):
     parsed = parse_outline(read(proj.f_outline()))
     total = int(cfg.get("target_chapters", len(parsed) or 20))
     per = int(cfg.get("words_per_chapter", 3000))
-    knowledge = kb.load(proj.root, kb.STAGE_MODULES["draft"], cap=14000)
+    knowledge = kb.load(proj.root, kb.STAGE_MODULES["draft"], cap=11000)
     world = clip(read(proj.f_world()), 9000)
     chars = clip(read(proj.f_characters()), 5000)
 
@@ -385,7 +385,7 @@ def stage_draft(proj, cfg, api, only=None, force=False):
 
 
 def stage_review(proj, cfg, api, only=None, force=False):
-    checklist = kb.load(proj.root, kb.STAGE_MODULES["review"], cap=12000)
+    checklist = kb.load(proj.root, kb.STAGE_MODULES["review"], cap=10000)
     world = clip(read(proj.f_world()), 7000)
     chars = clip(read(proj.f_characters()), 4000)
     outline = clip(read(proj.f_outline()), 5000)
