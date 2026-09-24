@@ -4,6 +4,7 @@
   "model": "gpt-4o-mini",
   "temperature": 0.8,
   "max_tokens": 4096,
-  "timeout": 300,
-  "retries": 3
+  "timeout": 600,
+  "retries": 5,
+  "extra_params": {}
 }

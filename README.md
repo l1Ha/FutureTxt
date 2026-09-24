@@ -21,8 +21,9 @@ FutureTxt/
 ├── pipeline/                  # 自动化流水线
 │   ├── run.py                 # 命令行入口
 │   ├── stages.py              # 8 个阶段的提示词与执行逻辑
-│   ├── llm.py                 # OpenAI 兼容 API 客户端（重试、UTF-8）
+│   ├── llm.py                 # OpenAI 兼容 API 客户端（SSE 流式、重试、思考 token 保护）
 │   └── kb.py                  # 知识库加载与检索（按阶段注入相关模块）
+├── benchmark_models.py        # 候选模型横测（延迟 + 中文创作质量）
 ├── projects/<项目名>/         # 每本小说一个目录
 │   ├── project.json           # 书名、题材、章节数、文风等配置
 │   ├── state.json             # 阶段状态与章节摘要（断点续跑）
@@ -112,18 +113,45 @@ python pipeline/run.py kb                                        # 列出全部�
 |---|---|---|
 | `base_url` | `https://api.openai.com/v1` | 任意 OpenAI 兼容接口根地址 |
 | `api_key` | 空 | 也可用环境变量 `SCIWRITE_API_KEY` |
-| `model` | `gpt-4o-mini` | 建议长篇章节用中等以上模型 |
+| `model` | `gpt-4o-mini` | 见下方「模型选型」 |
 | `temperature` | 0.8 | 创作温度 |
 | `max_tokens` | 4096 | 单次输出上限（正文会自动按每章字数放大） |
-| `timeout` / `retries` | 300 / 3 | 秒 / 429·5xx 自动重试次数 |
+| `timeout` / `retries` | 600 / 5 | 秒 / 网络错误·429·5xx 自动重试次数 |
+| `extra_params` | `{}` | 端点扩展参数，如 `{"reasoning_effort": "minimal"}` |
 
 `projects/<名>/project.json`（由 `run.py init` 生成）：`title`、`keywords`、`premise`、
 `target_chapters`、`words_per_chapter`、`pov`、`tone`、`audience`、`extra`。
 建好后可直接改这个文件再 `--force` 重跑对应阶段。
 
+## 模型选型与排障（实测经验）
+
+**换模型前先横测**（延迟 + 中文创作质量）：
+
+```powershell
+python benchmark_models.py    # 修改 MODELS 列表可自定义候选
+```
+
+- ✅ **非推理、大参数模型**最稳：本仓库默认 `nvidia/nemotron-3-super-120b-a12b`（NVIDIA 实测 23 秒完成世界观，正文直接输出）
+- ⚠️ **推理型模型慎用**（glm-5.3、deepseek-r1、kimi 等）：思考内容走 `reasoning_content` 字段，
+  复杂任务可能把 `max_tokens` 全部烧光导致正文为空。`llm.py` 已内置防护：
+  检测到「思考占满 token」会自动将 `max_tokens` 加倍重试（上限 32000），但速度与成本会上升
+- ⚠️ **NVIDIA 端点按账号开通模型**：部分模型返回 `Function … Not found for account`（404），
+  说明该账号未开通此模型，换列表里的其他模型即可
+
+**已内置的网络防护**（无需配置）：
+
+- 流式 SSE 请求：长生成期间连接持续有数据流动，避免被中间设备掐断（WinError 10054）
+- 429/5xx/连接重置自动重试 5 次，指数退避（最多等 30 秒）
+- 端点不支持 `stream` 时自动降级为普通请求
+
+**PowerShell 中文显示**：项目文件均为 UTF-8，Windows PowerShell 5.1 的 `Get-Content`
+直接读取可能显示乱码，用 `Get-Content -Encoding utf8` 或 VS Code 查看（流水线自身读写不受影响）。
+
 ## 注意事项
 
 - `config.json` 含 API Key，请参考 `.gitignore`（已排除）不要提交；仓库只保留 `config.example.json`。
-- `projects/测试项目` 是用本地模拟接口跑通全流程的**结构示例**，内容为占位文本，可直接删除。
+- `projects/测试项目` 是用本地模拟接口跑通全流程的**结构示例**（占位文本）；
+  `projects/连通测试`、`projects/连续测试` 是 NVIDIA API 真实生成的示例（1 章 / 3 章），
+  可对照查看每阶段产物与跨章衔接，不需要时直接删除。
 - 真实创作建议：先人工审阅 `00-创作概念.md` 和 `03-大纲.md`（改完再 `--force` 下一阶段），
   再让流水线批量写正文，最后逐章 `review → revise`。
