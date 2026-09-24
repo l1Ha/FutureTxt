@@ -70,6 +70,7 @@ def _extract(raw):
     if text.startswith("data:"):  # SSE 流
         parts, done = [], False
         parts_reasoning = False
+        finish = None
         for line in text.splitlines():
             line = line.strip()
             if not line.startswith("data:"):
@@ -83,6 +84,8 @@ def _extract(raw):
             except ValueError:
                 continue
             ch = (j.get("choices") or [{}])[0]
+            if ch.get("finish_reason"):
+                finish = ch["finish_reason"]
             delta = ch.get("delta") or {}
             if delta.get("reasoning_content"):
                 parts_reasoning = True
@@ -94,6 +97,8 @@ def _extract(raw):
                     p.get("text", "") if isinstance(p, dict) else str(p) for p in c))
         out = "".join(parts)
         if out:
+            if finish == "length":  # 正文被 max_tokens 截断，不完整
+                raise ValueError("输出被 max_tokens 截断（需加倍重试）")
             return out
         if done:
             if parts_reasoning:
@@ -101,11 +106,15 @@ def _extract(raw):
             raise ValueError("返回内容为空")
         raise ValueError("流式响应被截断")
     body = json.loads(text)  # 非流式回退
-    content = body["choices"][0]["message"]["content"]
+    ch0 = (body.get("choices") or [{}])[0]
+    content = ch0["message"]["content"]
     if isinstance(content, list):  # 分片格式
         content = "".join(
             p.get("text", "") if isinstance(p, dict) else str(p) for p in content)
-    return (content or "").strip()
+    content = (content or "").strip()
+    if ch0.get("finish_reason") == "length" and content:
+        raise ValueError("输出被 max_tokens 截断（需加倍重试）")
+    return content
 
 
 def chat(messages, cfg, temperature=None, max_tokens=None, what=""):
@@ -149,7 +158,7 @@ def chat(messages, cfg, temperature=None, max_tokens=None, what=""):
                 raise RuntimeError("LLM 调用失败（%s）：%s" % (what or "未知环节", last_err))
         except (urllib.error.URLError, TimeoutError, OSError, ValueError) as e:
             last_err = str(e)
-            if "思考占满" in last_err and payload["max_tokens"] < 32000:
+            if "加倍重试" in last_err and payload["max_tokens"] < 32000:
                 payload["max_tokens"] = min(payload["max_tokens"] * 2, 32000)
                 data = json.dumps(payload).encode("utf-8")
                 print("    · max_tokens 加倍至 %d 后重试" % payload["max_tokens"])

@@ -340,48 +340,60 @@ def stage_draft(proj, cfg, api, only=None, force=False):
             wanted.append(int(part))
     targets = wanted if wanted else list(range(1, total + 1))
 
-    done, skipped = [], []
+    done, skipped, failed = [], [], []
     for n in targets:
         fpath = proj.chapter_file(n)
         if os.path.exists(fpath) and not force:
             skipped.append(n)
             continue
-        # 上一章尾部（承接场景与语气）
-        prev_tail = ""
-        prev = proj.chapter_file(n - 1)
-        if n > 1 and os.path.exists(prev):
-            prev_tail = clip(read(prev), 1400)
-        title = ""
-        for num, t, _b in parsed:
-            if num == n:
-                title = t
-        user = (
-            "请写出第 %d 章正文（章名可用：%s）。\n\n"
-            "【项目信息】\n%s\n\n【硬性设定与世界观】\n%s\n\n【角色】\n%s\n\n"
-            "【本章与邻章大纲】\n%s\n\n【前情摘要】\n%s\n\n【上一章结尾（衔接用）】\n%s\n\n"
-            "【写作知识库】\n%s\n\n"
-            "要求：正文以「# 第%d章 %s」开头；长度约 %d 字（±15%%）；"
-            "开章尽快进入场景，章末落在钩子上；严格遵守硬性设定编号规则。"
-            % (n, title or "自拟", _project_brief(cfg), world, chars,
-               _outline_block(proj, n), _continuity_block(proj), prev_tail, knowledge,
-               n, title or "", per)
-        )
-        out = llm.chat([{"role": "system", "content": SYSTEM_WRITER},
-                        {"role": "user", "content": user}], api,
-                      max_tokens=max(api["max_tokens"], per * 3), what="第%d章" % n)
-        if not out.lstrip().startswith("#"):
-            out = "# 第%d章 %s\n\n%s" % (n, title or "", out)
-        write(fpath, out)
-        # 生成本章摘要，供后续章节衔接
-        summary = llm.chat(
-            [{"role": "system", "content": "你是剧情记录员。"},
-             {"role": "user", "content": "用120字以内概括这章发生的关键事件、人物状态变化与悬念，只输出摘要：\n\n" + clip(out, 6000)}],
-            api, temperature=0.3, max_tokens=400, what="第%d章摘要" % n)
-        proj.add_summary(n, summary)
-        done.append(n)
-        print("    ✓ 第%d章 完成（%d字）" % (n, word_count(out)))
-    return "正文完成 %d 章%s" % (
+        try:
+            # 上一章尾部（承接场景与语气）
+            prev_tail = ""
+            prev = proj.chapter_file(n - 1)
+            if n > 1 and os.path.exists(prev):
+                prev_tail = clip(read(prev), 1400)
+            title = ""
+            for num, t, _b in parsed:
+                if num == n:
+                    title = t
+            user = (
+                "请写出第 %d 章正文（章名可用：%s）。\n\n"
+                "【项目信息】\n%s\n\n【硬性设定与世界观】\n%s\n\n【角色】\n%s\n\n"
+                "【本章与邻章大纲】\n%s\n\n【前情摘要】\n%s\n\n【上一章结尾（衔接用）】\n%s\n\n"
+                "【写作知识库】\n%s\n\n"
+                "要求：正文以「# 第%d章 %s」开头；长度约 %d 字（±15%%）；"
+                "开章尽快进入场景，章末落在钩子上；严格遵守硬性设定编号规则。"
+                % (n, title or "自拟", _project_brief(cfg), world, chars,
+                   _outline_block(proj, n), _continuity_block(proj), prev_tail, knowledge,
+                   n, title or "", per)
+            )
+            out = llm.chat([{"role": "system", "content": SYSTEM_WRITER},
+                            {"role": "user", "content": user}], api,
+                          max_tokens=max(api["max_tokens"], per * 3), what="第%d章" % n)
+            if not out.lstrip().startswith("#"):
+                out = "# 第%d章 %s\n\n%s" % (n, title or "", out)
+            write(fpath, out)
+            # 生成本章摘要，供后续章节衔接（失败不致命，只是少了衔接信息）
+            try:
+                summary = llm.chat(
+                    [{"role": "system", "content": "你是剧情记录员。"},
+                     {"role": "user", "content": "用120字以内概括这章发生的关键事件、人物状态变化与悬念，只输出摘要：\n\n" + clip(out, 6000)}],
+                    api, temperature=0.3, max_tokens=400, what="第%d章摘要" % n)
+                proj.add_summary(n, summary)
+            except Exception as e:  # noqa: BLE001
+                print("    · 第%d章摘要生成失败（不影响正文）：%s" % (n, str(e)[:60]))
+            done.append(n)
+            print("    ✓ 第%d章 完成（%d字）" % (n, word_count(out)))
+        except Exception as e:  # noqa: BLE001
+            failed.append(n)
+            print("    ✗ 第%d章失败：%s" % (n, str(e)[:100]))
+    msg = "正文完成 %d 章%s" % (
         len(done), ("，跳过已有 %d 章" % len(skipped)) if skipped else "")
+    if failed:
+        raise RuntimeError(
+            "%s；失败 %d 章（第 %s 章）——重跑同一命令将自动补写失败章节"
+            % (msg, len(failed), "、".join(str(x) for x in failed)))
+    return msg
 
 
 def stage_review(proj, cfg, api, only=None, force=False):
@@ -393,7 +405,7 @@ def stage_review(proj, cfg, api, only=None, force=False):
     targets = proj.chapters_range(only)
     if not targets:
         targets = list(range(1, int(cfg.get("target_chapters", 20)) + 1))
-    done = 0
+    done, failed = 0, []
     for n in targets:
         src = proj.chapter_file(n)
         if not os.path.exists(src):
@@ -401,25 +413,32 @@ def stage_review(proj, cfg, api, only=None, force=False):
         fpath = proj.review_file(n)
         if os.path.exists(fpath) and not force:
             continue
-        user = (
-            "请审校下面这一章。\n\n"
-            "【审校清单】\n%s\n\n【世界观硬性设定】\n%s\n\n【角色要点】\n%s\n\n"
-            "【大纲中的本章任务】\n%s\n\n【章节正文（约目标 %d 字）】\n%s\n\n"
-            "输出格式：\n# 第%d章 审校报告\n"
-            "## 总评分（1-10，含扣分理由）\n"
-            "## 问题清单\n每条：【严重度 高/中/低】位置（引用原文片段≤30字）→ 问题 → 修改建议\n"
-            "## 亮点（最多3条）\n"
-            "## 结论（一句话：可直接通过 / 需修改后再审）"
-            % (checklist, world, chars, _outline_block(proj, n), per,
-               read(src), n)
-        )
-        out = llm.chat([{"role": "system", "content": SYSTEM_EDITOR},
-                        {"role": "user", "content": user}], api,
-                      temperature=0.3, max_tokens=3000, what="第%d章审校" % n)
-        write(fpath, out)
-        done += 1
-        score = re.search(r"(\d+(?:\.\d+)?)\s*/?\s*10", out)
-        print("    ✓ 第%d章 审校完成%s" % (n, ("，评分 " + score.group(1)) if score else ""))
+        try:
+            user = (
+                "请审校下面这一章。\n\n"
+                "【审校清单】\n%s\n\n【世界观硬性设定】\n%s\n\n【角色要点】\n%s\n\n"
+                "【大纲中的本章任务】\n%s\n\n【章节正文（约目标 %d 字）】\n%s\n\n"
+                "输出格式：\n# 第%d章 审校报告\n"
+                "## 总评分（1-10，含扣分理由）\n"
+                "## 问题清单\n每条：【严重度 高/中/低】位置（引用原文片段≤30字）→ 问题 → 修改建议\n"
+                "## 亮点（最多3条）\n"
+                "## 结论（一句话：可直接通过 / 需修改后再审）"
+                % (checklist, world, chars, _outline_block(proj, n), per,
+                   read(src), n)
+            )
+            out = llm.chat([{"role": "system", "content": SYSTEM_EDITOR},
+                            {"role": "user", "content": user}], api,
+                          temperature=0.3, max_tokens=3000, what="第%d章审校" % n)
+            write(fpath, out)
+            done += 1
+            score = re.search(r"(\d+(?:\.\d+)?)\s*/?\s*10", out)
+            print("    ✓ 第%d章 审校完成%s" % (n, ("，评分 " + score.group(1)) if score else ""))
+        except Exception as e:  # noqa: BLE001
+            failed.append(n)
+            print("    ✗ 第%d章审校失败：%s" % (n, str(e)[:100]))
+    if failed:
+        raise RuntimeError("完成 %d 份审校；失败第 %s 章（重跑自动补审）"
+                           % (done, "、".join(str(x) for x in failed)))
     return "完成 %d 份审校报告" % done
 
 
@@ -429,38 +448,45 @@ def stage_revise(proj, cfg, api, only=None, force=False):
     targets = proj.chapters_range(only)
     if not targets:
         targets = list(range(1, int(cfg.get("target_chapters", 20)) + 1))
-    done = 0
+    done, failed = 0, []
     for n in targets:
         src = proj.chapter_file(n)
         if not os.path.exists(src):
             continue
-        review = read(proj.review_file(n))
-        if not review:
-            print("    - 第%d章 无审校报告，先审校…" % n)
-            stage_review(proj, cfg, api, only=str(n))
+        try:
             review = read(proj.review_file(n))
-        idx = review.rfind("## 结论")
-        conclusion = review[idx:].split("\n", 1)[1] if idx >= 0 else review
-        if not force and "可直接通过" in conclusion and "需修改" not in conclusion:
-            print("    - 第%d章 审校结论为通过，跳过（--force 可强制修订）" % n)
-            continue
-        user = (
-            "请根据审校报告重写该章，保留原有剧情与硬性设定，只修正报告指出的问题，"
-            "并保持与上下章的衔接。\n\n"
-            "【世界观硬性设定（截断）】\n%s\n\n"
-            "【原文章节】\n%s\n\n【审校报告】\n%s\n\n"
-            "输出完整重写后的章节全文（以「# 第%d章 …」开头），长度约 %d 字（±15%%），"
-            "纯 Markdown 正文，无任何解释。"
-            % (world, read(src), review, n, per)
-        )
-        out = llm.chat([{"role": "system", "content": SYSTEM_WRITER},
-                        {"role": "user", "content": user}], api,
-                      max_tokens=max(api["max_tokens"], per * 3), what="第%d章修订" % n)
-        if out:
-            write(src + ".bak", read(src))
-            write(src, out)
-            done += 1
-            print("    ✓ 第%d章 已修订（原稿存为 .bak）" % n)
+            if not review:
+                print("    - 第%d章 无审校报告，先审校…" % n)
+                stage_review(proj, cfg, api, only=str(n))
+                review = read(proj.review_file(n))
+            idx = review.rfind("## 结论")
+            conclusion = review[idx:].split("\n", 1)[1] if idx >= 0 else review
+            if not force and "可直接通过" in conclusion and "需修改" not in conclusion:
+                print("    - 第%d章 审校结论为通过，跳过（--force 可强制修订）" % n)
+                continue
+            user = (
+                "请根据审校报告重写该章，保留原有剧情与硬性设定，只修正报告指出的问题，"
+                "并保持与上下章的衔接。\n\n"
+                "【世界观硬性设定（截断）】\n%s\n\n"
+                "【原文章节】\n%s\n\n【审校报告】\n%s\n\n"
+                "输出完整重写后的章节全文（以「# 第%d章 …」开头），长度约 %d 字（±15%%），"
+                "纯 Markdown 正文，无任何解释。"
+                % (world, read(src), review, n, per)
+            )
+            out = llm.chat([{"role": "system", "content": SYSTEM_WRITER},
+                            {"role": "user", "content": user}], api,
+                          max_tokens=max(api["max_tokens"], per * 3), what="第%d章修订" % n)
+            if out:
+                write(src + ".bak", read(src))
+                write(src, out)
+                done += 1
+                print("    ✓ 第%d章 已修订（原稿存为 .bak）" % n)
+        except Exception as e:  # noqa: BLE001
+            failed.append(n)
+            print("    ✗ 第%d章修订失败：%s" % (n, str(e)[:100]))
+    if failed:
+        raise RuntimeError("修订 %d 章；失败第 %s 章（重跑自动补修）"
+                           % (done, "、".join(str(x) for x in failed)))
     return "修订 %d 章" % done
 
 
