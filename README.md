@@ -147,6 +147,22 @@ python benchmark_models.py    # 修改 MODELS 列表可自定义候选
 **PowerShell 中文显示**：项目文件均为 UTF-8，Windows PowerShell 5.1 的 `Get-Content`
 直接读取可能显示乱码，用 `Get-Content -Encoding utf8` 或 VS Code 查看（流水线自身读写不受影响）。
 
+## 多 GitHub 账号双推送（本仓库配置示例）
+
+本仓库同时挂了两个 remote：`origin`→anfax/FutureTxt、`l1ha`→l1Ha/FutureTxt，
+提交后 `git push origin main && git push l1ha main` 即双向同步。
+
+l1Ha 账号的认证绕过了 Windows 凭据管理器（其对第二个账号存取会挂起），
+在 `.git/config` 中按 URL 精确配置（**URL 必须带 `.git` 后缀才匹配**）：
+
+```ini
+[credential "https://github.com/l1Ha/FutureTxt.git"]
+	helper =
+	helper = "!f(){ echo username=l1Ha; echo password=$(gh auth token); };f"
+```
+
+要点：段首空 `helper =` 用于清掉系统级凭据管理器，再挂 `gh auth token`（GitHub CLI 已登录该账号）。
+
 ## 注意事项
 
 - `config.json` 含 API Key，请参考 `.gitignore`（已排除）不要提交；仓库只保留 `config.example.json`。
