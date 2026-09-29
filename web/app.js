@@ -3,6 +3,8 @@
  * 具备 32 篇科幻知识库轻量检索、流式 SSE 请求、多阶段流水线、浏览器端生成 EPUB/HTML/TXT。
  */
 
+import { generateEpub } from './epub_builder.js';
+
 // 状态管理
 const state = {
   kbBundle: null,
@@ -35,6 +37,9 @@ const STORAGE_KEYS = {
 // ---------------------------------------------------------------- 初始化
 
 document.addEventListener('DOMContentLoaded', async () => {
+  if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.register('./sw.js').catch(() => {});
+  }
   loadLocalSettings();
   bindNavigation();
   bindStudioEvents();
@@ -675,17 +680,29 @@ function exportEpubInBrowser() {
   const proj = state.projects[state.currentProjectId];
   if (!proj) return;
 
-  // 简易轻量 Zip 打包（利用标准 Base64 或轻量纯 JS zip 结构生成，确保无外部依赖）
-  // 此处生成标准规范的 HTML/EPUB 容器并触发保存
   const chKeys = Object.keys(proj.chapters || {}).map(Number).sort((a, b) => a - b);
-  let fullTxt = `《${proj.title}》\n\n`;
-  chKeys.forEach(k => {
-    fullTxt += `${proj.chapters[k]}\n\n`;
+  if (chKeys.length === 0) {
+    alert('当前小说尚未生成任何正文章节！');
+    return;
+  }
+
+  const chaptersData = chKeys.map(k => {
+    const raw = proj.chapters[k];
+    const firstLine = raw.split('\n')[0].replace(/^#+\s*/, '') || `第 ${k} 章`;
+    return {
+      title: firstLine,
+      text: raw,
+    };
   });
 
-  // 直接提供兼容各大手机阅读器的标准 UTF-8 文档与下载
-  downloadBlob(new Blob([fullTxt], { type: 'text/plain;charset=utf-8' }), `${proj.title}·精校全本.txt`);
-  alert('✓ 已为您下载精校版文本，可直接发送到微信读书或 Apple Books 阅读！');
+  try {
+    const epubBytes = generateEpub(proj.title, 'FutureTxt 创作者', proj.premise, chaptersData);
+    const blob = new Blob([epubBytes], { type: 'application/epub+zip' });
+    downloadBlob(blob, `${proj.title}.epub`);
+    alert(`✓ 出版级 EPUB 电子书已生成！可直接导入 Apple Books / 微信读书 / Kindle 阅读。`);
+  } catch (err) {
+    alert('EPUB 生成失败: ' + err.message);
+  }
 }
 
 // ---------------------------------------------------------------- 内置示范项目
