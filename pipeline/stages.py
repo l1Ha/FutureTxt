@@ -3,10 +3,14 @@
 阶段顺序：concept → world → characters → outline → draft → review → revise → assemble
 """
 
+from __future__ import annotations
+
 import json
 import os
 import re
+from typing import Any, Dict, List, Optional, Tuple
 
+import export
 import kb
 import llm
 
@@ -15,20 +19,20 @@ import llm
 CHAPTER_RE = re.compile(r"^##\s*第\s*(\d+)\s*章[^\n]*$", re.M)
 
 
-def read(path, default=""):
+def read(path: str, default: str = "") -> str:
     if os.path.exists(path):
         with open(path, encoding="utf-8") as f:
             return f.read()
     return default
 
 
-def write(path, text):
-    os.makedirs(os.path.dirname(path), exist_ok=True)
+def write(path: str, text: str) -> None:
+    os.makedirs(os.path.dirname(os.path.abspath(path)), exist_ok=True)
     with open(path, "w", encoding="utf-8", newline="\n") as f:
         f.write(text.rstrip() + "\n")
 
 
-def clip(text, cap):
+def clip(text: str, cap: int) -> str:
     """超长截断：保留头 60% + 尾 40%（尾部通常是「硬性设定规则」）。"""
     text = text or ""
     if len(text) <= cap:
@@ -38,11 +42,11 @@ def clip(text, cap):
     return text[:head] + "\n…（中间略）…\n" + text[-tail:]
 
 
-def word_count(text):
+def word_count(text: str) -> int:
     return len(re.sub(r"\s+", "", text or ""))
 
 
-def chapter_no(path):
+def chapter_no(path: str) -> int:
     m = re.search(r"(\d+)", os.path.basename(path))
     return int(m.group(1)) if m else 0
 
@@ -50,7 +54,7 @@ def chapter_no(path):
 class Project:
     """一个小说项目的目录与状态。"""
 
-    def __init__(self, root, name):
+    def __init__(self, root: str, name: str) -> None:
         self.root = root
         self.name = name
         self.dir = os.path.join(root, "projects", name)
@@ -58,73 +62,111 @@ class Project:
         self.state_path = os.path.join(self.dir, "state.json")
 
     # -- 配置 --------------------------------------------------------
-    def exists(self):
+    def exists(self) -> bool:
         return os.path.exists(self.cfg_path)
 
-    def config(self):
+    def config(self) -> Dict[str, Any]:
         return json.loads(read(self.cfg_path, "{}"))
 
-    def save_config(self, cfg):
+    def save_config(self, cfg: Dict[str, Any]) -> None:
         write(self.cfg_path, json.dumps(cfg, ensure_ascii=False, indent=2))
 
     # -- 状态 --------------------------------------------------------
-    def state(self):
+    def state(self) -> Dict[str, Any]:
         return json.loads(read(self.state_path, "{}"))
 
-    def save_state(self, st):
+    def save_state(self, st: Dict[str, Any]) -> None:
         write(self.state_path, json.dumps(st, ensure_ascii=False, indent=2))
 
-    def mark(self, stage, status):
+    def mark(self, stage: str, status: str) -> None:
         st = self.state()
         st.setdefault("stages", {})[stage] = status
         self.save_state(st)
 
-    def summary(self, n):
+    def summary(self, n: int) -> str:
         return self.state().get("summaries", {}).get(str(n), "")
 
-    def add_summary(self, n, text):
+    def add_summary(self, n: int, text: str) -> None:
         st = self.state()
         st.setdefault("summaries", {})[str(n)] = text
         self.save_state(st)
 
+    def track_usage(self, stage: str, usage: Optional[Dict[str, int]] = None) -> None:
+        """记录各阶段 Token 用量消耗。"""
+        u = usage or llm.get_last_usage()
+        if not u or not any(u.values()):
+            return
+        st = self.state()
+        tu = st.setdefault("token_usage", {
+            "prompt_tokens": 0,
+            "completion_tokens": 0,
+            "total_tokens": 0,
+            "by_stage": {},
+        })
+        p = u.get("prompt_tokens", 0)
+        c = u.get("completion_tokens", 0)
+        t = u.get("total_tokens", p + c)
+        tu["prompt_tokens"] += p
+        tu["completion_tokens"] += c
+        tu["total_tokens"] += t
+
+        bs = tu["by_stage"].setdefault(stage, {"prompt_tokens": 0, "completion_tokens": 0, "total_tokens": 0})
+        bs["prompt_tokens"] += p
+        bs["completion_tokens"] += c
+        bs["total_tokens"] += t
+        self.save_state(st)
+
+    def set_score(self, chapter: int, score: float) -> None:
+        st = self.state()
+        st.setdefault("scores", {})[str(chapter)] = score
+        self.save_state(st)
+
+    def dossier(self) -> Dict[str, Any]:
+        return self.state().get("dossier", {})
+
+    def update_dossier(self, updates: Dict[str, Any]) -> None:
+        st = self.state()
+        d = st.setdefault("dossier", {})
+        d.update(updates)
+        self.save_state(st)
+
     # -- 产物路径 ----------------------------------------------------
-    def path(self, *parts):
+    def path(self, *parts: str) -> str:
         return os.path.join(self.dir, *parts)
 
-    def f_concept(self):
+    def f_concept(self) -> str:
         return self.path("00-创作概念.md")
 
-    def f_world(self):
+    def f_world(self) -> str:
         return self.path("01-世界观.md")
 
-    def f_characters(self):
+    def f_characters(self) -> str:
         return self.path("02-角色.md")
 
-    def f_outline(self):
+    def f_outline(self) -> str:
         return self.path("03-大纲.md")
 
-    def chapters_dir(self):
+    def chapters_dir(self) -> str:
         return self.path("chapters")
 
-    def reviews_dir(self):
+    def reviews_dir(self) -> str:
         return self.path("reviews")
 
-    def chapter_file(self, n):
-        return os.path.join(self.chapters_dir(), "chapter_%03d.md" % n)
+    def chapter_file(self, n: int) -> str:
+        return os.path.join(self.chapters_dir(), f"chapter_{n:03d}.md")
 
-    def review_file(self, n):
-        return os.path.join(self.reviews_dir(), "chapter_%03d_审校.md" % n)
+    def review_file(self, n: int) -> str:
+        return os.path.join(self.reviews_dir(), f"chapter_{n:03d}_审校.md")
 
-    def list_chapters(self):
+    def list_chapters(self) -> List[str]:
         d = self.chapters_dir()
         if not os.path.isdir(d):
             return []
-        files = [os.path.join(d, x) for x in os.listdir(d) if x.endswith(".md")]
+        files = [os.path.join(d, x) for x in os.listdir(d) if x.endswith(".md") and not x.endswith(".bak")]
         return sorted(files, key=chapter_no)
 
-    def chapters_range(self, only=None):
+    def chapters_range(self, only: Optional[str] = None) -> List[int]:
         """only 形如 '3'、'1-5'、'1,4,7-9'；返回存在的章节号列表。"""
-        total = int(self.config().get("target_chapters", 0))
         exist = [chapter_no(p) for p in self.list_chapters()]
         if only:
             picked = set()
@@ -156,20 +198,20 @@ SYSTEM_EDITOR = (
 )
 
 
-def _project_brief(cfg):
+def _project_brief(cfg: Dict[str, Any]) -> str:
     keys = cfg.get("keywords") or []
+    target_ch = int(cfg.get("target_chapters", 20))
+    words_per = int(cfg.get("words_per_chapter", 3000))
     return "\n".join(
         [
-            "书名（暂定）：%s" % cfg.get("title", "未定"),
-            "题材关键词：%s" % ("、".join(keys) if keys else "（未提供）"),
-            "故事前提（premise）：%s" % (cfg.get("premise") or "（未提供，请根据关键词自行提出）"),
-            "目标体量：%d 章 × 约 %d 字（共约 %d 字）"
-            % (cfg.get("target_chapters", 20), cfg.get("words_per_chapter", 3000),
-               cfg.get("target_chapters", 20) * cfg.get("words_per_chapter", 3000)),
-            "叙事视角：%s" % cfg.get("pov", "第三人称有限"),
-            "文风基调：%s" % cfg.get("tone", "克制、具象、冷峻中的温度"),
-            "目标读者：%s" % cfg.get("audience", "成人科幻读者"),
-            "其他要求：%s" % (cfg.get("extra") or "（无）"),
+            f"书名（暂定）：{cfg.get('title', '未定')}",
+            f"题材关键词：{'、'.join(keys) if keys else '（未提供）'}",
+            f"故事前提（premise）：{cfg.get('premise') or '（未提供，请根据关键词自行提出）'}",
+            f"目标体量：{target_ch} 章 × 约 {words_per} 字（共约 {target_ch * words_per:,} 字）",
+            f"叙事视角：{cfg.get('pov', '第三人称有限')}",
+            f"文风基调：{cfg.get('tone', '克制、具象、冷峻中的温度')}",
+            f"目标读者：{cfg.get('audience', '成人科幻读者')}",
+            f"其他要求：{cfg.get('extra') or '（无）'}",
         ]
     )
 
@@ -177,11 +219,11 @@ def _project_brief(cfg):
 # ---------------------------------------------------------------- 各阶段
 
 
-def stage_concept(proj, cfg, api):
+def stage_concept(proj: Project, cfg: Dict[str, Any], api: Dict[str, Any]) -> str:
     knowledge = kb.load(proj.root, kb.STAGE_MODULES["concept"])
     user = (
         "请为下面的项目生成「创作概念文档」。\n\n"
-        "【项目信息】\n%s\n\n【知识库参考】\n%s\n\n"
+        f"【项目信息】\n{_project_brief(cfg)}\n\n【知识库参考】\n{knowledge}\n\n"
         "按以下结构输出（Markdown）：\n"
         "# 创作概念\n"
         "## 一句话卖点（logline，80字内）\n"
@@ -192,20 +234,21 @@ def stage_concept(proj, cfg, api):
         "## 主角简述（身份+欲望+缺陷，100字内）\n"
         "## 结局走向\n"
         "## 创新点（说明与常见套路的区别）\n"
-        "## 暂定书名（3个候选）" % (_project_brief(cfg), knowledge)
+        "## 暂定书名（3个候选）"
     )
     out = llm.chat([{"role": "system", "content": SYSTEM_WRITER},
                     {"role": "user", "content": user}], api, what="创作概念")
-    write(proj.f_concept(), out)
+    write(proj.f_concept(), str(out))
+    proj.track_usage("concept")
     return "00-创作概念.md"
 
 
-def stage_world(proj, cfg, api):
+def stage_world(proj: Project, cfg: Dict[str, Any], api: Dict[str, Any]) -> str:
     concept = read(proj.f_concept())
     knowledge = kb.load(proj.root, kb.STAGE_MODULES["world"], cap=14000)
     user = (
         "请基于创作概念，写出完整「世界观设定文档」。\n\n"
-        "【项目信息】\n%s\n\n【创作概念】\n%s\n\n【知识库参考】\n%s\n\n"
+        f"【项目信息】\n{_project_brief(cfg)}\n\n【创作概念】\n{concept}\n\n【知识库参考】\n{knowledge}\n\n"
         "按以下结构输出：\n"
         "# 世界观设定\n"
         "## 一、一句话概括\n"
@@ -216,22 +259,22 @@ def stage_world(proj, cfg, api):
         "## 六、文化、宗教与日常（语言、习俗、衣食住行细节）\n"
         "## 七、硬性设定（本项目必须遵守的铁律，编号 W1、W2… 至少12条，"
         "覆盖科技限制、时间线、人物状态、地理规则，供后续写作与审校引用）"
-        % (_project_brief(cfg), concept, knowledge)
     )
     out = llm.chat([{"role": "system", "content": SYSTEM_WRITER},
                     {"role": "user", "content": user}], api, max_tokens=6000, what="世界观")
-    write(proj.f_world(), out)
+    write(proj.f_world(), str(out))
+    proj.track_usage("world")
     return "01-世界观.md"
 
 
-def stage_characters(proj, cfg, api):
+def stage_characters(proj: Project, cfg: Dict[str, Any], api: Dict[str, Any]) -> str:
     concept = read(proj.f_concept())
     world = read(proj.f_world())
     knowledge = kb.load(proj.root, kb.STAGE_MODULES["characters"])
     user = (
         "请基于创作概念与世界观，建立本小说的角色体系。\n\n"
-        "【项目信息】\n%s\n\n【创作概念】\n%s\n\n【世界观（可截断）】\n%s\n\n"
-        "【知识库参考】\n%s\n\n"
+        f"【项目信息】\n{_project_brief(cfg)}\n\n【创作概念】\n{concept}\n\n【世界观（可截断）】\n{clip(world, 9000)}\n\n"
+        f"【知识库参考】\n{knowledge}\n\n"
         "按以下结构输出：\n# 角色体系\n"
         "## 关系网（谁与谁：依赖/对立/隐瞒）\n"
         "对每个主要角色（主角、2~4 名配角、反派/对立力量）输出：\n"
@@ -241,18 +284,18 @@ def stage_characters(proj, cfg, api):
         "最后输出：\n"
         "## 群像与背景色（名字-身份对照，供次要人物统一使用）\n"
         "## 角色一致性要点（编号 C1、C2… 至少8条，供审校引用）"
-        % (_project_brief(cfg), concept, clip(world, 9000), knowledge)
     )
     out = llm.chat([{"role": "system", "content": SYSTEM_WRITER},
                     {"role": "user", "content": user}], api, max_tokens=6000, what="角色")
-    write(proj.f_characters(), out)
+    write(proj.f_characters(), str(out))
+    proj.track_usage("characters")
     return "02-角色.md"
 
 
-def parse_outline(text):
+def parse_outline(text: str) -> List[Tuple[int, str, str]]:
     """把大纲切分为 [(章节号, 标题, 条目正文)]。"""
     matches = list(CHAPTER_RE.finditer(text or ""))
-    out = []
+    out: List[Tuple[int, str, str]] = []
     for i, m in enumerate(matches):
         end = matches[i + 1].start() if i + 1 < len(matches) else len(text)
         title = re.sub(r"^##\s*第\s*\d+\s*章\s*", "", m.group(0)).strip()
@@ -260,7 +303,7 @@ def parse_outline(text):
     return out
 
 
-def stage_outline(proj, cfg, api):
+def stage_outline(proj: Project, cfg: Dict[str, Any], api: Dict[str, Any]) -> str:
     concept = read(proj.f_concept())
     world = clip(read(proj.f_world()), 7000)
     chars = clip(read(proj.f_characters()), 5000)
@@ -269,10 +312,16 @@ def stage_outline(proj, cfg, api):
     per = int(cfg.get("words_per_chapter", 3000))
     user = (
         "请创作全书章节大纲。\n\n"
-        "【项目信息】\n%s\n\n【创作概念】\n%s\n\n【世界观要点】\n%s\n\n【角色】\n%s\n\n"
-        "【知识库参考】\n%s\n\n"
-        "严格输出 %d 章（不得多、不得少），每章约 %d 字。结构要求：开篇即入冲突、"
-        "约三分之一处中点反转、每章末留钩子、伏笔在大纲中标注「伏笔:」「回收:」。\n\n"
+        f"【项目信息】\n{_project_brief(cfg)}\n\n【创作概念】\n{concept}\n\n【世界观要点】\n{world}\n\n【角色】\n{chars}\n\n"
+        f"【知识库参考】\n{knowledge}\n\n"
+        f"严格输出 {n} 章（不得多、不得少），每章约 {per} 字。\n"
+        "【长篇节奏与三幕式指引】：\n"
+        f"- 1~{max(1, int(n * 0.25))}章（第一幕）：开篇即入冲突与建置，以不可逆事件打破日常\n"
+        f"- {int(n * 0.25) + 1}~{int(n * 0.5)}章（第二幕上）：危机升级与探索，盟友聚散\n"
+        f"- 第{int(n * 0.5)}章（全书中点）：重大认知反转与假象破灭，赌注倍增\n"
+        f"- {int(n * 0.5) + 1}~{int(n * 0.75)}章（第二幕下）：对立力量反扑，至暗时刻与代价\n"
+        f"- {int(n * 0.75) + 1}~{n}章（第三幕）：总决战，伏笔闭环回收，新常态诞生\n\n"
+        "每章末必须留钩子，伏笔在大纲中标注「伏笔:」「回收:」。\n\n"
         "格式（严格遵守，便于机器解析）：\n"
         "# 全书大纲\n"
         "## 故事线概览（200字内）\n"
@@ -284,17 +333,17 @@ def stage_outline(proj, cfg, api):
         "- 信息与世界观揭示：\n"
         "- 伏笔/回收：\n"
         "- 章末钩子：\n"
-        "…（第2章起同格式，直到第%d章）"
-        % (_project_brief(cfg), concept, world, chars, knowledge, n, per, n)
+        f"…（第2章起同格式，直到第{n}章）"
     )
     out = llm.chat([{"role": "system", "content": SYSTEM_WRITER},
                     {"role": "user", "content": user}], api, max_tokens=8000, what="大纲")
-    write(proj.f_outline(), out)
-    parsed = parse_outline(out)
-    return "03-大纲.md（解析到 %d 章，目标 %d 章）" % (len(parsed), n)
+    write(proj.f_outline(), str(out))
+    proj.track_usage("outline")
+    parsed = parse_outline(str(out))
+    return f"03-大纲.md（解析到 {len(parsed)} 章，目标 {n} 章）"
 
 
-def _outline_block(proj, n):
+def _outline_block(proj: Project, n: int) -> str:
     parsed = parse_outline(read(proj.f_outline()))
     if not parsed:
         return "（大纲未按格式生成，请依据故事走向自由发挥并保持前后一致）"
@@ -302,26 +351,36 @@ def _outline_block(proj, n):
     parts = []
     for k in (n - 1, n, n + 1):
         if k in idx:
-            label = "第%d章" % k + ("（本章）" if k == n else
+            label = f"第{k}章" + ("（本章）" if k == n else
                                   ("（上一章）" if k == n - 1 else "（下一章）"))
-            parts.append("## %s %s\n%s" % (label, idx[k][0], idx[k][1]))
+            parts.append(f"## {label} {idx[k][0]}\n{idx[k][1]}")
     if n not in idx:
-        parts.append("（注意：本章未在大纲中，章节号 %d，请自行衔接）" % n)
+        parts.append(f"（注意：本章未在大纲中，章节号 {n}，请自行衔接）")
     return "\n\n".join(parts)
 
 
-def _continuity_block(proj):
+def _continuity_block(proj: Project) -> str:
     st = proj.state()
     sums = st.get("summaries", {})
-    if not sums:
+    dossier = st.get("dossier", {})
+    if not sums and not dossier:
         return "（本书第一章）"
-    lines = ["此前各章剧情摘要："]
-    for k in sorted(sums, key=lambda x: int(x)):
-        lines.append("- 第%s章：%s" % (k, sums[k]))
-    return clip("\n".join(lines), 3500)
+    lines = []
+    if dossier:
+        if "timeline" in dossier:
+            lines.append(f"【当前故事时间/坐标】{dossier['timeline']}")
+        if "active_clues" in dossier and dossier["active_clues"]:
+            lines.append("【待兑现/正在推进的伏笔悬念】")
+            for c in dossier["active_clues"][-4:]:
+                lines.append(f"- {c}")
+    if sums:
+        lines.append("此前各章剧情摘要：")
+        for k in sorted(sums, key=lambda x: int(x)):
+            lines.append(f"- 第{k}章：{sums[k]}")
+    return clip("\n".join(lines), 3800)
 
 
-def stage_draft(proj, cfg, api, only=None, force=False):
+def stage_draft(proj: Project, cfg: Dict[str, Any], api: Dict[str, Any], only: Optional[str] = None, force: bool = False) -> str:
     """逐章生成正文。"""
     parsed = parse_outline(read(proj.f_outline()))
     total = int(cfg.get("target_chapters", len(parsed) or 20))
@@ -347,7 +406,6 @@ def stage_draft(proj, cfg, api, only=None, force=False):
             skipped.append(n)
             continue
         try:
-            # 上一章尾部（承接场景与语气）
             prev_tail = ""
             prev = proj.chapter_file(n - 1)
             if n > 1 and os.path.exists(prev):
@@ -356,56 +414,65 @@ def stage_draft(proj, cfg, api, only=None, force=False):
             for num, t, _b in parsed:
                 if num == n:
                     title = t
+
+            # 动态智能检索本章关键词关联的科学/设定小节（局部轻量 RAG）
+            dyn_query = f"{title} {_outline_block(proj, n)[:300]}"
+            dyn_snippets = kb.retrieve_snippets(proj.root, dyn_query, cap=2000)
+            dyn_block = f"\n\n【本章针对性科学与方法论参考】\n{dyn_snippets}" if dyn_snippets else ""
+
             user = (
-                "请写出第 %d 章正文（章名可用：%s）。\n\n"
-                "【项目信息】\n%s\n\n【硬性设定与世界观】\n%s\n\n【角色】\n%s\n\n"
-                "【本章与邻章大纲】\n%s\n\n【前情摘要】\n%s\n\n【上一章结尾（衔接用）】\n%s\n\n"
-                "【写作知识库】\n%s\n\n"
-                "要求：正文以「# 第%d章 %s」开头；长度约 %d 字（±15%%）；"
+                f"请写出第 {n} 章正文（章名可用：{title or '自拟'}）。\n\n"
+                f"【项目信息】\n{_project_brief(cfg)}\n\n【硬性设定与世界观】\n{world}\n\n【角色】\n{chars}\n\n"
+                f"【本章与邻章大纲】\n{_outline_block(proj, n)}\n\n【前情摘要】\n{_continuity_block(proj)}\n\n"
+                f"【上一章结尾（衔接用）】\n{prev_tail}\n\n"
+                f"【通用写作知识库】\n{knowledge}{dyn_block}\n\n"
+                f"要求：正文以「# 第{n}章 {title or ''}」开头；长度约 {per} 字（±15%）；"
                 "开章尽快进入场景，章末落在钩子上；严格遵守硬性设定编号规则。"
-                % (n, title or "自拟", _project_brief(cfg), world, chars,
-                   _outline_block(proj, n), _continuity_block(proj), prev_tail, knowledge,
-                   n, title or "", per)
             )
             out = llm.chat([{"role": "system", "content": SYSTEM_WRITER},
                             {"role": "user", "content": user}], api,
-                          max_tokens=max(api["max_tokens"], per * 3), what="第%d章" % n)
-            if not out.lstrip().startswith("#"):
-                out = "# 第%d章 %s\n\n%s" % (n, title or "", out)
-            write(fpath, out)
-            # 生成本章摘要，供后续章节衔接（失败不致命，只是少了衔接信息）
+                          max_tokens=max(int(api["max_tokens"]), per * 3), what=f"第{n}章")
+            out_str = str(out)
+            if not out_str.lstrip().startswith("#"):
+                out_str = f"# 第{n}章 {title or ''}\n\n{out_str}"
+            write(fpath, out_str)
+            proj.track_usage("draft")
+
+            # 生成本章摘要，供后续章节衔接
             try:
                 summary = llm.chat(
                     [{"role": "system", "content": "你是剧情记录员。"},
-                     {"role": "user", "content": "用120字以内概括这章发生的关键事件、人物状态变化与悬念，只输出摘要：\n\n" + clip(out, 6000)}],
-                    api, temperature=0.3, max_tokens=400, what="第%d章摘要" % n)
-                proj.add_summary(n, summary)
-            except Exception as e:  # noqa: BLE001
-                print("    · 第%d章摘要生成失败（不影响正文）：%s" % (n, str(e)[:60]))
+                     {"role": "user", "content": "用120字以内概括这章发生的关键事件、人物状态变化与悬念，只输出摘要：\n\n" + clip(out_str, 6000)}],
+                    api, temperature=0.3, max_tokens=400, what=f"第{n}章摘要")
+                proj.add_summary(n, str(summary).strip())
+                proj.track_usage("draft")
+            except Exception as e:
+                print(f"    · 第{n}章摘要生成失败（不影响正文）：{str(e)[:60]}")
+
             done.append(n)
-            print("    ✓ 第%d章 完成（%d字）" % (n, word_count(out)))
-        except Exception as e:  # noqa: BLE001
+            print(f"    ✓ 第{n}章 完成（{word_count(out_str)}字）")
+        except Exception as e:
             failed.append(n)
-            print("    ✗ 第%d章失败：%s" % (n, str(e)[:100]))
-    msg = "正文完成 %d 章%s" % (
-        len(done), ("，跳过已有 %d 章" % len(skipped)) if skipped else "")
+            print(f"    ✗ 第{n}章失败：{str(e)[:100]}")
+
+    msg = f"正文完成 {len(done)} 章" + (f"，跳过已有 {len(skipped)} 章" if skipped else "")
     if failed:
         raise RuntimeError(
-            "%s；失败 %d 章（第 %s 章）——重跑同一命令将自动补写失败章节"
-            % (msg, len(failed), "、".join(str(x) for x in failed)))
+            f"{msg}；失败 {len(failed)} 章（第 {'、'.join(str(x) for x in failed)} 章）——重跑同一命令将自动补写失败章节"
+        )
     return msg
 
 
-def stage_review(proj, cfg, api, only=None, force=False):
+def stage_review(proj: Project, cfg: Dict[str, Any], api: Dict[str, Any], only: Optional[str] = None, force: bool = False) -> str:
     checklist = kb.load(proj.root, kb.STAGE_MODULES["review"], cap=10000)
     world = clip(read(proj.f_world()), 7000)
     chars = clip(read(proj.f_characters()), 4000)
-    outline = clip(read(proj.f_outline()), 5000)
     per = int(cfg.get("words_per_chapter", 3000))
     targets = proj.chapters_range(only)
     if not targets:
         targets = list(range(1, int(cfg.get("target_chapters", 20)) + 1))
     done, failed = 0, []
+
     for n in targets:
         src = proj.chapter_file(n)
         if not os.path.exists(src):
@@ -416,39 +483,41 @@ def stage_review(proj, cfg, api, only=None, force=False):
         try:
             user = (
                 "请审校下面这一章。\n\n"
-                "【审校清单】\n%s\n\n【世界观硬性设定】\n%s\n\n【角色要点】\n%s\n\n"
-                "【大纲中的本章任务】\n%s\n\n【章节正文（约目标 %d 字）】\n%s\n\n"
-                "输出格式：\n# 第%d章 审校报告\n"
+                f"【审校清单】\n{checklist}\n\n【世界观硬性设定】\n{world}\n\n【角色要点】\n{chars}\n\n"
+                f"【大纲中的本章任务】\n{_outline_block(proj, n)}\n\n【章节正文（约目标 {per} 字）】\n{read(src)}\n\n"
+                f"输出格式：\n# 第{n}章 审校报告\n"
                 "## 总评分（1-10，含扣分理由）\n"
                 "## 问题清单\n每条：【严重度 高/中/低】位置（引用原文片段≤30字）→ 问题 → 修改建议\n"
                 "## 亮点（最多3条）\n"
                 "## 结论（一句话：可直接通过 / 需修改后再审）"
-                % (checklist, world, chars, _outline_block(proj, n), per,
-                   read(src), n)
             )
             out = llm.chat([{"role": "system", "content": SYSTEM_EDITOR},
                             {"role": "user", "content": user}], api,
-                          temperature=0.3, max_tokens=3000, what="第%d章审校" % n)
-            write(fpath, out)
+                          temperature=0.3, max_tokens=3000, what=f"第{n}章审校")
+            write(fpath, str(out))
+            proj.track_usage("review")
             done += 1
-            score = re.search(r"(\d+(?:\.\d+)?)\s*/?\s*10", out)
-            print("    ✓ 第%d章 审校完成%s" % (n, ("，评分 " + score.group(1)) if score else ""))
-        except Exception as e:  # noqa: BLE001
+            score_m = re.search(r"(\d+(?:\.\d+)?)\s*/?\s*10", str(out))
+            if score_m:
+                proj.set_score(n, float(score_m.group(1)))
+            print(f"    ✓ 第{n}章 审校完成" + (f"，评分 {score_m.group(1)}" if score_m else ""))
+        except Exception as e:
             failed.append(n)
-            print("    ✗ 第%d章审校失败：%s" % (n, str(e)[:100]))
+            print(f"    ✗ 第{n}章审校失败：{str(e)[:100]}")
+
     if failed:
-        raise RuntimeError("完成 %d 份审校；失败第 %s 章（重跑自动补审）"
-                           % (done, "、".join(str(x) for x in failed)))
-    return "完成 %d 份审校报告" % done
+        raise RuntimeError(f"完成 {done} 份审校；失败第 {'、'.join(str(x) for x in failed)} 章（重跑自动补审）")
+    return f"完成 {done} 份审校报告"
 
 
-def stage_revise(proj, cfg, api, only=None, force=False):
+def stage_revise(proj: Project, cfg: Dict[str, Any], api: Dict[str, Any], only: Optional[str] = None, force: bool = False) -> str:
     per = int(cfg.get("words_per_chapter", 3000))
     world = clip(read(proj.f_world()), 7000)
     targets = proj.chapters_range(only)
     if not targets:
         targets = list(range(1, int(cfg.get("target_chapters", 20)) + 1))
     done, failed = 0, []
+
     for n in targets:
         src = proj.chapter_file(n)
         if not os.path.exists(src):
@@ -456,61 +525,71 @@ def stage_revise(proj, cfg, api, only=None, force=False):
         try:
             review = read(proj.review_file(n))
             if not review:
-                print("    - 第%d章 无审校报告，先审校…" % n)
+                print(f"    - 第{n}章 无审校报告，先审校…")
                 stage_review(proj, cfg, api, only=str(n))
                 review = read(proj.review_file(n))
             idx = review.rfind("## 结论")
             conclusion = review[idx:].split("\n", 1)[1] if idx >= 0 else review
             if not force and "可直接通过" in conclusion and "需修改" not in conclusion:
-                print("    - 第%d章 审校结论为通过，跳过（--force 可强制修订）" % n)
+                print(f"    - 第{n}章 审校结论为通过，跳过（--force 可强制修订）")
                 continue
             user = (
                 "请根据审校报告重写该章，保留原有剧情与硬性设定，只修正报告指出的问题，"
                 "并保持与上下章的衔接。\n\n"
-                "【世界观硬性设定（截断）】\n%s\n\n"
-                "【原文章节】\n%s\n\n【审校报告】\n%s\n\n"
-                "输出完整重写后的章节全文（以「# 第%d章 …」开头），长度约 %d 字（±15%%），"
+                f"【世界观硬性设定（截断）】\n{world}\n\n"
+                f"【原文章节】\n{read(src)}\n\n【审校报告】\n{review}\n\n"
+                f"输出完整重写后的章节全文（以「# 第{n}章 …」开头），长度约 {per} 字（±15%），"
                 "纯 Markdown 正文，无任何解释。"
-                % (world, read(src), review, n, per)
             )
             out = llm.chat([{"role": "system", "content": SYSTEM_WRITER},
                             {"role": "user", "content": user}], api,
-                          max_tokens=max(api["max_tokens"], per * 3), what="第%d章修订" % n)
-            if out:
+                          max_tokens=max(int(api["max_tokens"]), per * 3), what=f"第{n}章修订")
+            out_str = str(out)
+            if out_str:
                 write(src + ".bak", read(src))
-                write(src, out)
+                write(src, out_str)
+                proj.track_usage("revise")
                 done += 1
-                print("    ✓ 第%d章 已修订（原稿存为 .bak）" % n)
-        except Exception as e:  # noqa: BLE001
+                print(f"    ✓ 第{n}章 已修订（原稿存为 .bak）")
+        except Exception as e:
             failed.append(n)
-            print("    ✗ 第%d章修订失败：%s" % (n, str(e)[:100]))
+            print(f"    ✗ 第{n}章修订失败：{str(e)[:100]}")
+
     if failed:
-        raise RuntimeError("修订 %d 章；失败第 %s 章（重跑自动补修）"
-                           % (done, "、".join(str(x) for x in failed)))
-    return "修订 %d 章" % done
+        raise RuntimeError(f"修订 {done} 章；失败第 {'、'.join(str(x) for x in failed)} 章（重跑自动补修）")
+    return f"修订 {done} 章"
 
 
-def stage_assemble(proj, cfg, api=None, **_kw):
+def stage_assemble(proj: Project, cfg: Dict[str, Any], api: Optional[Dict[str, Any]] = None, **_kw: Any) -> str:
     concept = read(proj.f_concept())
-    m = re.search(r"^#.*$|书名.*", concept, re.M)
     files = proj.list_chapters()
     if not files:
         raise RuntimeError("没有章节文件，无法汇编。")
-    parts = ["---", "title: %s" % cfg.get("title", proj.name),
-             "chapters: %d" % len(files),
-             "words: %d" % sum(word_count(read(p)) for p in files),
+    title = cfg.get("title", proj.name)
+    parts = ["---", f"title: {title}",
+             f"chapters: {len(files)}",
+             f"words: {sum(word_count(read(p)) for p in files)}",
              "---", ""]
-    parts.append("# %s\n" % cfg.get("title", proj.name))
+    parts.append(f"# {title}\n")
     if concept:
-        parts.append("## 简介\n\n%s\n" % clip(concept, 600))
+        parts.append(f"## 简介\n\n{clip(concept, 600)}\n")
     for p in files:
         parts.append(read(p).strip() + "\n\n")
-    out_path = proj.path("manuscript", "%s·初稿.md" % cfg.get("title", proj.name))
+
+    out_path = proj.path("manuscript", f"{title}·初稿.md")
     text = "\n".join(parts)
     write(out_path, text)
     total = word_count(text)
-    return "汇编完成：%s（%d 章 / %d 字）" % (
-        os.path.relpath(out_path, proj.root), len(files), total)
+
+    # 自动同时生成出版级电子书格式 (EPUB, HTML, TXT)
+    export_msg = ""
+    try:
+        dist_res = export.export_all(proj, formats=["epub", "html", "txt"])
+        export_msg = f"；已同步导出 EPUB/HTML/TXT 至 dist/"
+    except Exception as e:
+        export_msg = f"（电子书导出提示: {e}）"
+
+    return f"汇编完成：{os.path.relpath(out_path, proj.root)}（{len(files)} 章 / {total:,} 字{export_msg}）"
 
 
 STAGES = ["concept", "world", "characters", "outline", "draft", "review", "revise", "assemble"]
