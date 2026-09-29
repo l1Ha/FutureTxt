@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+  <title>FutureTxt —— 随身科幻小说创作工作站</title>
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="theme-color" content="#0d1117">
+  <link rel="manifest" href="manifest.json">
+  <link rel="stylesheet" href="style.css">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🚀</text></svg>">
+</head>
+<body class="dark-theme">
+
+  <!-- 顶部状态栏 -->
+  <header class="app-header">
+    <div class="header-left">
+      <span class="logo-icon">🚀</span>
+      <div class="logo-title">
+        <span class="main-title">FutureTxt</span>
+        <span class="sub-title" id="current-project-title">未选定小说</span>
+      </div>
+    </div>
+    <div class="header-actions">
+      <button id="btn-theme-toggle" class="icon-btn" title="切换暗色/亮色">🌓</button>
+      <button id="btn-quick-config" class="icon-btn" title="API 设置">⚙️</button>
+    </div>
+  </header>
+
+  <!-- 主体工作区（多视图切换） -->
+  <main class="app-main">
+
+    <!-- 视图 1：创作控制台 / 项目向导 (Studio) -->
+    <section id="view-studio" class="app-view active">
+      <div class="view-content">
+        <!-- 顶部项目切换与新建 -->
+        <div class="card project-selector-card">
+          <div class="card-header-flex">
+            <h3>当前小说</h3>
+            <button id="btn-new-project" class="btn btn-secondary btn-sm">+ 新建小说</button>
+          </div>
+          <select id="select-project" class="form-input">
+            <!-- 动态填充已存项目 -->
+          </select>
+        </div>
+
+        <!-- 8 阶段流水线进度面板 -->
+        <div class="card pipeline-card">
+          <div class="card-header-flex">
+            <h3>创作流水线</h3>
+            <span id="pipeline-status-badge" class="badge">准备就绪</span>
+          </div>
+
+          <div class="stage-stepper">
+            <div class="step-node" data-stage="concept">
+              <div class="step-dot">1</div>
+              <div class="step-name">概念</div>
+            </div>
+            <div class="step-line"></div>
+            <div class="step-node" data-stage="world">
+              <div class="step-dot">2</div>
+              <div class="step-name">世界观</div>
+            </div>
+            <div class="step-line"></div>
+            <div class="step-node" data-stage="characters">
+              <div class="step-dot">3</div>
+              <div class="step-name">角色</div>
+            </div>
+            <div class="step-line"></div>
+            <div class="step-node" data-stage="outline">
+              <div class="step-dot">4</div>
+              <div class="step-name">大纲</div>
+            </div>
+            <div class="step-line"></div>
+            <div class="step-node" data-stage="draft">
+              <div class="step-dot">5</div>
+              <div class="step-name">正文</div>
+            </div>
+            <div class="step-line"></div>
+            <div class="step-node" data-stage="export">
+              <div class="step-dot">6</div>
+              <div class="step-name">成书</div>
+            </div>
+          </div>
+
+          <!-- 操作按钮栏 -->
+          <div class="pipeline-actions">
+            <button id="btn-run-stage" class="btn btn-primary btn-block">
+              <span class="btn-icon">⚡</span> <span id="btn-run-label">开始生成：创作概念</span>
+            </button>
+            <div class="quick-draft-row" id="draft-control-row" style="display:none;">
+              <select id="select-chapter-to-draft" class="form-input form-input-sm">
+                <!-- 动态章节选项 -->
+              </select>
+              <button id="btn-draft-single" class="btn btn-accent btn-sm">单独写此章</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- 实时流式输出窗口 -->
+        <div class="card live-output-card">
+          <div class="card-header-flex">
+            <h3>实时输出流 <span id="stream-indicator" class="pulse-dot" style="display:none;"></span></h3>
+            <div class="output-actions">
+              <span id="output-word-count" class="text-muted">0 字</span>
+              <button id="btn-copy-stream" class="btn btn-ghost btn-xs">复制</button>
+            </div>
+          </div>
+          <div id="live-stream-box" class="stream-box markdown-body">
+            <p class="placeholder-text">暂无生成任务。点击上方按钮或输入灵感，见证 AI 实时推演硬科幻长篇！</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 视图 2：全书章节与目录 (Chapters) -->
+    <section id="view-chapters" class="app-view">
+      <div class="view-content">
+        <div class="card">
+          <div class="card-header-flex">
+            <h3>章节大纲与正文</h3>
+            <span id="chapters-summary-badge" class="badge">0 章</span>
+          </div>
+          <div id="chapter-list-container" class="chapter-list">
+            <!-- 动态生成章节项 -->
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 视图 3：沉浸式阅读与导出 (Reader & Export) -->
+    <section id="view-reader" class="app-view">
+      <div class="view-content">
+        <div class="card export-card">
+          <h3>成果交付与导出</h3>
+          <p class="text-muted" style="margin-bottom:12px;">直接在手机上打包为出版级电子书，无需电脑：</p>
+          <div class="export-buttons-grid">
+            <button id="btn-export-epub" class="btn btn-outline btn-block">
+              📥 导出 EPUB 电子书<small>（支持 Apple Books/微信读书）</small>
+            </button>
+            <button id="btn-export-html" class="btn btn-outline btn-block">
+              🌐 导出 HTML 阅读器<small>（单文件离线网页）</small>
+            </button>
+            <button id="btn-export-txt" class="btn btn-outline btn-block">
+              📄 导出 TXT 全文<small>（规范段首缩进排版）</small>
+            </button>
+          </div>
+        </div>
+
+        <div class="card reader-display-card">
+          <div class="card-header-flex">
+            <h3 id="reader-chapter-title">全书预览</h3>
+            <div class="font-controls">
+              <button id="btn-font-dec" class="btn btn-ghost btn-xs">A-</button>
+              <button id="btn-font-inc" class="btn btn-ghost btn-xs">A+</button>
+            </div>
+          </div>
+          <div id="reader-content-body" class="reader-body markdown-body">
+            <p class="placeholder-text">选择章节开始阅读。</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 视图 4：知识库与设置 (Settings & KB) -->
+    <section id="view-settings" class="app-view">
+      <div class="view-content">
+        <!-- API 配置 -->
+        <div class="card">
+          <h3>⚡ LLM API 配置</h3>
+          <p class="text-muted" style="font-size:0.85rem; margin-bottom:12px;">
+            您的 API Key 仅保存在手机浏览器本地（localStorage），绝对不经过任何第三方服务器。
+          </p>
+          <div class="form-group">
+            <label>API Key (必填)</label>
+            <input type="password" id="cfg-api-key" class="form-input" placeholder="sk-...">
+          </div>
+          <div class="form-group">
+            <label>API Base URL (端点)</label>
+            <input type="text" id="cfg-base-url" class="form-input" placeholder="https://api.openai.com/v1" value="https://api.deepseek.com/v1">
+            <small class="text-muted">推荐: DeepSeek / SiliconFlow / OpenRouter / Moonshot 等</small>
+          </div>
+          <div class="form-group">
+            <label>模型名称 (Model)</label>
+            <input type="text" id="cfg-model" class="form-input" placeholder="deepseek-chat" value="deepseek-chat">
+          </div>
+          <button id="btn-save-config" class="btn btn-primary btn-block">保存设置并测试连通性</button>
+        </div>
+
+        <!-- 32 篇科幻知识库速查 -->
+        <div class="card">
+          <div class="card-header-flex">
+            <h3>🧠 32 篇科幻知识库</h3>
+            <span id="kb-stats-badge" class="badge">已载入 32 篇</span>
+          </div>
+          <div class="form-group">
+            <input type="text" id="kb-search-input" class="form-input" placeholder="搜索方法论或科学名词（如：黑洞、曲率、三幕式）">
+          </div>
+          <div id="kb-search-results" class="kb-results-list">
+            <!-- 动态知识库检索结果 -->
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- 底部导航栏 (Bottom Navigation) -->
+  <nav class="app-bottom-nav">
+    <button class="nav-item active" data-target="view-studio">
+      <span class="nav-icon">✍️</span>
+      <span class="nav-label">创作</span>
+    </button>
+    <button class="nav-item" data-target="view-chapters">
+      <span class="nav-icon">📑</span>
+      <span class="nav-label">章节</span>
+    </button>
+    <button class="nav-item" data-target="view-reader">
+      <span class="nav-icon">📖</span>
+      <span class="nav-label">阅读/导出</span>
+    </button>
+    <button class="nav-item" data-target="view-settings">
+      <span class="nav-icon">⚙️</span>
+      <span class="nav-label">设置/知识库</span>
+    </button>
+  </nav>
+
+  <!-- 模态框：新建小说项目向导 -->
+  <div id="modal-new-project" class="modal-backdrop" style="display:none;">
+    <div class="modal-sheet">
+      <div class="modal-header">
+        <h3>🚀 创建新科幻小说</h3>
+        <button id="btn-close-modal" class="btn-close">✕</button>
+      </div>
+      <div class="modal-body">
+        <div class="form-group">
+          <label>书名 / 项目代号</label>
+          <input type="text" id="new-title" class="form-input" placeholder="例如：星尘之子、深空回响">
+        </div>
+        <div class="form-group">
+          <label>题材关键词 (逗号分隔)</label>
+          <input type="text" id="new-keywords" class="form-input" placeholder="例如：硬科幻, 曲率引擎, 戴森球, 接触文明">
+        </div>
+        <div class="form-group">
+          <label>一句话故事前提 (Logline)</label>
+          <textarea id="new-premise" class="form-input" rows="3" placeholder="例如：近未来外太空采矿船在小行星带发现非人造信号，随之引出整个人类文明命运转折..."></textarea>
+        </div>
+        <div class="form-row">
+          <div class="form-group col">
+            <label>计划章节数</label>
+            <input type="number" id="new-chapters" class="form-input" value="10" min="1" max="50">
+          </div>
+          <div class="form-group col">
+            <label>每章目标字数</label>
+            <input type="number" id="new-words" class="form-input" value="2500" step="500">
+          </div>
+        </div>
+        <div class="form-group">
+          <label>叙事文风</label>
+          <input type="text" id="new-tone" class="form-input" value="克制、具象、冷峻中蕴含人性温度">
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button id="btn-confirm-create" class="btn btn-primary btn-block">确 定 创 建</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
