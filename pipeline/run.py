@@ -154,6 +154,8 @@ def cmd_run(args: argparse.Namespace) -> None:
                 msg = stages.stage_review(proj, cfg, api, only=args.only, force=args.force)
             elif stage == "revise":
                 msg = stages.stage_revise(proj, cfg, api, only=args.only, force=args.force)
+            elif stage == "continuity":
+                msg = stages.stage_continuity(proj, cfg, api, force=args.force)
             else:
                 msg = stages.stage_assemble(proj, cfg, api)
         except Exception as e:
@@ -289,10 +291,8 @@ def build_parser() -> argparse.ArgumentParser:
     r = sub.add_parser("run", help="执行创作流水线")
     r.add_argument("name", help="项目标识")
     r.add_argument("--stages", default="all",
-                   help="指定执行的阶段（逗号分隔）：concept,world,characters,outline,draft,review,revise,assemble")
+                   help="指定执行的阶段（逗号分隔）：concept,world,characters,outline,draft,review,revise,continuity,assemble")
     r.add_argument("--only", help="仅处理指定章节范围，如 3、1-5、1,4,7-9（作用于 draft/review/revise）")
-    r.add_argument("--force", action="store_true", help="强制重新生成已有产物")
-    r.add_argument("--dry-run", action="store_true", help="仅校验配置与环境，不发起实际生成")
     r.set_defaults(func=cmd_run)
 
     # status

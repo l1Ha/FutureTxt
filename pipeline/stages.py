@@ -51,6 +51,124 @@ def chapter_no(path: str) -> int:
     return int(m.group(1)) if m else 0
 
 
+# ---------------------------------------------------------------- 质量红线（规则固化）
+
+# 章尾字数尾注（元信息，禁止出现在文稿中）
+META_NOTE_RE = re.compile(r"[ \t]*（(?:全[章节]|全文)约\s*\d{2,6}\s*字）[ \t]*")
+
+# 中文语境夹生外语词 → 中文
+STRAY_WORDS = {
+    "nods": "点头", "hésitation": "犹豫", "earlier": "先前",
+    "heaviness": "沉重感", "deja vu": "既视感",
+}
+STRAY_RE = re.compile(
+    r"(?<=[一-鿿])\s+(%s)\s*(?=[一-鿿，。、；：？！）」])"
+    % "|".join(re.escape(w) for w in STRAY_WORDS)
+)
+
+# 高频错别字表
+TYPOS = {
+    "眉头一皖": "眉头一皱",
+    "不容置疑的决顾": "不容置疑的决绝",
+    "曾参余热": "曾参与余热",
+    "自我毁启动": "自毁启动",
+}
+
+
+def clean(text):
+    """文稿卫生清洗（幂等）：剔除元信息尾注、修复夹生外语词与高频错别字。"""
+    if not text:
+        return text
+    text = META_NOTE_RE.sub("", text)
+    text = STRAY_RE.sub(lambda m: STRAY_WORDS[m.group(1)], text)
+    for bad, good in TYPOS.items():
+        text = text.replace(bad, good)
+    return re.sub(r"\n{3,}", "\n\n", text)
+
+
+def quality_rules(per):
+    """注入写作/修订提示词的质量红线（源自两部作品品质复盘）。"""
+    return (
+        "1) 跨章唯一：同一场景桥段（发现/备份/对峙/揭秘/牺牲）全书只展开一次；"
+        "结尾句与章末钩子不得与任何已完成章节雷同；同一句台词不重复（口头禅每章至多2次）。\n"
+        "2) 数字自洽：同一指标全文一个值；引用硬性设定编号时数值必须与规则表一致；换算必须可验算。\n"
+        "3) 文本卫生：禁止夹生英文/法文词（nods、earlier、heaviness、hésitation、deja vu，一律用中文）；"
+        "禁止元信息（「全文约3020字」「章节在这里戛然而止」之类）；警惕错别字（皱/决绝/参与/自毁）。\n"
+        "4) 视角不越界：一章一个视角，与项目设定一致。\n"
+        "5) 设定引用点到为止：规则编号每章至多3处且须伴随情节作用；单段技术说明不超过200字。\n"
+        "6) 长度：实际汉字数须达到约 %d 字的 85%% 以上（不足将被闸门自动扩写一次）。" % per
+    )
+
+
+def _enforce_length(api, n, title, per, text):
+    """字数闸门：低于目标 85%% 时自动扩写一次。返回 (text, note)。"""
+    need = int(per * 0.85)
+    wc = word_count(META_NOTE_RE.sub("", text))
+    if wc >= need:
+        return text, ""
+    try:
+        out = llm.chat(
+            [{"role": "system", "content": SYSTEM_WRITER},
+             {"role": "user", "content":
+              "把下面这章扩写到约 %d 字（当前仅约 %d 字）。保持章首行、剧情事件与硬性设定完全不变，"
+              "通过动作细节、环境感知、对话与心理推进自然扩长；不得新增重大事件，不得添加任何解释性"
+              "或字数统计类元信息。直接输出扩写后的完整章节。\n\n%s" % (per, wc, text)}],
+            api, max_tokens=max(api["max_tokens"], per * 3),
+            what="第%d章扩写" % n)
+        if out:
+            if not out.lstrip().startswith("#"):
+                out = "# 第%d章 %s\n\n%s" % (n, title or "", out)
+            out = clean(out)
+            wc2 = word_count(out)
+            if wc2 > wc:
+                note = "（字数闸门：%d→%d字）" % (wc, wc2) if wc2 < need else ""
+                return out, note
+        return text, "；⚠字数闸门：%d字仍低于目标85%%，请人工关注" % wc
+    except Exception as e:  # noqa: BLE001
+        return text, "；⚠字数闸门：%d字不足且扩写失败（%s）" % (wc, str(e)[:60])
+
+
+def machine_precheck(files, per):
+    """连续性机器预检：跨章重复整句、雷同结尾、字数、卫生残留（确定性结果）。"""
+    sent_map, endings, wc_short, hygiene = {}, {}, [], []
+    for p in files:
+        n = chapter_no(p)
+        text = read(p)
+        wc = word_count(text)
+        if wc < per * 0.85:
+            wc_short.append("第%d章 %d字（%d%%）" % (n, wc, round(wc * 100 / max(per, 1))))
+        meta = META_NOTE_RE.findall(text)
+        stray = STRAY_RE.findall(text)
+        typos = [b for b in TYPOS if b in text]
+        if meta or stray or typos:
+            hygiene.append("第%d章：字数尾注%d、夹生外语%d、错别字%d"
+                           % (n, len(meta), len(stray), len(typos)))
+        body = re.sub(r"^#.*$", "", text, flags=re.M)
+        sents = [s.strip() for s in re.split(r"[。！？!?\n]+", body) if len(s.strip()) >= 14]
+        for s in sents:
+            sent_map.setdefault(s, []).append(n)
+        if sents:
+            endings.setdefault(sents[-1], []).append(n)
+    dups = [(s, sorted(set(ns))) for s, ns in sent_map.items() if len(set(ns)) > 1]
+    dups.sort(key=lambda t: -len(t[0]))
+    end_dups = [(s, sorted(set(ns))) for s, ns in endings.items() if len(set(ns)) > 1]
+    lines = []
+    if wc_short:
+        lines.append("- **字数不足 85%%**（%d 章）：%s" % (len(wc_short), "；".join(wc_short)))
+    if dups:
+        lines.append("- **跨章重复整句**（≥14字，出现在 2 章以上）：共 %d 处，示例：" % len(dups))
+        for s, ns in dups[:10]:
+            lines.append("  - 「%s…」 ← 第%s章" % (s[:40], "、".join(str(x) for x in ns)))
+    if end_dups:
+        lines.append("- **雷同结尾句**：%s" % "；".join(
+            "「%s…」← 第%s章" % (s[:30], "、".join(str(x) for x in ns)) for s, ns in end_dups[:5]))
+    if hygiene:
+        lines.append("- **卫生残留**（应由 clean() 处理）：" + "；".join(hygiene))
+    if not lines:
+        lines.append("- 未发现字数、重复、卫生类问题")
+    return "\n".join(lines), len(dups) + len(end_dups) + len(wc_short) + len(hygiene)
+
+
 class Project:
     """一个小说项目的目录与状态。"""
 
@@ -194,7 +312,9 @@ SYSTEM_WRITER = (
     "3) 人物动机与存在主义困境：拒绝脸谱化善恶，冲突源于宇宙物理客观法则与人类情感尊严的不可调和；"
     "对话富有个性语言指纹，坚决杜绝悬浮汇报式对话。\n"
     "4) 严格遵守世界观硬性设定编号（W1..Wn）与角色一致性铁律（C1..Cn），逻辑闭环推演至极。\n"
-    "5) 纯 Markdown 正文输出，严禁任何前言、后记、免责声明或寒暄套话。"
+    "5) 纯 Markdown 正文输出，严禁任何前言、后记、免责声明、寒暄套话或字数统计尾注"
+    "（如「全文约3020字」）；不得出现 meta 叙述（如「章节在这里戛然而止」）"
+    "与中文语境下的夹生外语单词（nods、earlier、heaviness 等，一律用中文）。"
 )
 
 SYSTEM_EDITOR = (
@@ -432,8 +552,10 @@ def stage_draft(proj: Project, cfg: Dict[str, Any], api: Dict[str, Any], only: O
                 f"【本章与邻章大纲】\n{_outline_block(proj, n)}\n\n【前情摘要】\n{_continuity_block(proj)}\n\n"
                 f"【上一章结尾（衔接用）】\n{prev_tail}\n\n"
                 f"【通用写作知识库】\n{knowledge}{dyn_block}\n\n"
+                f"【质量红线（违反即返工）】\n{quality_rules(per)}\n\n"
                 f"要求：正文以「# 第{n}章 {title or ''}」开头；长度约 {per} 字（±15%）；"
-                "开章尽快进入场景，章末落在钩子上；严格遵守硬性设定编号规则。"
+                "开章尽快进入场景，章末落在钩子上；严格遵守硬性设定编号规则；"
+                "本章内容不得复用前情摘要或上一章结尾中已发生过的场景。"
             )
             out = llm.chat([{"role": "system", "content": SYSTEM_WRITER},
                             {"role": "user", "content": user}], api,
@@ -441,6 +563,8 @@ def stage_draft(proj: Project, cfg: Dict[str, Any], api: Dict[str, Any], only: O
             out_str = str(out)
             if not out_str.lstrip().startswith("#"):
                 out_str = f"# 第{n}章 {title or ''}\n\n{out_str}"
+            out_str = clean(out_str)
+            out_str, gate_note = _enforce_length(api, n, title, per, out_str)
             write(fpath, out_str)
             proj.track_usage("draft")
 
@@ -456,7 +580,7 @@ def stage_draft(proj: Project, cfg: Dict[str, Any], api: Dict[str, Any], only: O
                 print(f"    · 第{n}章摘要生成失败（不影响正文）：{str(e)[:60]}")
 
             done.append(n)
-            print(f"    ✓ 第{n}章 完成（{word_count(out_str)}字）")
+            print(f"    ✓ 第{n}章 完成（{word_count(out_str)}字）{gate_note}")
         except Exception as e:
             failed.append(n)
             print(f"    ✗ 第{n}章失败：{str(e)[:100]}")
@@ -487,13 +611,23 @@ def stage_review(proj: Project, cfg: Dict[str, Any], api: Dict[str, Any], only: 
         if os.path.exists(fpath) and not force:
             continue
         try:
+            neigh = []
+            if n > 1 and proj.summary(n - 1):
+                neigh.append("- 第%d章：%s" % (n - 1, proj.summary(n - 1)))
+            if proj.summary(n + 1):
+                neigh.append("- 第%d章：%s" % (n + 1, proj.summary(n + 1)))
+            neigh_block = ("\n【相邻章节摘要（供跨章检查）】\n%s\n" % "\n".join(neigh)) if neigh else ""
             user = (
                 "请审校下面这一章。\n\n"
-                f"【审校清单】\n{checklist}\n\n【世界观硬性设定】\n{world}\n\n【角色要点】\n{chars}\n\n"
-                f"【大纲中的本章任务】\n{_outline_block(proj, n)}\n\n【章节正文（约目标 {per} 字）】\n{read(src)}\n\n"
+                f"【审校清单】\n{checklist}\n\n【质量红线】\n{quality_rules(per)}\n\n"
+                f"【世界观硬性设定】\n{world}\n\n【角色要点】\n{chars}\n\n"
+                f"【大纲中的本章任务】\n{_outline_block(proj, n)}\n{neigh_block}"
+                f"【章节正文（约目标 {per} 字）】\n{read(src)}\n\n"
                 f"输出格式：\n# 第{n}章 审校报告\n"
                 "## 总评分（1-10，含扣分理由）\n"
                 "## 问题清单\n每条：【严重度 高/中/低】位置（引用原文片段≤30字）→ 问题 → 修改建议\n"
+                "必须含跨章检查结论：与相邻章的重复场景/重复台词/雷同结尾、数值矛盾；"
+                "若确无此类问题，显式写一条「跨章检查：无问题」。\n"
                 "## 亮点（最多3条）\n"
                 "## 结论（一句话：可直接通过 / 需修改后再审）"
             )
@@ -539,11 +673,20 @@ def stage_revise(proj: Project, cfg: Dict[str, Any], api: Dict[str, Any], only: 
             if not force and "可直接通过" in conclusion and "需修改" not in conclusion:
                 print(f"    - 第{n}章 审校结论为通过，跳过（--force 可强制修订）")
                 continue
+            src_text = clean(read(src))
+            cont_report = read(proj.path("reviews", "全书连续性报告.md"))
+            next_sum = "\n【下一章摘要（不得提前消耗其事件）】\n第%d章：%s\n" % (
+                n + 1, proj.summary(n + 1)) if proj.summary(n + 1) else ""
+            cont_block = ("\n【全书连续性报告（涉及本章的问题优先修）】\n%s\n"
+                          % clip(cont_report, 3000)) if cont_report else ""
             user = (
-                "请根据审校报告重写该章，保留原有剧情与硬性设定，只修正报告指出的问题，"
-                "并保持与上下章的衔接。\n\n"
-                f"【世界观硬性设定（截断）】\n{world}\n\n"
-                f"【原文章节】\n{read(src)}\n\n【审校报告】\n{review}\n\n"
+                "请根据审校报告重写该章，保留原有剧情与硬性设定，只修正报告指出的问题。\n\n"
+                f"【质量红线（违反即返工）】\n{quality_rules(per)}\n\n"
+                f"【大纲中的本章任务与邻章】\n{_outline_block(proj, n)}\n\n【前情摘要】\n{_continuity_block(proj)}\n{next_sum}"
+                f"【世界观硬性设定（截断）】\n{world}\n{cont_block}"
+                f"【原文章节】\n{src_text}\n\n【审校报告】\n{review}\n\n"
+                "特别注意：重写不得引入其他章节已出现过的场景、对白、结尾句；"
+                "不得复用前情摘要中已发生过的桥段；只修复报告所列问题。\n"
                 f"输出完整重写后的章节全文（以「# 第{n}章 …」开头），长度约 {per} 字（±15%），"
                 "纯 Markdown 正文，无任何解释。"
             )
@@ -552,11 +695,17 @@ def stage_revise(proj: Project, cfg: Dict[str, Any], api: Dict[str, Any], only: 
                           max_tokens=max(int(api["max_tokens"]), per * 3), what=f"第{n}章修订")
             out_str = str(out)
             if out_str:
+                mtitle = re.search(r"^#\s*(.+)$", src_text, re.M)
+                if not out_str.lstrip().startswith("#"):
+                    out_str = ("# %s\n\n%s" % (mtitle.group(1).strip() if mtitle else "第%d章" % n,
+                                              out_str)) if mtitle else f"# 第{n}章\n\n{out_str}"
+                out_str = clean(out_str)
+                out_str, gate_note = _enforce_length(api, n, "", per, out_str)
                 write(src + ".bak", read(src))
                 write(src, out_str)
                 proj.track_usage("revise")
                 done += 1
-                print(f"    ✓ 第{n}章 已修订（原稿存为 .bak）")
+                print(f"    ✓ 第{n}章 已修订（原稿存为 .bak）{gate_note}")
         except Exception as e:
             failed.append(n)
             print(f"    ✗ 第{n}章修订失败：{str(e)[:100]}")
@@ -566,42 +715,94 @@ def stage_revise(proj: Project, cfg: Dict[str, Any], api: Dict[str, Any], only: 
     return f"修订 {done} 章"
 
 
+def stage_continuity(proj, cfg, api, only=None, force=False):
+    """全书连续性审校：机器预检（确定性） + LLM 跨章复核，报告落盘 reviews/。"""
+    files = proj.list_chapters()
+    if not files:
+        raise RuntimeError("没有章节文件，无法做连续性审校。")
+    report_path = proj.path("reviews", "全书连续性报告.md")
+    if os.path.exists(report_path) and not force:
+        return "已存在：%s（--force 可重做）" % os.path.relpath(report_path, proj.root)
+    per = int(cfg.get("words_per_chapter", 3000))
+    machine_md, issue_count = machine_precheck(files, per)
+
+    sums = proj.state().get("summaries", {})
+    parts = []
+    for p in files:
+        n = chapter_no(p)
+        body = re.sub(r"^#.*$", "", read(p), flags=re.M).strip()
+        parts.append("### 第%d章\n- 摘要：%s\n- 开头：%s…\n- 结尾：…%s" % (
+            n, sums.get(str(n), "（无摘要，据首尾判断）"),
+            re.sub(r"\s+", " ", body[:180]), re.sub(r"\s+", " ", body[-180:])))
+    evidence = clip("\n\n".join(parts), 16000)
+    knowledge = kb.load(proj.root, kb.STAGE_MODULES["continuity"], cap=6000)
+    user = (
+        "请做全书连续性审校——只看跨章问题（单章内部问题已由章节审校负责）。\n\n"
+        "【全书大纲（截断）】\n%s\n\n【质量红线与审校清单】\n%s\n\n"
+        "【各章证据（摘要与首尾节选）】\n%s\n\n"
+        "必查：1) 跨章重复场景/桥段/台词/结尾句；2) 数值与时间线矛盾（含与硬性设定冲突）；"
+        "3) 章末钩子雷同；4) 视角越界；5) 人物状态前后矛盾。\n\n"
+        "输出格式：\n# 跨章复核\n## 问题清单\n每条：【严重度 高/中/低】涉及章节 → 问题 → 修改建议\n"
+        "## 结论（一句话：全书通过 / 需修改后再审）"
+        % (clip(read(proj.f_outline()), 5000), knowledge, evidence)
+    )
+    out = llm.chat([{"role": "system", "content": SYSTEM_EDITOR},
+                    {"role": "user", "content": user}], api,
+                   temperature=0.3, max_tokens=4000, what="全书连续性")
+    report = ("# 全书连续性报告\n\n"
+              "阶段：continuity（机器预检 + LLM 跨章复核）　章节数：%d\n\n"
+              "## 机器预检（脚本，结果确定）\n%s\n\n%s"
+              % (len(files), machine_md, out))
+    write(report_path, report)
+    return "连续性报告：%s（机器预检发现 %d 项问题）" % (
+        os.path.relpath(report_path, proj.root), issue_count)
+
+
 def stage_assemble(proj: Project, cfg: Dict[str, Any], api: Optional[Dict[str, Any]] = None, **_kw: Any) -> str:
-    concept = read(proj.f_concept())
+    concept = clean(read(proj.f_concept()))
+    concept = re.sub(r"^#[^\n]*\n", "", concept).strip()  # 去掉概念稿标题，避免混入成书
     files = proj.list_chapters()
     if not files:
         raise RuntimeError("没有章节文件，无法汇编。")
     title = cfg.get("title", proj.name)
+    chapter_words = sum(word_count(clean(read(p))) for p in files)
     parts = ["---", f"title: {title}",
              f"chapters: {len(files)}",
-             f"words: {sum(word_count(read(p)) for p in files)}",
+             f"words: {chapter_words}",
              "---", ""]
     parts.append(f"# {title}\n")
     if concept:
         parts.append(f"## 简介\n\n{clip(concept, 600)}\n")
     for p in files:
-        parts.append(read(p).strip() + "\n\n")
+        parts.append(clean(read(p)).strip() + "\n\n")
 
     out_path = proj.path("manuscript", f"{title}·初稿.md")
     text = "\n".join(parts)
     write(out_path, text)
-    total = word_count(text)
+    total = chapter_words
 
     # 自动同时生成出版级电子书格式 (EPUB, HTML, TXT)
     export_msg = ""
     try:
-        dist_res = export.export_all(proj, formats=["epub", "html", "txt"])
+        export.export_all(proj, formats=["epub", "html", "txt"])
         export_msg = f"；已同步导出 EPUB/HTML/TXT 至 dist/"
     except Exception as e:
         export_msg = f"（电子书导出提示: {e}）"
 
-    return f"汇编完成：{os.path.relpath(out_path, proj.root)}（{len(files)} 章 / {total:,} 字{export_msg}）"
+    # 全书字数 85% 闸门告警
+    target = int(cfg.get("target_chapters", len(files))) * int(cfg.get("words_per_chapter", 3000))
+    warn = ""
+    if target and chapter_words < target * 0.85:
+        warn = f"；⚠ 全书字数为目标({target:,})的 {round(chapter_words * 100 / target)}%，低于 85% 闸门，建议补写"
+
+    return f"汇编完成：{os.path.relpath(out_path, proj.root)}（{len(files)} 章 / {total:,} 字{export_msg}）{warn}"
 
 
-STAGES = ["concept", "world", "characters", "outline", "draft", "review", "revise", "assemble"]
+STAGES = ["concept", "world", "characters", "outline",
+          "draft", "review", "revise", "continuity", "assemble"]
 
 STAGE_LABEL = {
     "concept": "创作概念", "world": "世界观", "characters": "角色体系",
     "outline": "大纲", "draft": "正文初稿", "review": "章节审校",
-    "revise": "按审校修订", "assemble": "汇编成书",
+    "revise": "按审校修订", "continuity": "全书连续性", "assemble": "汇编成书",
 }
