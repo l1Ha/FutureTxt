@@ -108,6 +108,36 @@ class TestExport(unittest.TestCase):
         self.assertIn("`3F9A…C2`", out)   # 哈希原样保留
         self.assertNotIn("（W6）", out)    # 锚点照常剥离
 
+    def test_strip_anchors_daily_details(self):
+        src = (
+            "每餐约 0.03 信用点（日常细节2），“根据MemBazaar日常细节13，违规罚500 CP。”\n"
+            "这正是日常细节1所描述的调光机制；标志（见文化日常细节第11条）。\n"
+            "LED 模拟日出。（起床与光照）她继续做饭。\n"
+            "她的话语间插入了一段日常细节——看似琐碎，却是生活的质地。\n"
+        )
+        out = export.strip_anchors(src, valid_ids=set(), daily_titles=["起床与光照"])
+        self.assertNotIn("（日常细节2）", out)
+        self.assertNotIn("日常细节13", out)
+        self.assertNotIn("日常细节1所描述的", out)
+        self.assertNotIn("见文化日常细节第11条", out)
+        self.assertNotIn("（起床与光照）", out)
+        self.assertIn("一段日常细节——", out)  # 非引用的正常行文保留
+
+    def test_strip_anchors_fixup_sentences(self):
+        out = export.strip_anchors(
+            "为了满足 C7 而设计；甚至触发 W8——须参保；符合 W3 规定。"
+            "这是 W15 中提到的急救箱；误差 1.3 厘米，well within W3；受W10保护。"
+            "这直接触犯了 W13——须知情同意。",
+            valid_ids={"C7", "W8", "W3", "W15", "W10", "W13"},
+        )
+        self.assertIn("为了满足要求而设计", out)
+        self.assertIn("触发相关规定——", out)
+        self.assertIn("符合规定。", out)
+        self.assertNotIn("中提到", out)
+        self.assertNotIn("well within", out)
+        self.assertIn("受规则保护", out)
+        self.assertIn("触犯了规定——", out)
+
 
 if __name__ == "__main__":
     unittest.main()

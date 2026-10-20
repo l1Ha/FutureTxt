@@ -58,15 +58,38 @@ def _extract_title(md_text: str, default: str) -> str:
 
 # ---- 设定编号锚点剥离（出版净稿） ----
 # 审校/audit 用带标记版（章节与 manuscript 成书），出版导出用净稿。
+# 锚点三族：W/C 硬性设定与角色规则、日常细节清单编号（（日常细节2））、清单条目标题标签（（起床与光照））。
 
 _ANCHOR_RE_PAREN = re.compile(r"[（(]\s*[WC]\d+(?:\s*[、,，]\s*[WC]\d+)*\s*[）)]")
+# 编号前须为标点/引号/空白/行首，避免误伤「数据」这类词
+_ANCHOR_PRE = r"(?P<pre>[，,。：；、（(\s…？！“”‘’]|^)"
 _ANCHOR_RE_LEAD = re.compile(
-    r"(?P<pre>[，,。：；、（(\s]|^)"
-    r"(?:根据|按照|依照|遵循|依据|参见|正如|据)\s*[WC]\d+"
-    r"\s*(?:确实规定|明确规定|规定|要求|条款|规则|约定)?\s*的?\s*[，,、：:；;]?\s*")
+    _ANCHOR_PRE
+    + r"(?:根据|按照|依照|遵循|依据|参见|正如|据)\s*[WC]\d+"
+    + r"\s*(?:确实规定|明确规定|规定|要求|条款|规则|约定)?\s*的?\s*[，,、：:；;]?\s*")
 _ANCHOR_RE_RULE = re.compile(
     r"[WC]\d+\s*(?:确实规定|明确规定|规定|要求|限制|指出|所述|的)\s*的?\s*[，,、：:；;]?\s*")
 _ANCHOR_RE_BARE = re.compile(r"(?<![A-Za-z0-9])[WC]\d+(?![A-Za-z0-9])")
+
+# 日常细节族（01-世界观.md「日常细节（每项至少出现一次正文）」清单）
+_ANCHOR_RE_DAILY_PAREN = re.compile(r"[（(][^（）()\n]*日常细节[^（）()\n]*[）)]")
+_ANCHOR_RE_DAILY_LEAD = re.compile(
+    _ANCHOR_PRE
+    + r"(?:根据|按照|依照|遵循|依据|参见|正如|据)\s*(?:MemBazaar\s*)?日常细节\d*"
+    + r"\s*(?:所描述的|所描述)?\s*[，,、：:；;]?\s*")
+_ANCHOR_RE_DAILY_REF = re.compile(r"日常细节\d*\s*所描述的")
+
+# 裸删会致病句的上下文：先按语境定向改写（均要求句中确有编号，正常行文误伤不了）
+_ANCHOR_FIXUPS = [
+    (re.compile(r"满足\s*[WC]\d+\s*而"), "满足要求而"),
+    (re.compile(r"触发了?\s*[WC]\d+\s*(?=[——：:,，。])"), "触发相关规定"),
+    (re.compile(r"(符合|违反|违背|触犯)(了?)\s*[WC]\d+\s*(?:规定|要求|限制)?"), r"\1\2规定"),
+    (re.compile(r"[WC]\d+\s*被(?:违反|违背|破坏)"), "规定被"),
+    (re.compile(r"受\s*[WC]\d+\s*保护"), "受规则保护"),
+    (re.compile(r"[WC]\d+\s*中(?:提到|出现|规定|描述)\s*的?"), ""),
+    (re.compile(r"[WC]\d+\s*所(?:提到|指|见|描述)\s*的?"), ""),
+    (re.compile(r"[，,]?\s*(?:well\s+)?(?:within|below|above|under)\s*[WC]\d+(?![A-Za-z0-9])", re.I), ""),
+]
 
 
 def _defined_anchor_ids(proj: Any) -> "set[str]":
@@ -86,13 +109,38 @@ def _defined_anchor_ids(proj: Any) -> "set[str]":
     return ids
 
 
-def strip_anchors(text: str, valid_ids: Optional["set[str]"] = None) -> str:
-    """剥离正文中的设定编号锚点，产出出版级净稿。
+def _defined_daily_titles(proj: Any) -> List[str]:
+    """提取世界观文档「日常细节」清单条目标题（如「起床与光照」），用于剥离标题括号标签。"""
+    getter_fn = getattr(proj, "f_world", None)
+    if not callable(getter_fn):
+        return []
+    try:
+        path = getter_fn()
+    except Exception:
+        return []
+    if not (path and os.path.exists(path)):
+        return []
+    with open(path, encoding="utf-8") as f:
+        src = f.read()
+    m = re.search(r"日常细节[^\n]*\n((?:[ \t]+\d+\.[^\n]*\n?)+)", src)
+    if not m:
+        return []
+    return [t.strip() for t in re.findall(r"[ \t]+\d+\.\s*\*\*([^*\n]+)\*\*", m.group(1))]
 
-    覆盖四种形态：（W5）（C3、C5）括号式、根据/正如 W4 引导式、
-    W2 规定/C1 的 挂接式、裸编号（仅限项目文档定义过的编号，
-    防止误伤 W3C、C12 这类非锚点文本）。剥离后清理多余空格与标点。
-    反引号代码段（哈希、实验编号等，如 `3F9A…C2E7`）整体保护，绝不改动。
+
+def strip_anchors(
+    text: str,
+    valid_ids: Optional["set[str]"] = None,
+    daily_titles: Optional[List[str]] = None,
+) -> str:
+    """剥离正文中的锚点，产出出版级净稿。
+
+    三族锚点：W/C 硬性设定与角色规则（（W5）（C3、C5）、根据 W4，、W2 规定、裸编号）、
+    日常细节清单编号（（日常细节2）、（见文化日常细节第11条）、根据日常细节13，）、
+    清单条目标题标签（（起床与光照））。非引用的行文（「一段日常细节」「日常细节中的一环」）保留。
+    裸编号仅限项目文档定义过的编号，防误伤 W3C、C12；
+    会致病句的上下文（满足…而、触发…——、符合…规定、中提到的、well within…）先定向改写再剥离。
+    反引号代码段（哈希、实验编号，如 `3F9A…C2E7`）整体保护，绝不改动。
     """
     # 0) 保护反引号代码段，防止哈希/编号被误剥
     spans: List[str] = []
@@ -101,19 +149,34 @@ def strip_anchors(text: str, valid_ids: Optional["set[str]"] = None) -> str:
         lambda m: (spans.append(m.group(0)) or "\x00%d\x00" % (len(spans) - 1)),
         text,
     )
-    text = _ANCHOR_RE_PAREN.sub("", text)                              # 1) 括号锚点
-    text = _ANCHOR_RE_LEAD.sub(lambda m: m.group("pre"), text)         # 2) 引导式（编号前须为标点/空白/行首）
-    text = _ANCHOR_RE_RULE.sub("", text)                               # 3) 挂接式
-    if valid_ids:                                                      # 4) 裸编号（限已定义编号）
+    # 1) 日常细节族：括号标签 + 条目标题标签
+    text = _ANCHOR_RE_DAILY_PAREN.sub("", text)
+    for t in daily_titles or []:
+        t = t.strip()
+        if t:
+            text = text.replace("（%s）" % t, "").replace("(%s)" % t, "")
+    # 2) W/C 括号锚点
+    text = _ANCHOR_RE_PAREN.sub("", text)
+    # 3) 两族引导式
+    text = _ANCHOR_RE_DAILY_LEAD.sub(lambda m: m.group("pre"), text)
+    text = _ANCHOR_RE_LEAD.sub(lambda m: m.group("pre"), text)
+    # 4) 病句上下文定向改写——须在挂接式/裸删之前（如「符合 W3 规定」整体改写，防止拆剩「符合。」）
+    for pat, repl in _ANCHOR_FIXUPS:
+        text = pat.sub(repl, text)
+    # 5) 挂接式与「所描述的」引用
+    text = _ANCHOR_RE_RULE.sub("", text)
+    text = _ANCHOR_RE_DAILY_REF.sub("", text)
+    # 6) 裸编号（限已定义编号）
+    if valid_ids:
         text = _ANCHOR_RE_BARE.sub(
             lambda m: "" if m.group(0) in valid_ids else m.group(0), text)
-    # 5) 清理剥离残渣：连续空格、汉字间空格、悬空标点、空括号、多余空行
+    # 7) 清理剥离残渣：连续空格、汉字间空格、悬空标点、空括号、多余空行
     text = re.sub(r"[ \t]{2,}", " ", text)
     text = re.sub(r"(?<=[一-鿿])[ \t]+(?=[一-鿿])", "", text)
     text = re.sub(r"\s+([。．！？；，、：])", r"\1", text)
     text = re.sub(r"（\s*）", "", text)
     text = re.sub(r"\n{3,}", "\n\n", text)
-    # 6) 还原代码段
+    # 8) 还原代码段
     text = re.sub(r"\x00(\d+)\x00", lambda m: spans[int(m.group(1))], text)
     return text
 
@@ -739,12 +802,13 @@ def export_all(
         raise RuntimeError("项目尚无章节文件，请先执行 draft 阶段生成正文。")
 
     valid_ids = _defined_anchor_ids(proj) if strip else None
+    daily_titles = _defined_daily_titles(proj) if strip else None
     chapters: List[Tuple[str, str]] = []
     for path in chapter_files:
         with open(path, encoding="utf-8") as f:
             text = f.read()
         if strip:
-            text = strip_anchors(text, valid_ids)
+            text = strip_anchors(text, valid_ids, daily_titles)
         no = re.search(r"chapter_(\d+)", os.path.basename(path))
         def_title = f"第 {int(no.group(1))} 章" if no else os.path.basename(path)
         ch_title = _extract_title(text, def_title)
