@@ -233,7 +233,8 @@ python pipeline/run.py kb              # 列出全部 36 篇方法论文档
 ```bash
 python -m unittest discover tests
 ```
-*包含 LLM 客户端容错、知识库均衡加载、大纲切分、EPUB 电子书封装、小说数据统计与一致性审计等 22 项全功能单元测试。*
+*包含 LLM 客户端容错、知识库均衡加载、大纲切分、EPUB 电子书封装、小说数据统计与一致性审计、*
+*三族锚点剥离（W/C、日常细节、标题标签 + 病句 fixup + export_all 端到端）等 28 项全功能单元测试。*
 
 ---
 
