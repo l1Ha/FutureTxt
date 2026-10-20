@@ -158,6 +158,10 @@ python pipeline/run.py export 赛博侦探 --format html    # 仅导出离线交
 ```
 导出产物自动保存在 `projects/<项目名>/dist/` 目录下。
 
+> **锚点剥离（审校版 / 出版版分离）**：导出默认自动剥离（W5）（C3、C5）等设定编号锚点，
+> `dist/` 即出版净稿；章节与 `manuscript/` 成书保留锚点，供审校与 `audit` 溯源；
+> `--keep-anchors` 可导出带标记版。
+
 ### 4. 灵活分步与区间控制
 ```bash
 python pipeline/run.py run 赛博侦探 --stages draft --only 1-5     # 仅写第 1~5 章

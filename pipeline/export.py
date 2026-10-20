@@ -56,6 +56,68 @@ def _extract_title(md_text: str, default: str) -> str:
     return default
 
 
+# ---- 设定编号锚点剥离（出版净稿） ----
+# 审校/audit 用带标记版（章节与 manuscript 成书），出版导出用净稿。
+
+_ANCHOR_RE_PAREN = re.compile(r"[（(]\s*[WC]\d+(?:\s*[、,，]\s*[WC]\d+)*\s*[）)]")
+_ANCHOR_RE_LEAD = re.compile(
+    r"(?P<pre>[，,。：；、（(\s]|^)"
+    r"(?:根据|按照|依照|遵循|依据|参见|正如|据)\s*[WC]\d+"
+    r"\s*(?:确实规定|明确规定|规定|要求|条款|规则|约定)?\s*的?\s*[，,、：:；;]?\s*")
+_ANCHOR_RE_RULE = re.compile(
+    r"[WC]\d+\s*(?:确实规定|明确规定|规定|要求|限制|指出|所述|的)\s*的?\s*[，,、：:；;]?\s*")
+_ANCHOR_RE_BARE = re.compile(r"(?<![A-Za-z0-9])[WC]\d+(?![A-Za-z0-9])")
+
+
+def _defined_anchor_ids(proj: Any) -> "set[str]":
+    """从本项目世界观/角色文档提取已定义的设定编号（W1、C3…）。"""
+    ids: "set[str]" = set()
+    for getter in ("f_world", "f_characters"):
+        getter_fn = getattr(proj, getter, None)
+        if not callable(getter_fn):
+            continue
+        try:
+            path = getter_fn()
+        except Exception:
+            continue
+        if path and os.path.exists(path):
+            with open(path, encoding="utf-8") as f:
+                ids |= set(re.findall(r"\*\*\s*([WC]\d+)\s*\*\*", f.read()))
+    return ids
+
+
+def strip_anchors(text: str, valid_ids: Optional["set[str]"] = None) -> str:
+    """剥离正文中的设定编号锚点，产出出版级净稿。
+
+    覆盖四种形态：（W5）（C3、C5）括号式、根据/正如 W4 引导式、
+    W2 规定/C1 的 挂接式、裸编号（仅限项目文档定义过的编号，
+    防止误伤 W3C、C12 这类非锚点文本）。剥离后清理多余空格与标点。
+    反引号代码段（哈希、实验编号等，如 `3F9A…C2E7`）整体保护，绝不改动。
+    """
+    # 0) 保护反引号代码段，防止哈希/编号被误剥
+    spans: List[str] = []
+    text = re.sub(
+        r"`[^`\n]+`",
+        lambda m: (spans.append(m.group(0)) or "\x00%d\x00" % (len(spans) - 1)),
+        text,
+    )
+    text = _ANCHOR_RE_PAREN.sub("", text)                              # 1) 括号锚点
+    text = _ANCHOR_RE_LEAD.sub(lambda m: m.group("pre"), text)         # 2) 引导式（编号前须为标点/空白/行首）
+    text = _ANCHOR_RE_RULE.sub("", text)                               # 3) 挂接式
+    if valid_ids:                                                      # 4) 裸编号（限已定义编号）
+        text = _ANCHOR_RE_BARE.sub(
+            lambda m: "" if m.group(0) in valid_ids else m.group(0), text)
+    # 5) 清理剥离残渣：连续空格、汉字间空格、悬空标点、空括号、多余空行
+    text = re.sub(r"[ \t]{2,}", " ", text)
+    text = re.sub(r"(?<=[一-鿿])[ \t]+(?=[一-鿿])", "", text)
+    text = re.sub(r"\s+([。．！？；，、：])", r"\1", text)
+    text = re.sub(r"（\s*）", "", text)
+    text = re.sub(r"\n{3,}", "\n\n", text)
+    # 6) 还原代码段
+    text = re.sub(r"\x00(\d+)\x00", lambda m: spans[int(m.group(1))], text)
+    return text
+
+
 def export_epub(
     output_path: str,
     title: str,
@@ -647,10 +709,13 @@ def export_txt(
 def export_all(
     proj: Any,
     formats: Optional[Sequence[str]] = None,
+    strip: bool = True,
 ) -> Dict[str, str]:
     """一键为项目导出指定格式小说。
 
-    formats 默认为 ['epub', 'html', 'txt']
+    formats 默认为 ['epub', 'html', 'txt']。
+    strip=True（默认）时剥离 W/C 设定编号锚点，产出出版净稿；
+    审校与 audit 请使用章节文件与 manuscript/ 成书（保留锚点）。
     """
     if formats is None or "all" in formats:
         formats = ["epub", "html", "txt"]
@@ -673,10 +738,13 @@ def export_all(
     if not chapter_files:
         raise RuntimeError("项目尚无章节文件，请先执行 draft 阶段生成正文。")
 
+    valid_ids = _defined_anchor_ids(proj) if strip else None
     chapters: List[Tuple[str, str]] = []
     for path in chapter_files:
         with open(path, encoding="utf-8") as f:
             text = f.read()
+        if strip:
+            text = strip_anchors(text, valid_ids)
         no = re.search(r"chapter_(\d+)", os.path.basename(path))
         def_title = f"第 {int(no.group(1))} 章" if no else os.path.basename(path)
         ch_title = _extract_title(text, def_title)
