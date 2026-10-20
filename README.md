@@ -242,13 +242,15 @@ python -m unittest discover tests
 
 ---
 
-## 多 GitHub 账号双推送（本仓库配置示例）
+## Git remote 与凭据配置（本仓库）
 
-本仓库同时挂了两个 remote：`origin`→anfax/FutureTxt、`l1ha`→l1Ha/FutureTxt，
-提交后 `git push origin main && git push l1ha main` 即双向同步。
+本仓库托管于唯一地址 **https://github.com/l1Ha/FutureTxt.git**（l1Ha 账户；
+原 anfax/FutureTxt 已删除/转移，`origin` 已改指同一地址）。
+本地保留 `origin` 与 `l1ha` 两个 remote 均指向它，提交后
+`git push origin main && git push l1ha main` 即可同步（同仓库，第二次通常 up-to-date）。
 
-l1Ha 账号的认证绕过了 Windows 凭据管理器（其对第二个账号存取会挂起），
-在 `.git/config` 中按 URL 精确配置（**URL 必须带 `.git` 后缀才匹配**）：
+认证在 `.git/config` 中按 URL 精确配置、绕过 Windows 凭据管理器 GCM
+（**URL 必须带 `.git` 后缀才匹配**）：
 
 ```ini
 [credential "https://github.com/l1Ha/FutureTxt.git"]
@@ -256,7 +258,17 @@ l1Ha 账号的认证绕过了 Windows 凭据管理器（其对第二个账号存
 	helper = "!f(){ echo username=l1Ha; echo password=$(gh auth token); };f"
 ```
 
-要点：段首空 `helper =` 用于清掉系统级凭据管理器，再挂 `gh auth token`（GitHub CLI 已登录该账号）。
+要点：段首空 `helper =` 清掉系统级凭据管理器，再挂 `gh auth token`
+（GitHub CLI 已登录 l1Ha）。**勿用 `gh auth login` 切换其它账号**，否则本 helper 失效。
+
+**排查口诀**：`git push` 报 `Repository not found` ≠ 仓库真没了——
+GCM 里只要存了凭据（哪怕已失效）就直接用、**不弹登录窗**，最容易误判：
+
+```powershell
+cmdkey /list | findstr github           # 找到用户名不对/过期的条目
+cmdkey /delete:git:https://github.com   # 删掉后重推，会重新弹浏览器登录
+```
+清完仍 404，再用浏览器确认仓库是否已改名/转移。
 
 ---
 
