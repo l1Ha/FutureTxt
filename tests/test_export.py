@@ -128,8 +128,8 @@ class TestExport(unittest.TestCase):
         out = export.strip_anchors(
             "为了满足 C7 而设计；甚至触发 W8——须参保；符合 W3 规定。"
             "这是 W15 中提到的急救箱；误差 1.3 厘米，well within W3；受W10保护。"
-            "这直接触犯了 W13——须知情同意。",
-            valid_ids={"C7", "W8", "W3", "W15", "W10", "W13"},
+            "这直接触犯了 W13——须知情同意。“按 W9规定，超采将被扣除配额。”",
+            valid_ids={"C7", "W8", "W3", "W15", "W10", "W13", "W9"},
         )
         self.assertIn("为了满足要求而设计", out)
         self.assertIn("触发相关规定——", out)
@@ -138,6 +138,8 @@ class TestExport(unittest.TestCase):
         self.assertNotIn("well within", out)
         self.assertIn("受规则保护", out)
         self.assertIn("触犯了规定——", out)
+        self.assertIn("按规定，超采将被扣除配额", out)  # 介词悬空修复：按 W9规定 → 按规定
+        self.assertNotIn("按超采", out)
 
     def test_export_all_e2e_three_anchor_families(self):
         # 端到端：迷你项目（火星采冰穹顶《冰下回声》）走真实 export_all，
@@ -241,6 +243,8 @@ class TestExport(unittest.TestCase):
         self.assertIn("这正是光通量动态分配机制", txt)
         self.assertIn("误差在 3 厘米内", txt)
         self.assertIn("超采将被扣除配额", txt)
+        self.assertIn("按规定，超采将被扣除配额", txt)  # 引号前置「按 W9规定，」→「按规定，」
+        self.assertNotIn("按超采", txt)
         # 陷阱词、哈希、正常行文原样保留
         self.assertIn("`9F2E…C3A7`", txt)
         self.assertIn("W3C", txt)
