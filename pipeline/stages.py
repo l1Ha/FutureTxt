@@ -101,31 +101,66 @@ def quality_rules(per):
 
 
 def _enforce_length(api, n, title, per, text):
-    """字数闸门：低于目标 85%% 时自动扩写一次。返回 (text, note)。"""
+    """字数闸门：低于目标 85% 时自动补足。返回 (text, note)。
+
+    两段式策略：
+    ① 整体扩写——部分模型有效；
+    ② 续写拼接——沿章尾往下写新内容再拼接。对「整体不肯变长、
+       但会顺接续写」的模型（如 nemotron-3-ultra）第二步才是有效手段。
+    """
     need = int(per * 0.85)
-    wc = word_count(META_NOTE_RE.sub("", text))
-    if wc >= need:
+    best = text
+    wc0 = word_count(META_NOTE_RE.sub("", text))
+    if wc0 >= need:
         return text, ""
+
+    # ① 整体扩写
     try:
         out = llm.chat(
             [{"role": "system", "content": SYSTEM_WRITER},
              {"role": "user", "content":
               "把下面这章扩写到约 %d 字（当前仅约 %d 字）。保持章首行、剧情事件与硬性设定完全不变，"
               "通过动作细节、环境感知、对话与心理推进自然扩长；不得新增重大事件，不得添加任何解释性"
-              "或字数统计类元信息。直接输出扩写后的完整章节。\n\n%s" % (per, wc, text)}],
-            api, max_tokens=max(api["max_tokens"], per * 3),
+              "或字数统计类元信息。直接输出扩写后的完整章节。\n\n%s" % (per, wc0, text)}],
+            api, max_tokens=max(int(api["max_tokens"]), per * 3),
             what="第%d章扩写" % n)
         if out:
             if not out.lstrip().startswith("#"):
                 out = "# 第%d章 %s\n\n%s" % (n, title or "", out)
             out = clean(out)
-            wc2 = word_count(out)
-            if wc2 > wc:
-                note = "（字数闸门：%d→%d字）" % (wc, wc2) if wc2 < need else ""
-                return out, note
-        return text, "；⚠字数闸门：%d字仍低于目标85%%，请人工关注" % wc
-    except Exception as e:  # noqa: BLE001
-        return text, "；⚠字数闸门：%d字不足且扩写失败（%s）" % (wc, str(e)[:60])
+            if word_count(out) > word_count(best):
+                best = out
+    except Exception:  # noqa: BLE001
+        pass
+
+    # ② 续写拼接兜底（最多两轮）
+    for _ in range(2):
+        wc = word_count(META_NOTE_RE.sub("", best))
+        if wc >= need:
+            break
+        add = max(int(need - wc) + 250, 700)
+        try:
+            cont = llm.chat(
+                [{"role": "system", "content": SYSTEM_WRITER},
+                 {"role": "user", "content":
+                  "这是本章的结尾片段：\n\n%s\n\n"
+                  "请**接着往下写**约 %d 字的续写内容（同一场景、紧接的下一步动作与对话），"
+                  "不要重复或概括上述已有情节，不要加章标题，不要任何解释性文字，"
+                  "直接输出续写正文。" % (best[-1000:], add)}],
+                api, max_tokens=max(int(api["max_tokens"]), add * 3),
+                what="第%d章续写" % n)
+        except Exception as e:  # noqa: BLE001
+            return best, "；⚠字数闸门：%d字不足且续写失败（%s）" % (wc, str(e)[:50])
+        cont = clean(str(cont or ""))
+        cont = re.sub(r"^#{1,3}\s*第\s*\d+\s*章[^\n]*\n+", "", cont).strip()
+        if word_count(cont) < 150:
+            break
+        best = best.rstrip() + "\n\n" + cont
+
+    wc1 = word_count(META_NOTE_RE.sub("", best))
+    if wc1 < need:
+        return best, "；⚠字数闸门：%d→%d字仍低于目标85%%，请人工关注" % (wc0, wc1)
+    return best, "（字数闸门：%d→%d字）" % (wc0, wc1)
 
 
 def machine_precheck(files, per):
