@@ -10,6 +10,8 @@
   python pipeline/run.py stats 赛博侦探                      # 小说数据全景与文学工艺指标
   python pipeline/run.py audit 赛博侦探                      # 设定、角色与大纲伏笔一致性审计
   python pipeline/run.py export 赛博侦探 --format all        # 导出 EPUB 电子书、HTML 阅读器、规范 TXT
+  python pipeline/run.py translate 赛博侦探                  # 双语支线：译为出版级英文（chapters_en/）
+  python pipeline/run.py export 赛博侦探 --lang en           # 导出英文版（dist_en/，标题带 English Edition）
   python pipeline/run.py kb 戴森球                           # 检索 32 篇科幻方法论知识库
 """
 
@@ -29,6 +31,7 @@ import export  # noqa: E402
 import kb  # noqa: E402
 import llm  # noqa: E402
 import stages  # noqa: E402
+import translate  # noqa: E402
 from stages import Project  # noqa: E402
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -222,9 +225,11 @@ def cmd_export(args: argparse.Namespace) -> None:
     proj = Project(ROOT, args.name)
     if not proj.exists():
         raise SystemExit(red(f"项目不存在：{args.name}"))
+    lang = getattr(args, "lang", "zh")
     fmts = [args.format] if args.format != "all" else ["epub", "html", "txt"]
-    print(cyan(f"正在导出《{proj.config().get('title', proj.name)}》..."))
-    res = export.export_all(proj, formats=fmts, strip=not args.keep_anchors)
+    suffix = "（英文版）" if lang == "en" else ""
+    print(cyan(f"正在导出《{proj.config().get('title', proj.name)}》{suffix}..."))
+    res = export.export_all(proj, formats=fmts, strip=not args.keep_anchors, lang=lang)
     if not args.keep_anchors:
         print(f"  ℹ 设定编号锚点（W/C）已剥离为出版净稿；章节与成书保留标记供审校/audit 溯源")
     print(green("✔ 导出成功！产物清单："))
@@ -232,6 +237,22 @@ def cmd_export(args: argparse.Namespace) -> None:
         rel = os.path.relpath(path, ROOT)
         size_kb = round(os.path.getsize(path) / 1024, 1)
         print(f"  • [{fmt_name.upper():<4}] {rel} ({size_kb} KB)")
+
+
+def cmd_translate(args: argparse.Namespace) -> None:
+    """双语支线：把中文章节译为出版级英文（chapters_en/ + blurb_en.md）。"""
+    proj = Project(ROOT, args.name)
+    if not proj.exists():
+        raise SystemExit(red(f"项目不存在：{args.name}"))
+    api = _ensure_api(args)
+    print(cyan(f"正在翻译《{proj.config().get('title', proj.name)}》为英文（术语表 → 逐章）..."))
+    try:
+        msg = translate.translate_book(proj, api, only=args.only, force=args.force)
+    except Exception as e:  # noqa: BLE001
+        print(red(f"✗ 翻译失败：{e}"))
+        raise SystemExit(1)
+    print(green("✔ " + msg))
+    print(f"  下一步：{cyan('python pipeline/run.py export ' + args.name + ' --lang en')}")
 
 
 def cmd_doctor(_args: argparse.Namespace) -> None:
@@ -295,6 +316,8 @@ def build_parser() -> argparse.ArgumentParser:
     r.add_argument("--stages", default="all",
                    help="指定执行的阶段（逗号分隔）：concept,world,characters,outline,draft,review,revise,continuity,assemble")
     r.add_argument("--only", help="仅处理指定章节范围，如 3、1-5、1,4,7-9（作用于 draft/review/revise）")
+    r.add_argument("--force", action="store_true", help="重做已完成的阶段/章节（覆盖既有产物）")
+    r.add_argument("--dry-run", action="store_true", help="只打印将使用的模型与地址，不实际调用")
     r.set_defaults(func=cmd_run)
 
     # status
@@ -319,7 +342,17 @@ def build_parser() -> argparse.ArgumentParser:
                    help="导出格式：epub / html / txt / all（默认 all）")
     e.add_argument("--keep-anchors", action="store_true",
                    help="保留（W5）（C6）等设定编号锚点（默认剥离为出版净稿；章节/成书始终保留供审校）")
+    e.add_argument("--lang", choices=["zh", "en"], default="zh",
+                   help="导出语言：zh 中文版（默认）/ en 英文版（需先执行 translate，产物落 dist_en/）")
     e.set_defaults(func=cmd_export)
+
+    # translate
+    t = sub.add_parser("translate", help="双语支线：将中文章节译为出版级英文（chapters_en/）")
+    t.add_argument("name", help="项目标识")
+    t.add_argument("--only", help="仅翻译指定章节范围，如 3、1-5、1,4,7-9")
+    t.add_argument("--force", action="store_true", help="重译（覆盖既有译稿与术语表）")
+    t.add_argument("--dry-run", action="store_true", help="只打印将使用的模型与地址，不实际调用")
+    t.set_defaults(func=cmd_translate)
 
     # kb
     k = sub.add_parser("kb", help="智能检索 32 篇科幻方法论知识库")

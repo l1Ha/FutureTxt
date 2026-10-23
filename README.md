@@ -62,7 +62,11 @@ FutureTxt/
 │   ├── reviews/chapter_*_审校.md # 依据 72 条清单的逐章严苛审校报告
 │   ├── reviews/全书连续性报告.md # 跨章重复/矛盾机器预检 + LLM 复核
 │   ├── manuscript/《书名》·初稿.md # 全书汇编稿
-│   └── dist/                  # 出版交付物（.epub / .html / .txt）
+│   ├── dist/                  # 中文出版交付物（.epub / .html / .txt）
+│   ├── chapters_en/           # 英文译稿（translate 支线产出）
+│   ├── glossary_en.md         # 中英术语对照表（人名/机构/货币/阶级统一）
+│   ├── blurb_en.md            # 英文版简介
+│   └── dist_en/               # 英文出版交付物（export --lang en）
 ├── config.json                # LLM API 配置（不入库密钥，见下）
 └── README.md
 ```
@@ -163,6 +167,18 @@ python pipeline/run.py export 赛博侦探 --format html    # 仅导出离线交
 > `dist/` 即出版净稿；章节与 `manuscript/` 成书保留锚点，供审校与 `audit` 溯源；
 > `--keep-anchors` 可导出带标记版。
 
+### 3.5 双语发行：中文 + 英文双版本 (`translate`)
+```bash
+python pipeline/run.py translate 赛博侦探            # 中文 → 英文（先生成术语表，再逐章翻译）
+python pipeline/run.py translate 赛博侦探 --only 3   # 仅翻译第 3 章（--force 可重译）
+python pipeline/run.py export 赛博侦探 --lang en     # 导出英文版 → dist_en/（标题带 English Edition）
+```
+主水线只产中文；`translate` 支线把已完成章节译为**出版级英文**：先从世界观/角色文档
+一次性生成「中文 = English」术语表（保证人名、机构、货币、阶级称谓全书统一），
+再逐章翻译——反引号代码段（哈希/编号）整体保护不译，章首行规范为 `# Chapter N: Title`，
+并产出英文简介 `blurb_en.md`。`export --lang en` 读 `chapters_en/`、产物落 `dist_en/`，
+EPUB/HTML/TXT 的界面文案（作者/目录/上一章/字数…）与语言标记全部切换为英文。
+
 ### 4. 灵活分步与区间控制
 ```bash
 python pipeline/run.py run 赛博侦探 --stages draft --only 1-5     # 仅写第 1~5 章
@@ -234,7 +250,8 @@ python pipeline/run.py kb              # 列出全部 36 篇方法论文档
 python -m unittest discover tests
 ```
 *包含 LLM 客户端容错、知识库均衡加载、大纲切分、EPUB 电子书封装、小说数据统计与一致性审计、*
-*三族锚点剥离（W/C、日常细节、标题标签 + 病句 fixup + export_all 端到端）等 28 项全功能单元测试。*
+*三族锚点剥离（W/C、日常细节、标题标签 + 病句 fixup + export_all 端到端）、*
+*双语导出链路（英文章节选取 / dist_en / 英文界面文案）、CLI 参数契约回归等 41 项全功能单元测试。*
 
 ---
 
