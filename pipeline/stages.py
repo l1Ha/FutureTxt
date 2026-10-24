@@ -489,6 +489,45 @@ def parse_outline(text: str) -> List[Tuple[int, str, str]]:
     return out
 
 
+def outline_count_block(cfg: Dict[str, Any]) -> Tuple[bool, str, str, str]:
+    """大纲提示词中的章数规则块。
+
+    返回 (auto, 章数规则, 三幕节奏指引, 结尾格式行)。
+    - `chapters_mode: fixed`（默认）：严格输出 target_chapters 章；
+    - `chapters_mode: auto`：**章数由情节决定**（建议 min_chapters~max_chapters 章），
+      大纲成为章数的唯一权威（正文/成书阶段均以解析大纲的章数为准）。
+    """
+    n = int(cfg.get("target_chapters", 20))
+    per = int(cfg.get("words_per_chapter", 3000))
+    auto = str(cfg.get("chapters_mode", "fixed")).lower() == "auto"
+    lo = max(2, int(cfg.get("min_chapters", 5)))
+    hi = max(lo, int(cfg.get("max_chapters", 12)))
+    if auto:
+        count_rule = (
+            "**章数由情节决定**：请根据故事推进的实际需要自行确定章节总数"
+            "（建议 %d~%d 章，每章约 %d 字）；不得为凑数拆章，也不得为压缩硬并——"
+            "每一章都必须承载一次独立的事件推进与章末钩子。\n" % (lo, hi, per))
+        act_rule = (
+            "【三幕式节奏（按实际章数自行换算比例）】：\n"
+            "- 第一幕（约前 1/4）：开篇即入冲突与建置，以不可逆事件打破日常\n"
+            "- 第二幕上（约 1/4~1/2）：危机升级与探索，盟友聚散\n"
+            "- 中点（全书正中的那一章）：重大认知反转与假象破灭，赌注倍增\n"
+            "- 第二幕下（约 1/2~3/4）：对立力量反扑，至暗时刻与代价\n"
+            "- 第三幕（最后 1/4）：总决战，伏笔闭环回收，新常态诞生\n")
+        return auto, count_rule, act_rule, "…（第2章起同格式，直到最后一章）"
+    count_rule = "严格输出 %d 章（不得多、不得少），每章约 %d 字。\n" % (n, per)
+    act_rule = (
+        "【长篇节奏与三幕式指引】：\n"
+        "- 1~%d章（第一幕）：开篇即入冲突与建置，以不可逆事件打破日常\n"
+        "- %d~%d章（第二幕上）：危机升级与探索，盟友聚散\n"
+        "- 第%d章（全书中点）：重大认知反转与假象破灭，赌注倍增\n"
+        "- %d~%d章（第二幕下）：对立力量反扑，至暗时刻与代价\n"
+        "- %d~%d章（第三幕）：总决战，伏笔闭环回收，新常态诞生\n"
+        % (max(1, int(n * 0.25)), int(n * 0.25) + 1, int(n * 0.5), int(n * 0.5),
+           int(n * 0.5) + 1, int(n * 0.75), int(n * 0.75) + 1, n))
+    return auto, count_rule, act_rule, "…（第2章起同格式，直到第%d章）" % n
+
+
 def stage_outline(proj: Project, cfg: Dict[str, Any], api: Dict[str, Any]) -> str:
     concept = read(proj.f_concept())
     world = clip(read(proj.f_world()), 7000)
@@ -496,17 +535,13 @@ def stage_outline(proj: Project, cfg: Dict[str, Any], api: Dict[str, Any]) -> st
     knowledge = kb.load(proj.root, kb.STAGE_MODULES["outline"])
     n = int(cfg.get("target_chapters", 20))
     per = int(cfg.get("words_per_chapter", 3000))
+    auto, count_rule, act_rule, last_line = outline_count_block(cfg)
     user = (
         "请创作全书章节大纲。\n\n"
         f"【项目信息】\n{_project_brief(cfg)}\n\n【创作概念】\n{concept}\n\n【世界观要点】\n{world}\n\n【角色】\n{chars}\n\n"
         f"【知识库参考】\n{knowledge}\n\n"
-        f"严格输出 {n} 章（不得多、不得少），每章约 {per} 字。\n"
-        "【长篇节奏与三幕式指引】：\n"
-        f"- 1~{max(1, int(n * 0.25))}章（第一幕）：开篇即入冲突与建置，以不可逆事件打破日常\n"
-        f"- {int(n * 0.25) + 1}~{int(n * 0.5)}章（第二幕上）：危机升级与探索，盟友聚散\n"
-        f"- 第{int(n * 0.5)}章（全书中点）：重大认知反转与假象破灭，赌注倍增\n"
-        f"- {int(n * 0.5) + 1}~{int(n * 0.75)}章（第二幕下）：对立力量反扑，至暗时刻与代价\n"
-        f"- {int(n * 0.75) + 1}~{n}章（第三幕）：总决战，伏笔闭环回收，新常态诞生\n\n"
+        f"{count_rule}"
+        f"{act_rule}\n"
         "每章末必须留钩子，伏笔在大纲中标注「伏笔:」「回收:」。\n\n"
         "格式（严格遵守，便于机器解析）：\n"
         "# 全书大纲\n"
@@ -519,13 +554,15 @@ def stage_outline(proj: Project, cfg: Dict[str, Any], api: Dict[str, Any]) -> st
         "- 信息与世界观揭示：\n"
         "- 伏笔/回收：\n"
         "- 章末钩子：\n"
-        f"…（第2章起同格式，直到第{n}章）"
+        f"{last_line}"
     )
     out = llm.chat([{"role": "system", "content": SYSTEM_WRITER},
                     {"role": "user", "content": user}], api, max_tokens=8000, what="大纲")
     write(proj.f_outline(), str(out))
     proj.track_usage("outline")
     parsed = parse_outline(str(out))
+    if auto:
+        return f"03-大纲.md（**章数由情节决定：{len(parsed)} 章**，每章约 {per} 字）"
     return f"03-大纲.md（解析到 {len(parsed)} 章，目标 {n} 章）"
 
 
@@ -569,7 +606,8 @@ def _continuity_block(proj: Project) -> str:
 def stage_draft(proj: Project, cfg: Dict[str, Any], api: Dict[str, Any], only: Optional[str] = None, force: bool = False) -> str:
     """逐章生成正文。"""
     parsed = parse_outline(read(proj.f_outline()))
-    total = int(cfg.get("target_chapters", len(parsed) or 20))
+    # 章数以大纲为唯一权威（auto 模式下大纲自行决定章数）
+    total = len(parsed) or int(cfg.get("target_chapters", 20))
     per = int(cfg.get("words_per_chapter", 3000))
     knowledge = kb.load(proj.root, kb.STAGE_MODULES["draft"], cap=11000)
     world = clip(read(proj.f_world()), 9000)
@@ -850,7 +888,7 @@ def stage_assemble(proj: Project, cfg: Dict[str, Any], api: Optional[Dict[str, A
         export_msg = f"（电子书导出提示: {e}）"
 
     # 全书字数 85% 闸门告警
-    target = int(cfg.get("target_chapters", len(files))) * int(cfg.get("words_per_chapter", 3000))
+    target = len(files) * int(cfg.get("words_per_chapter", 3000))
     warn = ""
     if target and chapter_words < target * 0.85:
         warn = f"；⚠ 全书字数为目标({target:,})的 {round(chapter_words * 100 / target)}%，低于 85% 闸门，建议补写"

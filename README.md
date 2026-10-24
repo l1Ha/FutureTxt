@@ -96,6 +96,18 @@ python pipeline/run.py init 赛博侦探 \
     --chapters 20 --words 3000 --pov "第三人称有限" --tone "冷峻、克制中有温度"
 ```
 
+**章数模式**（`--chapters-mode`）：
+
+- `fixed`（默认）：严格写死 `--chapters` 章；
+- `auto`：**章数由情节决定**——大纲阶段自行定章数（建议 `--min-chapters`~`--max-chapters`，默认 5–12），
+  且**大纲成为章数的唯一权威**：正文、审校、成书阶段均以解析大纲得到的实际章数为准
+  （`target_chapters` 在 auto 模式下只作规划参考）。适合"故事该多长就多长"的写法。
+
+```bash
+python pipeline/run.py init 原件纪元 --chapters-mode auto --min-chapters 5 --max-chapters 12 \
+    --asset-prefix YuanJianJiYuan
+```
+
 ### 4. 一键跑通全流程
 ```bash
 python pipeline/run.py run 赛博侦探

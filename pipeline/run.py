@@ -103,6 +103,9 @@ def cmd_init(args: argparse.Namespace) -> None:
         "audience": args.audience,
         "extra": args.extra or "",
         "asset_prefix": args.asset_prefix or "",
+        "chapters_mode": args.chapters_mode,
+        "min_chapters": args.min_chapters,
+        "max_chapters": args.max_chapters,
     }
     proj.save_config(cfg)
     proj.save_state({"stages": {}, "summaries": {}})
@@ -320,7 +323,11 @@ def build_parser() -> argparse.ArgumentParser:
     i.add_argument("--title", help="正式书名，默认同项目标识")
     i.add_argument("--keywords", help="题材关键词，逗号分隔，如 '赛博朋克,意识上传,侦探'")
     i.add_argument("--premise", help="一句话故事核心前提（Logline）")
-    i.add_argument("--chapters", type=int, default=20, help="目标章节数，默认 20")
+    i.add_argument("--chapters", type=int, default=20, help="目标章节数，默认 20（auto 模式下作为规划参考）")
+    i.add_argument("--chapters-mode", choices=["fixed", "auto"], default="fixed",
+                   help="章数模式：fixed 写死章数（默认）/ auto 由情节决定（大纲自行定章数，后续阶段以大纲为准）")
+    i.add_argument("--min-chapters", type=int, default=5, help="auto 模式下的建议最小章数，默认 5")
+    i.add_argument("--max-chapters", type=int, default=12, help="auto 模式下的建议最大章数，默认 12")
     i.add_argument("--words", type=int, default=3000, help="每章期望字数，默认 3000")
     i.add_argument("--pov", default="第三人称有限", help="叙事视角（第三人称有限/第一人称/全知等）")
     i.add_argument("--tone", default="克制、具象、冷峻中有温度", help="文风基调")

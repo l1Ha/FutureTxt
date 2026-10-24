@@ -1,0 +1,25 @@
+{
+  "stages": {
+    "concept": "done",
+    "world": "done",
+    "characters": "running"
+  },
+  "summaries": {},
+  "token_usage": {
+    "prompt_tokens": 39254,
+    "completion_tokens": 12965,
+    "total_tokens": 52219,
+    "by_stage": {
+      "concept": {
+        "prompt_tokens": 12808,
+        "completion_tokens": 2508,
+        "total_tokens": 15316
+      },
+      "world": {
+        "prompt_tokens": 26446,
+        "completion_tokens": 10457,
+        "total_tokens": 36903
+      }
+    }
+  }
+}

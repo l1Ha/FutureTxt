@@ -11,6 +11,25 @@ ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 
 class TestStages(unittest.TestCase):
+    def test_outline_count_block_fixed(self):
+        auto, rule, act, last = stages.outline_count_block(
+            {"target_chapters": 6, "words_per_chapter": 2500})
+        self.assertFalse(auto)
+        self.assertIn("严格输出 6 章（不得多、不得少）", rule)
+        self.assertIn("直到第6章", last)
+        self.assertIn("三幕式", act)
+
+    def test_outline_count_block_auto(self):
+        auto, rule, act, last = stages.outline_count_block(
+            {"target_chapters": 8, "words_per_chapter": 2500, "chapters_mode": "auto",
+             "min_chapters": 5, "max_chapters": 12})
+        self.assertTrue(auto)
+        self.assertIn("章数由情节决定", rule)
+        self.assertIn("建议 5~12 章", rule)
+        self.assertNotIn("严格输出", rule)
+        self.assertIn("直到最后一章", last)
+        self.assertIn("按实际章数自行换算比例", act)
+
     def test_word_count(self):
         text = "未来 科技 探索\nHello World!"
         # 中文6字 + 英文与标点11字 = 17
