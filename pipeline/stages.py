@@ -133,12 +133,12 @@ def _enforce_length(api, n, title, per, text):
     except Exception:  # noqa: BLE001
         pass
 
-    # ② 续写拼接兜底（最多两轮）
+    # ② 续写拼接兜底（最多两轮；单轮索取封顶，防止模型单次暴涨 3~5 倍）
     for _ in range(2):
         wc = word_count(META_NOTE_RE.sub("", best))
         if wc >= need:
             break
-        add = max(int(need - wc) + 250, 700)
+        add = min(max(int(need - wc) + 200, 500), 1200)
         try:
             cont = llm.chat(
                 [{"role": "system", "content": SYSTEM_WRITER},
@@ -158,6 +158,31 @@ def _enforce_length(api, n, title, per, text):
         best = best.rstrip() + "\n\n" + cont
 
     wc1 = word_count(META_NOTE_RE.sub("", best))
+
+    # ③ 明显超长（>1.5 倍目标）时压缩一次，吸收单轮续写的暴涨
+    if wc1 > int(per * 1.5):
+        try:
+            squeezed = llm.chat(
+                [{"role": "system", "content": SYSTEM_WRITER},
+                 {"role": "user", "content":
+                  "下面这章约 %d 字，明显超出篇幅要求。请压缩到约 %d 字：保留全部剧情事件、"
+                  "人物行动与章末钩子，删除重复的环境铺陈与冗余修饰，不得删掉任何关键情节；"
+                  "章首行保持不变，不得添加任何字数统计或元信息。直接输出压缩后的完整章节。\n\n%s"
+                  % (wc1, per, best)}],
+                api, max_tokens=max(int(api["max_tokens"]), per * 3),
+                what="第%d章压缩" % n)
+            squeezed = clean(str(squeezed or ""))
+            wc2 = word_count(META_NOTE_RE.sub("", squeezed))
+            if int(need * 0.9) <= wc2 < wc1:      # 压到接近目标才采纳
+                best, wc1 = squeezed, wc2
+        except Exception:  # noqa: BLE001
+            pass
+
+    # 保底：任何闸门路径都不得丢失章首行（否则会连带英译丢失章标题）
+    if best and not META_NOTE_RE.sub("", best).lstrip().startswith("#"):
+        best = "# 第%d章 %s\n\n%s" % (n, title or "", best.lstrip())
+        wc1 = word_count(META_NOTE_RE.sub("", best))
+
     if wc1 < need:
         return best, "；⚠字数闸门：%d→%d字仍低于目标85%%，请人工关注" % (wc0, wc1)
     return best, "（字数闸门：%d→%d字）" % (wc0, wc1)
