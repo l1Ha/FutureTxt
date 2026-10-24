@@ -12,6 +12,7 @@
   python pipeline/run.py export 赛博侦探 --format all        # 导出 EPUB 电子书、HTML 阅读器、规范 TXT
   python pipeline/run.py translate 赛博侦探                  # 双语支线：译为出版级英文（chapters_en/）
   python pipeline/run.py export 赛博侦探 --lang en           # 导出英文版（dist_en/，标题带 English Edition）
+  python pipeline/run.py release 赛博侦探                    # 一键发行：打包附件+双语说明+建/更新 GitHub Release
   python pipeline/run.py kb 戴森球                           # 检索 32 篇科幻方法论知识库
 """
 
@@ -30,6 +31,7 @@ import doctor  # noqa: E402
 import export  # noqa: E402
 import kb  # noqa: E402
 import llm  # noqa: E402
+import release  # noqa: E402
 import stages  # noqa: E402
 import translate  # noqa: E402
 from stages import Project  # noqa: E402
@@ -100,6 +102,7 @@ def cmd_init(args: argparse.Namespace) -> None:
         "tone": args.tone,
         "audience": args.audience,
         "extra": args.extra or "",
+        "asset_prefix": args.asset_prefix or "",
     }
     proj.save_config(cfg)
     proj.save_state({"stages": {}, "summaries": {}})
@@ -255,6 +258,22 @@ def cmd_translate(args: argparse.Namespace) -> None:
     print(f"  下一步：{cyan('python pipeline/run.py export ' + args.name + ' --lang en')}")
 
 
+def cmd_release(args: argparse.Namespace) -> None:
+    """一键发行：打包 ASCII 附件 + 双语说明 + 创建/更新 GitHub Release。"""
+    proj = Project(ROOT, args.name)
+    if not proj.exists():
+        raise SystemExit(red(f"项目不存在：{args.name}"))
+    try:
+        report = release.run_release(
+            proj, tag=args.tag, prefix=args.prefix, title=args.title,
+            repo=args.repo, dry_run=args.dry_run, target=args.target)
+    except Exception as e:  # noqa: BLE001
+        raise SystemExit(red(f"✗ 发行失败：{e}"))
+    print(report)
+    if args.dry_run:
+        print(yellow("  （dry-run：仅本地打包预览，未触碰 GitHub）"))
+
+
 def cmd_doctor(_args: argparse.Namespace) -> None:
     print(doctor.run_doctor(ROOT))
 
@@ -307,6 +326,7 @@ def build_parser() -> argparse.ArgumentParser:
     i.add_argument("--tone", default="克制、具象、冷峻中有温度", help="文风基调")
     i.add_argument("--audience", default="成人科幻读者", help="目标读者画像")
     i.add_argument("--extra", help="作者补充的特殊设定或硬性要求")
+    i.add_argument("--asset-prefix", help="发行附件用的 ASCII 前缀（拼音），如 JuanYangJiYuan")
     i.add_argument("--overwrite", action="store_true", help="如项目已存在则强制重置覆盖")
     i.set_defaults(func=cmd_init)
 
@@ -353,6 +373,17 @@ def build_parser() -> argparse.ArgumentParser:
     t.add_argument("--force", action="store_true", help="重译（覆盖既有译稿与术语表）")
     t.add_argument("--dry-run", action="store_true", help="只打印将使用的模型与地址，不实际调用")
     t.set_defaults(func=cmd_translate)
+
+    # release
+    rl = sub.add_parser("release", help="一键发行：打包 ASCII 附件 + 双语说明 + 创建/更新 GitHub Release")
+    rl.add_argument("name", help="项目标识")
+    rl.add_argument("--tag", help="发行标签（默认自动取最大版本号递增，如 novels-v1.2）")
+    rl.add_argument("--prefix", help="ASCII 附件前缀（拼音），如 JuanYangJiYuan；缺省读 project.json 的 asset_prefix")
+    rl.add_argument("--title", help="发行标题（默认「小说发行 <版本> ·《书名》」）")
+    rl.add_argument("--repo", help="目标仓库（owner/name），默认由当前 git remote 推断")
+    rl.add_argument("--target", default="main", help="标签指向的分支，默认 main")
+    rl.add_argument("--dry-run", action="store_true", help="只本地打包附件与说明，不发布")
+    rl.set_defaults(func=cmd_release)
 
     # kb
     k = sub.add_parser("kb", help="智能检索 32 篇科幻方法论知识库")

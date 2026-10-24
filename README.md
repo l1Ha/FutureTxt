@@ -182,6 +182,27 @@ python pipeline/run.py export 赛博侦探 --lang en     # 导出英文版 → d
 并产出英文简介 `blurb_en.md`。`export --lang en` 读 `chapters_en/`、产物落 `dist_en/`，
 EPUB/HTML/TXT 的界面文案（作者/目录/上一章/字数…）与语言标记全部切换为英文。
 
+### 3.6 一键发行到 GitHub Releases (`release`)
+```bash
+python pipeline/run.py release 赛博侦探 --dry-run            # 本地打包预览（不触碰 GitHub）
+python pipeline/run.py release 赛博侦探 --prefix CyberNoir   # 打包 + 创建发行（版本号自动递增）
+python pipeline/run.py release 赛博侦探 --tag novels-v1.5    # 指定标签（已存在则覆盖更新）
+```
+一条命令完成「打包 → 生成说明 → 发布 → 校验」：
+
+- **附件自动 ASCII 化**：GitHub Release 资产名只接受 ASCII，中文名会被静默剥离
+  （实测 `意识纪元.epub` → `default.epub`、`地球2200.epub` → `2200.epub`）。
+  故附件按 `asset_prefix`（拼音）命名：`<prefix>.{epub,html,txt}`（中文版）与
+  `<prefix>-EN.{epub,html,txt}`（英文版，存在 `dist_en/` 时自动纳入）。
+  前缀取自 `--prefix` 或 `project.json` 的 `asset_prefix`（`init --asset-prefix` 可预置），
+  两者皆无时给出明确指引而非发布出 `default.epub`。
+- **说明自动生成**：中文简介取净稿 TXT 的【作品简介】，英文简介取 `blurb_en.md`，
+  附「附件-作品对照表」与出版约定（锚点剥离、审校版位置等）。
+- **版本号自动递增**：从既有发行标签推断，`novels-v1.0 → novels-v1.1 → …`。
+- **可重入**：标签已存在时改为「覆盖上传附件 + 更新说明」，不会重复建发行；
+  发布后回读资产并校验名称全为 ASCII（防止 `default.epub` 静默事故）。
+- 打包产物落在 `projects/<项目名>/release_build/`（已 gitignore）。
+
 ### 4. 灵活分步与区间控制
 ```bash
 python pipeline/run.py run 赛博侦探 --stages draft --only 1-5     # 仅写第 1~5 章
@@ -254,7 +275,8 @@ python -m unittest discover tests
 ```
 *包含 LLM 客户端容错、知识库均衡加载、大纲切分、EPUB 电子书封装、小说数据统计与一致性审计、*
 *三族锚点剥离（W/C、日常细节、标题标签 + 病句 fixup + export_all 端到端）、*
-*双语导出链路（英文章节选取 / dist_en / 英文界面文案）、CLI 参数契约回归等 41 项全功能单元测试。*
+*双语导出链路（英文章节选取 / dist_en / 英文界面文案）、一键发行打包（ASCII 附件命名 / 版本递增 /
+说明生成 / dry-run）、CLI 参数契约回归等 49 项全功能单元测试。*
 
 ---
 

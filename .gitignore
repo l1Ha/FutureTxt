@@ -3,3 +3,9 @@ config.json
 __pycache__/
 *.pyc
 .DS_Store
+
+# 发行打包产物（由 run.py release 生成，可随时重建）
+projects/*/release_build/
+
+# 章节备份（*.bak / *.long.bak / *.precont.bak / *.pretarget.bak / *.precround.bak）
+projects/*/chapters/*.bak
