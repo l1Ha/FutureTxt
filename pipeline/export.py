@@ -208,13 +208,17 @@ def strip_anchors(
     会致病句的上下文（满足…而、触发…——、符合…规定、中提到的、well within…）先定向改写再剥离。
     反引号代码段（哈希、实验编号，如 `3F9A…C2E7`）整体保护，绝不改动。
     """
-    # 0) 保护反引号代码段，防止哈希/编号被误剥
+    # 0) 代码段处理：内容恰好是整条规则编号的代码段（如 `W8`）视为锚点直接剥离；
+    #    其余代码段（哈希、单位、编号组合等）整体保护，防止误剥
     spans: List[str] = []
-    text = re.sub(
-        r"`[^`\n]+`",
-        lambda m: (spans.append(m.group(0)) or "\x00%d\x00" % (len(spans) - 1)),
-        text,
-    )
+
+    def _mask_span(m: "re.Match[str]") -> str:
+        if valid_ids and m.group(0)[1:-1].strip() in valid_ids:
+            return ""
+        spans.append(m.group(0))
+        return "\x00%d\x00" % (len(spans) - 1)
+
+    text = re.sub(r"`[^`\n]+`", _mask_span, text)
     # 1) 日常细节族：括号标签 + 条目标题标签
     text = _ANCHOR_RE_DAILY_PAREN.sub("", text)
     for t in daily_titles or []:

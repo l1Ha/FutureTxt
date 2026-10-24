@@ -109,6 +109,18 @@ class TestExport(unittest.TestCase):
         self.assertIn("`3F9A…C2`", out)   # 哈希原样保留
         self.assertNotIn("（W6）", out)    # 锚点照常剥离
 
+    def test_strip_anchors_strips_pure_rule_code_span(self):
+        # 代码段内容恰好是整条规则编号（如 `W8`）→ 视为锚点剥离；
+        # 含哈希/单位/组合的代码段仍整体保护
+        out = export.strip_anchors(
+            "触发协议（见 `W8`），哈希 `3F9A…C2E7` 与 `2 ms` 保护（W7）。",
+            valid_ids={"W7", "W8"},
+        )
+        self.assertNotIn("W8", out)
+        self.assertIn("`3F9A…C2E7`", out)
+        self.assertIn("`2 ms`", out)
+        self.assertNotIn("（W7）", out)
+
     def test_strip_anchors_daily_details(self):
         src = (
             "每餐约 0.03 信用点（日常细节2），“根据MemBazaar日常细节13，违规罚500 CP。”\n"
