@@ -109,6 +109,35 @@ class TestExport(unittest.TestCase):
         self.assertIn("`3F9A…C2`", out)   # 哈希原样保留
         self.assertNotIn("（W6）", out)    # 锚点照常剥离
 
+    def test_defined_anchor_ids_accepts_titled_bold_definitions(self):
+        # 定义式写法两种都要认：**W1** 与 **W1 标题**（实测模型常输出后者）；
+        # 正文里的普通词（试剂 C12）不得被当作编号
+        class _Doc:
+            def __init__(self, w, c):
+                self._w, self._c = w, c
+
+            def f_world(self):
+                return self._w
+
+            def f_characters(self):
+                return self._c
+
+        td = tempfile.mkdtemp()
+        w = os.path.join(td, "w.md")
+        c = os.path.join(td, "c.md")
+        with open(w, "w", encoding="utf-8") as f:
+            f.write("- **W1 溯源层写入门槛**：任何数据上链需生物签名。\n"
+                    "| **W2** | 额度冻结条件 |\n"
+                    "正文里提到试剂 C12 时不应被登记为编号。\n")
+        with open(c, "w", encoding="utf-8") as f:
+            f.write("- **C1 主角编号**：E-11。\n- C2：语言指纹。\n")
+        ids = export._defined_anchor_ids(_Doc(w, c))
+        self.assertIn("W1", ids)
+        self.assertIn("W2", ids)
+        self.assertIn("C1", ids)
+        self.assertIn("C2", ids)
+        self.assertNotIn("C12", ids)
+
     def test_strip_anchors_strips_pure_rule_code_span(self):
         # 代码段内容恰好是整条规则编号（如 `W8`）→ 视为锚点剥离；
         # 含哈希/单位/组合的代码段仍整体保护

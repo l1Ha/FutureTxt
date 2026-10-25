@@ -158,6 +158,11 @@ def _labels(lang: str) -> Dict[str, str]:
     return _LABELS.get((lang or "zh").lower(), _LABELS["zh"])
 
 
+# 仅认定义位置：`**W1 标题**`、`**W1**`、`- W1：…`、`| **W1** |`；
+# 正文里的普通词（如试剂 C12）不算定义，避免误剥。
+_ANCHOR_ID_DEF_RE = re.compile(r"(?:\*\*\s*|^\s*[-*•]?\s*)([WC]\d+)(?![A-Za-z0-9])", re.M)
+
+
 def _defined_anchor_ids(proj: Any) -> "set[str]":
     """从本项目世界观/角色文档提取已定义的设定编号（W1、C3…）。"""
     ids: "set[str]" = set()
@@ -171,7 +176,7 @@ def _defined_anchor_ids(proj: Any) -> "set[str]":
             continue
         if path and os.path.exists(path):
             with open(path, encoding="utf-8") as f:
-                ids |= set(re.findall(r"\*\*\s*([WC]\d+)\s*\*\*", f.read()))
+                ids |= set(_ANCHOR_ID_DEF_RE.findall(f.read()))
     return ids
 
 
