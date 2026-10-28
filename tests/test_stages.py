@@ -30,6 +30,20 @@ class TestStages(unittest.TestCase):
         self.assertIn("直到最后一章", last)
         self.assertIn("按实际章数自行换算比例", act)
 
+    def test_quality_rules_includes_reality_mapping(self):
+        # 「未来为镜：设定映射当下」必须作为红线注入写作/修订提示词
+        rules = stages.quality_rules(2500)
+        self.assertIn("映射当下", rules)
+        self.assertIn("现实", rules)
+        self.assertIn("2500", rules)  # 仍带字数参数
+
+    def test_mapping_rules_injected_into_setting_stages(self):
+        # 概念与世界观阶段必须能拿到质量规则（含映射原则），否则开书时不会产出映射表
+        import kb
+        for stage_name in ("concept", "world", "draft", "review", "revise", "continuity"):
+            mods = kb.STAGE_MODULES[stage_name]
+            self.assertTrue(any(m.startswith("09") for m in mods), stage_name)
+
     def test_word_count(self):
         text = "未来 科技 探索\nHello World!"
         # 中文6字 + 英文与标点11字 = 17
