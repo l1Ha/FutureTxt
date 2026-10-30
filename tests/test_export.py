@@ -109,6 +109,45 @@ class TestExport(unittest.TestCase):
         self.assertIn("`3F9A…C2`", out)   # 哈希原样保留
         self.assertNotIn("（W6）", out)    # 锚点照常剥离
 
+    def test_export_strips_anchors_in_description(self):
+        # 简介（作品简介/premise）也可能带锚点，必须与正文一样剥离
+        root = self.temp_dir.name
+        os.makedirs(os.path.join(root, "chapters"), exist_ok=True)
+        with open(os.path.join(root, "01-世界观.md"), "w", encoding="utf-8") as f:
+            f.write("| **W1** | 评分换算 |\n")
+            f.write("- **C1**：调度客服的口头语。\n")
+        with open(os.path.join(root, "chapters", "chapter_001.md"), "w",
+                  encoding="utf-8") as f:
+            f.write("# 第1章 开端\n\n他盯着评分（W1）。\n")
+
+        class _P:
+            name = "descproj"
+
+            def config(self):
+                return {"title": "简介剥离测试", "premise": "平台规则 W1 决定排位，调度客服 C1 在倒计时。"}
+
+            def f_concept(self):
+                return os.path.join(root, "00-创作概念.md")
+
+            def f_world(self):
+                return os.path.join(root, "01-世界观.md")
+
+            def f_characters(self):
+                return os.path.join(root, "02-角色.md")
+
+            def list_chapters(self):
+                return [os.path.join(root, "chapters", "chapter_001.md")]
+
+            def path(self, *p):
+                return os.path.join(root, *p)
+
+        res = export.export_all(_P(), formats=["txt"])
+        with open(res["txt"], encoding="utf-8") as f:
+            txt = f.read()
+        self.assertIn("平台规则", txt)          # 简介保留
+        self.assertNotIn("W1", txt)             # 但锚点被剥离
+        self.assertNotIn("C1", txt)
+
     def test_export_short_form_single_piece(self):
         # 短篇单篇：导出不应出现「第1章」分隔，篇名即书名
         root = self.temp_dir.name

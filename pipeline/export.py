@@ -925,6 +925,9 @@ def export_all(
     is_short = str(cfg.get("work_type", "novel")).lower() == "short"
     valid_ids = _defined_anchor_ids(proj) if strip else None
     daily_titles = _defined_daily_titles(proj) if strip else None
+    if strip:
+        # 简介同样可能是锚点来源（如「平台规则 W1：…」「调度客服 C1…」），必须一并剥离
+        description = strip_anchors(description, valid_ids, daily_titles)
     chapters: List[Tuple[str, str]] = []
     for path in chapter_files:
         with open(path, encoding="utf-8") as f:

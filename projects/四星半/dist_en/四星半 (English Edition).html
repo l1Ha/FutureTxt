@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>四星半 (English Edition) - FutureTxt 在线阅读</title>
+<style>
+:root {
+    --bg-primary: #f8fafc;
+    --bg-card: #ffffff;
+    --text-primary: #1e293b;
+    --text-secondary: #64748b;
+    --border-color: #e2e8f0;
+    --accent: #2563eb;
+    --accent-hover: #1d4ed8;
+    --sidebar-bg: #f1f5f9;
+}
+[data-theme="dark"] {
+    --bg-primary: #0f172a;
+    --bg-card: #1e293b;
+    --text-primary: #f8fafc;
+    --text-secondary: #94a3b8;
+    --border-color: #334155;
+    --accent: #38bdf8;
+    --accent-hover: #0ea5e9;
+    --sidebar-bg: #111827;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+    font-family: -apple-system, "PingFang SC", "Microsoft YaHei", "Noto Sans SC", sans-serif;
+    background-color: var(--bg-primary);
+    color: var(--text-primary);
+    line-height: 1.85;
+    transition: background-color 0.2s, color 0.2s;
+    display: flex;
+    height: 100vh;
+    overflow: hidden;
+}
+#sidebar {
+    width: 320px;
+    background: var(--sidebar-bg);
+    border-right: 1px solid var(--border-color);
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    flex-shrink: 0;
+}
+.sidebar-header {
+    padding: 20px;
+    border-bottom: 1px solid var(--border-color);
+}
+.sidebar-header h2 {
+    font-size: 1.15em;
+    font-weight: 700;
+    margin-bottom: 6px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+.sidebar-meta {
+    font-size: 0.85em;
+    color: var(--text-secondary);
+}
+.chapter-list {
+    overflow-y: auto;
+    flex: 1;
+    list-style: none;
+}
+.chapter-item {
+    padding: 12px 20px;
+    border-bottom: 1px solid var(--border-color);
+    cursor: pointer;
+    font-size: 0.95em;
+    transition: background 0.15s;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.chapter-item:hover {
+    background: rgba(0,0,0,0.04);
+}
+.chapter-item.active {
+    background: var(--accent);
+    color: #ffffff;
+    font-weight: 600;
+}
+.chapter-item .ch-words {
+    font-size: 0.8em;
+    opacity: 0.75;
+}
+#main {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+.topbar {
+    padding: 12px 24px;
+    border-bottom: 1px solid var(--border-color);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: var(--bg-card);
+}
+.controls button {
+    background: transparent;
+    border: 1px solid var(--border-color);
+    color: var(--text-primary);
+    padding: 6px 14px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 0.88em;
+    margin-left: 8px;
+    transition: 0.15s;
+}
+.controls button:hover {
+    border-color: var(--accent);
+    color: var(--accent);
+}
+#content-container {
+    flex: 1;
+    overflow-y: auto;
+    padding: 40px 10%;
+    display: flex;
+    justify-content: center;
+}
+.content-wrapper {
+    max-width: 780px;
+    width: 100%;
+}
+.article-header {
+    text-align: center;
+    margin-bottom: 36px;
+    padding-bottom: 20px;
+    border-bottom: 1px solid var(--border-color);
+}
+.article-header h1 {
+    font-size: 1.85em;
+    font-weight: 700;
+    margin-bottom: 10px;
+}
+.article-meta {
+    font-size: 0.9em;
+    color: var(--text-secondary);
+}
+.article-body p {
+    text-indent: 2em;
+    margin-bottom: 1.4em;
+    font-size: 1.1em;
+    text-align: justify;
+}
+.intro-box {
+    background: var(--bg-card);
+    border: 1px solid var(--border-color);
+    border-left: 5px solid var(--accent);
+    padding: 24px;
+    border-radius: 8px;
+    margin-bottom: 40px;
+}
+.nav-buttons {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 50px;
+    padding-top: 20px;
+    border-top: 1px solid var(--border-color);
+}
+.nav-btn {
+    padding: 10px 20px;
+    border-radius: 6px;
+    border: 1px solid var(--border-color);
+    background: var(--bg-card);
+    color: var(--text-primary);
+    cursor: pointer;
+    font-size: 0.95em;
+}
+.nav-btn:disabled {
+    opacity: 0.3;
+    cursor: not-allowed;
+}
+@media (max-width: 768px) {
+    body { flex-direction: column; }
+    #sidebar { width: 100%; height: 200px; }
+    #content-container { padding: 20px 5%; }
+}
+</style>
+</head>
+<body>
+<div id="sidebar">
+    <div class="sidebar-header">
+        <h2 title="四星半 (English Edition)">四星半 (English Edition)</h2>
+        <div class="sidebar-meta">By FutureTxt AI Writer · 1 chapters / 16,790 chars</div>
+    </div>
+    <ul class="chapter-list" id="chapterList"></ul>
+</div>
+<div id="main">
+    <div class="topbar">
+        <span id="currentChLabel">Title Page & Synopsis</span>
+        <div class="controls">
+            <button onclick="changeFontSize(-1)">A-</button>
+            <button onclick="changeFontSize(1)">A+</button>
+            <button onclick="toggleTheme()" id="themeBtn">🌓 Theme</button>
+        </div>
+    </div>
+    <div id="content-container">
+        <div class="content-wrapper" id="articleWrapper"></div>
+    </div>
+</div>
+
+<script>
+const book = {"title": "四星半 (English Edition)", "author": "FutureTxt AI Writer", "description": "Zhou Ping, a 34‑year‑old full‑time delivery rider with a 4.6 platform rating, discovers that every 0.1 point moves his mother’s dialysis slot three days earlier. She needs a 4.8 rating, which would shave three months off her wait. During a night‑shift rush the system offers a “7‑minute‑late” order that would instantly grant the missing 0.2 points. At a busy intersection a 78‑year‑old man living alone collapses from a stroke; bystanders only film. In his earpiece the dispatch AI counts down the delivery deadline while an ER doctor waits for a hand‑off note. With the insulated box in one hand and his e‑bike underfoot, Zhou has seven minutes to choose between the algorithmic reward that could save his mother and the human life bleeding out on the pavement. The platform recognises only data; both lives hang on a single, brutal decision.", "total_words": 16790, "chapters": [{"index": 1, "title": "四星半 (English Edition)", "words": 16790, "paragraphs": ["Rain drummed against the helmet visor, a fine “hiss” mingling with the cumin‑oil scent drifting from a roadside kebab stall and slipping into his nostrils. Zhou Ping gripped the handlebars; the BioBand on his left wrist had vibrated three times—heart rate 138, sustained for four minutes fifty seconds. The synthetic female voice in his earpiece was flat: “Seven minutes zero seconds, six minutes fifty‑nine seconds, six minutes fifty‑eight seconds…”", "The insulated box’s strap cut into the handlebars, the container still steaming. Inside lay two freshly cooked spicy hot‑pot bowls, broth seeping through the seams and catching the rain in oily glints. The red‑light countdown read 90 seconds; the stream of traffic at the crosswalk moved like a gray chain, inching forward. Zhou Ping’s eyes flicked to the emergency entrance across the street—City Third People’s Hospital’s neon washed pale in the night, the Dialysis Center’s queue screen flashing red: **Dialysis Queue Position 47, Short 0.2 Score = 90 Days**.", "“Order, Score, Overtime, Advance, Freeze, Heart‑rate.” He muttered the words to himself, each one feeling like a splintered bone lodged in his throat. Score 4.6; his mother needed 4.8 for next week’s dialysis; Advance Limit 4,800 CNY already frozen. Overtime Penalty ‑0.3 Score; On‑time Bonus +0.2 Score. Only that 0.2 Score stood between him and the thaw.", "The earpiece kept counting: “Five minutes forty seconds, five minutes thirty‑nine seconds…” The BioBand’s vibration intensified; skin‑conductance numbers on the display flashed red. Zhou Ping felt his chest tighten, breath weighed down by rain and pressure. He caught sight of a gray heap on the sidewalk bricks, an old man collapsed, a soaked umbrella still clenched in his hand. The man’s head lolled, white foam at the corners of his mouth, breathing shallow.", "“Remaining time four minutes fifty seconds, four minutes forty‑nine seconds…” CS‑07’s voice dripped like ice water into his ear. Zhou Ping’s fingertips tightened on the brake lever; the dried soy‑sauce stains on the back of his hand glimmered amber under the streetlamp. He had once posted anonymously in the rider forum: “Don’t meddle; if you lose your Score, who’ll cover your Advance?” The thread sank, no likes.", "The old man’s fingers twitched faintly, as if trying to grasp something. Zhou Ping’s heartbeat hammered against his eardrums; the BioBand warned: “Fatigue Work alert, deduct 0.15 Score.” He gritted his teeth, a hoarse whisper escaping: “One more order.”", "The light turned red; traffic stalled. Countdown “Three minutes thirty seconds, three minutes twenty‑nine seconds.” Zhou Ping swung the e‑bike onto the shoulder, the brake lever shrieking metal on metal. He jumped off, rain instantly soaking his trouser legs, cold climbing to his knees. The insulated box remained strapped to the handlebars, swaying, broth splashing onto his boots.", "He bent, arms sliding under the man’s armpits, back muscles locking, a dull pop from his lumbar spine. The man was heavier than expected; his labored breathing grew loud in Zhou Ping’s ear. Zhou Ping shifted his weight, shoved the man onto the rear seat, rain streaming down his visor and blurring his vision.", "“Two minutes ten seconds, two minutes nine seconds.” The earpiece persisted. One hand steadied the man, the other seized the handlebars; he slammed the throttle. The e‑bike surged through standing water, rear wheel slipping, the frame tilting—he jammed his knee against the chassis, forcing it upright.", "The automatic doors of the emergency entrance slid open; antiseptic scent mixed with rain. Dr. Lin stood at the triage desk, his white coat collar worn thin, stethoscope dangling like a gray rope. He glanced at the MedChain terminal; the screen flashed red: “Score 4.6, Advance Limit frozen, ≥4.8 required to unfreeze.”", "“Score unfreeze needs 4.8, Advance Cap 5,000.” Dr. Lin’s voice was dry, as if reading a manual; his fingertips brushed the old man’s icy wrist, pausing a fraction, then he added low: “I can only do this much.”", "Zhou Ping panted, heart rate on the BioBand climbing to 152, vibration unceasing. His chest felt struck by a sledgehammer; peripheral vision darkened. The earpiece now only whispered “One minute twenty‑three seconds, one minute twenty‑two seconds.”", "He glanced at the insulated box—strap still locked to the handlebars, the container trembling slightly. In that instant his fingertips brushed the metal clasp of the strap, the cold ridge familiar. Memory flashed: that same morning he had snapped it shut with the same practiced motion, muscle memory.", "“Remaining time fifty‑nine seconds, fifty‑eight seconds.”", "Zhou Ping released the brake lever; both hands moved simultaneously—left hand unfastening the strap, right hand lifting the whole insulated box and wedging it against the handlebars, lid up, steam rising into the rain. He turned, hoisted the old man, staggered into the emergency corridor; the automatic door hissed shut behind him, cutting off the countdown.", "Dr. Lin scribbled rapidly on the triage form, ink bleeding through: “Special Approval·Humanitarian.” He didn’t look at the terminal, only at Zhou Ping’s soaked back, his Adam’s apple bobbing once.", "A gurney’s wheels squeaked over puddles, “glug‑glug” echoing. Zhou Ping stood at the corridor’s end, still clutching the strap; the metal clasp cooled against his fingertips. The earpiece looped “0:00, 0:00, 0:00.” He didn’t remove it, simply re‑clasped the strap onto the handlebars—*click*, a crisp closure.", "Rain kept tapping the visor; the kebab scent lingered; the BioBand continued to vibrate, heart‑rate numbers flickering. Zhou Ping lifted his head; neon stretched his shadow long across the wet floor. He didn’t look back; his footsteps faded at the corridor’s far end.", "His phone screen lit, a system push appearing: “Score 4.6 → 4.8, Advance Limit unfrozen, effective next Monday 00:00.” Zhou Ping’s thumb hovered over the screen, fingertip trembling as if touching an irreversible switch. He didn’t tap confirm, merely watched the line flicker in the rain‑light, like a neon string that could extinguish at any moment.", "The synthetic voice finally stopped its loop, replaced by a brief chime: “Task settlement complete, score updating…” Zhou Ping felt the pressure in his chest release in an instant, a massive stone finally rolling away, yet a deeper, heavier void followed. He knew the score rise was temporary; the next seven minutes, the next old man, the next red light, the next countdown—all waiting.", "The Dialysis Center’s queue screen still flashed red; his mother’s name remained at position 47, followed by that crimson “0.2 Score.” Next week he’d have to grind the score above 4.8 again to fully unlock the Advance Limit. The night wind carried the charred scent of kebabs, the sewer’s rot, the sharp bite of exhaust from the elevated highway—an oppressive base note that slipped through the helmet vents, down his airway, into his lungs.", "Zhou Ping inhaled deeply, refastened his helmet, the metal clasp *click* sharp. He swung onto the e‑bike, throttled, rear wheel spraying a fan of water, the bike slicing into the rain, taillight drawing a red ribbon through darkness. The earpiece was silent; the BioBand’s vibration had settled; only rain, wind, the motor’s low hum, and his heart beating steady and strong in his chest.", "Rain continued to drum the visor; the kebab scent persisted; the BioBand still vibrated, heart‑rate digits flashing. Zhou Ping raised his head; neon elongated his shadow on the slick pavement. He didn’t turn back; his footsteps vanished at the corridor’s end.", "Rain fell like fine stitches, sewing the city night’s cracks. The e‑bike’s motor growled low, gripping the slick asphalt; rear‑wheel spray fractured into broken halos under streetlamps. Zhou Ping’s fingertips still rested on the strap’s metal clasp, the chill creeping up his palm to his wrist, a snake unwilling to let go.", "The BioBand pulsed lightly; a new order popped on the screen: **[Urgent·Fresh·3.2 km·ETA 06:12]**. Sender “Lao Chen Seafood,” destination “Renhe Community Block 7‑302.” He didn’t study the address, only the red countdown after the distance—**6:58**. His thumb brushed the handlebar edge; the worn grip’s microscopic ridges tickled his palm.", "Beneath the overpass, a drain spewed brown foam, mingling kebab char and sewer stench, slipping into the helmet vents, down his throat. Zhou Ping drew a sharp breath; cold air exploded in his nasal cavity, then was rebutted by heat. He adjusted the chin strap; the metal buckle *clicked* home, vibration traveling from jaw to collarbone.", "The earpiece held only the dispatch system’s terse tone: “Order confirmed, countdown started.” Zhou Ping’s thumb hovered over the screen, fingertip trembling like a finger on an irrevocable trigger. He didn’t press confirm, merely let his fingertip slide across the glass, leaving a faint water trace.", "“Xiao Zhou, don’t keep toughing it out.” In the rear‑view mirror a familiar face flashed—Lao Chen, grease‑stained apron, a crate of iced shrimp in hand, rain dripping from his temples. His voice was shredded by wind and rain, reduced to a hoarse whisper: “Your mom’s still queued; the Advance Limit needs another run. Don’t let the Score drop.”", "Zhou Ping didn’t turn; in the mirror he saw Lao Chen shove the shrimp crate into the trunk, the lid thudding dully in the rain. The bike sagged slightly; rear wheel threw up a larger spray; the taillight’s red ribbon stretched, twisted, finally breaking into scattered specks.", "The BioBand buzzed again; the screen showed his mother’s Dialysis Queue Position: **46, 0.2 Score**. Zhou Ping’s heart slammed against his ribs, each beat striking a rusted iron plate. He twisted the throttle to the stop; the motor shrieked, plunging into the rainy night, neon reds, blues, greens fracturing into a shattered mosaic on his visor.", "Ahead, the intersection turned red; countdown **00:04**. Zhou Ping lowered his torso, knees clamping the tank; rain seeped past the helmet rim, cold threads clinging to skin. He stared at the ticking numbers, fingers tightening on the grips; the metal clasp’s edges bit into flesh—pain sharp and real, the only tactile proof not devoured by the system.", "Green. He launched through the crosswalk; rain curtains shredded into countless filaments by the headlights, like innumerable thin nerves linking him, his mother, the Score, and the ever‑waiting next seven minutes. Distant elevated‑highway lights swayed in the rain, a fading pulse; Zhou Ping’s breath and the motor’s hum merged into a single rhythm, propelling him through one algorithm‑sliced night after another.", "**Extended Details**", "Rain gathered on the visor into thin rivulets, trailing down his chin to the waterproof jacket’s zipper teeth, emitting an almost inaudible “tap.” Zhou Ping’s fingertips repeatedly stroked the grip; the plastic sheath, polished by sweat, oil, and salt, bore a delicate sheen—each pass feeling like tracing an old map etched with countless compressed seven‑minute intervals.", "The BioBand’s vibration frequency shifted with his heart‑rate fluctuations, a bee trapped beneath skin, now low, now piercing. The display numbers were more than heart‑rate; they logged SpO₂, skin conductance, temperature—each silently recording his body’s concession to the system.", "The insulated box’s strap was heavy‑woven nylon, edges frayed to fine burrs; the *click* of its clasp rang unusually clear in the rain night, like a contract’s final seal. Inside, a thin aluminum foil layer trapped heat; steam rose through the foil into the rain, a miniature steam engine reminding him: food temperature, customer satisfaction, system Score—all hinged on that thin membrane.", "The red‑light countdown digits refracted through rain, appearing and disappearing like a code warped by water. Zhou Ping had waited at this junction innumerable times; every countdown acted as a ruler measuring the distance between him and his mother’s lifeline.", "The old man lay in the brick cracks, umbrella ribs rusted, canopy shredded by wind and rain. His fingers twitched weakly, unable to grasp anything. Zhou Ping heard a low rattle in the man’s throat, like a leaking bellows; each breath carried a faint whistle. That sound pierced his ear more sharply than the earpiece countdown.", "Dr. Lin’s coat collar showed a gray line of fabric at the worn edge—traces of countless washes. His stethoscope’s chest piece caught the night’s cold glow, a temperature‑less probe. When his fingertip touched the old man’s icy wrist, Zhou Ping saw a fleeting hesitation in the doctor’s eyes, instantly masked by professional coldness.", "“Special Approval·Humanitarian” bled across the triage form, ink feathering, edges blurred. Zhou Ping stood at the corridor’s end, clutching the strap; the metal clasp left shallow impressions on his fingertip. The earpiece’s “0:00” loop echoed like an infinite reverberation, reminding him: system time never pauses for anyone.", "The phone push flickered in rain‑light, system‑standard Heiti font, tight line spacing, as if unwilling to waste a pixel. Zhou Ping’s thumb hovered over “Confirm,” trembling not from cold but from knowing that tapping it meant surrendering his fate once more to an algorithmic black box.", "The new order’s countdown **6:58** blazed red on the screen, a blood‑red gauge. Zhou Ping’s gaze swept distance, time, sender—his brain executing millisecond‑level route planning: main artery, side road, overpass ramp, community lanes—each segment a potential jam, construction, signal failure. He needed no map; muscle memory had long etched the route into his spine.", "Lao Chen’s apron reeked of dried fish, rain diluting it into a sweet‑sour perfume mingling with kebab char, invading Zhou Ping’s nostrils. Lao Chen’s fingers were coarse, nail beds embedded with shell fragments; lifting the crate his wrist dipped, muscle lines flickering in rain‑light. His words were torn by wind, leaving only keywords: “mom, queue, advance, score.” Each word acted like a system keyword, tightening the screws on Zhou Ping’s nerves.", "The BioBand refreshed his mother’s Dialysis Queue Position to **45, 0.2 Score**, clutching his heart like an invisible hand. He knew every advance in queue meant his mother neared a dialysis bed, yet also meant he must push the Score above 4.8 again in the next seven minutes. An endless loop, like the perpetual red lights on the overpass.", "The motor’s shriek tore the night; rear‑wheel spray fractured into broken halos under lamps, countless tiny prisms scattering neon reds, blues, greens into a dazzling yet illusory mosaic. Zhou Ping’s gaze pierced the light spots, locking onto the red‑light countdown **00:03**; fingers clenched the grip, metal clasp edges biting flesh—pain crisp and real, the sole sensation the system could not consume.", "Green. He burst from the intersection; rain curtains shredded into innumerable fine threads by the headlights, like countless slender nerves connecting him, his mother, the Score, and the ever‑waiting next seven minutes. Far‑off overpass lights trembled in rain, a dying pulse; Zhou Ping’s breath and motor hum intertwined into a single cadence, driving him through one system‑segmented night after another.", "**Inner Monologue & Sensory Extension**", "Every heartbeat left a data line on the BioBand; streams aggregated, analyzed, scored, priced in the cloud. Zhou Ping felt like a coin tossed into a massive computing engine, both faces stamped with a price. Rain striking the visor felt like innumerable micro‑taps shattering his last illusion of “freedom.”", "He heard his own breath reverberate inside the helmet; humid air condensed into minute droplets on the inner shield, sliding down his nose bridge onto his lips—salty. The taste recalled childhood ginger tea his mother brewed, ginger slices tumbling in boiling water, steam carrying spicy aroma into his nose. Now ginger tea had become spicy hot‑pot oil fumes, become the system’s countdown push.", "Lao Chen’s voice in the mirror seemed distant yet vivid, a warning from another spacetime. Zhou Ping wanted to reply, but his throat felt blocked, only a low “hmph” escaping. The sound vanished in wind; only the BioBand’s vibration answered.", "When the e‑bike surged past the light, his center of gravity violently shifted; rear wheel lost traction in standing water, the frame instantly leaning left. Instinctively he braced his knee against the chassis, muscles locking, tendons standing like steel cables under skin. Rain lashed exposed skin like whips, each drop delivering icy sting. He clenched his jaw, a raw roar rising in his throat, torn apart by wind and rain, leaving only deep vibration.", "Entering the emergency corridor, the automatic doors sighed open. Antiseptic scent, cold damp air, distant monitor beeps wove a silent tableau. Dr. Lin’s pen scratched paper; ink bloomed like vessels across the page. Zhou Ping stood at the corridor’s end, strap in hand; the metal clasp’s chill climbed fingertip to arm, reaching his shoulder.", "The phone push flashed like lightning, slicing his inner gloom. Score 4.8, Advance Limit unfrozen. He didn’t confirm immediately, letting his fingertip rest on the glass, feeling its faint warmth. In that moment he seemed to hear the system’s internal gears turning—massive, cold, emotionless cogs meshing, rotating, spitting out one score after another.", "The new order’s countdown restarted at **6:58**. Zhou Ping’s thumb hovered over “Confirm,” tremor unabated. He knew this run carried more than 3.2 km of fresh goods; it bore his mother’s next dialysis eligibility, the unpaid mortgage, the perpetual seven‑minute wait.", "Night wind bundled kebab char, sewer rot, highway exhaust into a heavy base note, slipping through helmet vents, down his airway, into lung lobes. Zhou Ping inhaled sharply; cold air detonated in his nasal cavity, then was rebutted by heat. He readjusted the chin strap; the metal buckle *clicked* home, vibration traveling from jaw to collarbone.", "The earpiece offered only the dispatch system’s dry tone: “Order confirmed, countdown started.” Zhou Ping’s thumb hovered, fingertip trembling like a finger on an irreversible switch. He didn’t press, merely let his fingertip glide across the screen, leaving a faint water trace.", "“Xiao Zhou, don’t keep toughing it out.” The mirror flashed Lao Chen again—grease‑stained apron, crate of iced shrimp, rain trailing his temples. His voice shredded by storm, reduced to a hoarse whisper: “Your mom’s still queued; the Advance Limit needs another run. Don’t let the Score drop.”", "Zhou Ping didn’t turn; in the mirror he watched Lao Chen shove the shrimp crate into the trunk, lid thudding dully. The bike sagged; rear wheel threw up a larger spray; the taillight’s red ribbon stretched, twisted, finally breaking into scattered points.", "The BioBand buzzed again; mother’s Dialysis Queue Position updated to **46, 0.2 Score**. Zhou Ping’s heart hammered, each beat striking a rusted iron plate. He twisted throttle to the stop; motor shrieked, plunging into rain night, neon reds, blues, greens fracturing into a shattered mosaic on his visor.", "Ahead, the intersection turned red; countdown **00:04**. Zhou Ping lowered his torso, knees clamping the tank; rain seeped past helmet rim, cold threads clinging to skin. He stared at the ticking numbers, fingers tightening on grips; metal clasp edges biting flesh—pain sharp and real, the only tactile proof not devoured by the system.", "Green. He launched through the crosswalk; rain curtains shredded into innumerable fine threads by the headlights, like countless slender nerves connecting him, his mother, the Score, and the ever‑waiting next seven minutes. Distant overpass lights swayed in rain, a fading pulse; Zhou Ping’s breath and motor hum merged into a single rhythm, propelling him through one algorithm‑sliced night after another."]}]};
+const L = {"cover_label": "Title Page & Synopsis", "unit": " chars", "by": "By ", "meta_sep": " | ~", "intro_title": "About this book", "prev": "← Previous", "next": "Next →", "start": "Start Reading →", "ch_prefix": "Chapter ", "ch_mid": " | ", "theme_dark": "☀️ Light Mode", "theme_light": "🌓 Dark Mode"};
+let currentIndex = -1; // -1 = title page / synopsis
+let fontSize = 17;
+
+function renderSidebar() {
+    const list = document.getElementById("chapterList");
+    list.innerHTML = `<li class="chapter-item ${currentIndex === -1 ? 'active' : ''}" onclick="goToChapter(-1)">
+        <span>📖 ${L.cover_label}</span>
+    </li>`;
+    book.chapters.forEach((ch, idx) => {
+        const li = document.createElement("li");
+        li.className = "chapter-item" + (currentIndex === idx ? " active" : "");
+        li.innerHTML = `<span>${ch.title}</span><span class="ch-words">${ch.words}${L.unit}</span>`;
+        li.onclick = () => goToChapter(idx);
+        list.appendChild(li);
+    });
+}
+
+function renderContent() {
+    const wrapper = document.getElementById("articleWrapper");
+    const label = document.getElementById("currentChLabel");
+    if (currentIndex === -1) {
+        label.innerText = L.cover_label;
+        wrapper.innerHTML = `
+            <div class="article-header">
+                <h1>${book.title}</h1>
+                <div class="article-meta">${L.by}${book.author}${L.meta_sep}${book.total_words.toLocaleString()}${L.unit}</div>
+            </div>
+            <div class="intro-box">
+                <h3 style="margin-bottom:12px;color:var(--accent);">${L.intro_title}</h3>
+                <div style="white-space: pre-wrap; line-height:1.75;">${book.description}</div>
+            </div>
+            <div class="nav-buttons">
+                <button class="nav-btn" disabled>${L.prev}</button>
+                <button class="nav-btn" onclick="goToChapter(0)">${L.start}</button>
+            </div>
+        `;
+    } else {
+        const ch = book.chapters[currentIndex];
+        label.innerText = ch.title;
+        const pTags = ch.paragraphs.map(p => `<p style="font-size: ${fontSize}px;">${p}</p>`).join("");
+        wrapper.innerHTML = `
+            <div class="article-header">
+                <h1>${ch.title}</h1>
+                <div class="article-meta">${L.ch_prefix}${ch.index}${L.ch_mid}${ch.words}${L.unit}</div>
+            </div>
+            <div class="article-body">
+                ${pTags}
+            </div>
+            <div class="nav-buttons">
+                <button class="nav-btn" onclick="goToChapter(currentIndex - 1)">${L.prev}</button>
+                <button class="nav-btn" onclick="goToChapter(currentIndex + 1)" ${currentIndex >= book.chapters.length - 1 ? 'disabled' : ''}>${L.next}</button>
+            </div>
+        `;
+    }
+    document.getElementById("content-container").scrollTop = 0;
+}
+
+function goToChapter(idx) {
+    if (idx < -1 || idx >= book.chapters.length) return;
+    currentIndex = idx;
+    renderSidebar();
+    renderContent();
+}
+
+function toggleTheme() {
+    const current = document.documentElement.getAttribute("data-theme");
+    const next = current === "dark" ? "light" : "dark";
+    document.documentElement.setAttribute("data-theme", next);
+    document.getElementById("themeBtn").innerText = next === "dark" ? L.theme_dark : L.theme_light;
+}
+
+function changeFontSize(delta) {
+    fontSize = Math.max(14, Math.min(26, fontSize + delta));
+    const paras = document.querySelectorAll(".article-body p");
+    paras.forEach(p => p.style.fontSize = fontSize + "px");
+}
+
+renderSidebar();
+renderContent();
+</script>
+</body>
+</html>
