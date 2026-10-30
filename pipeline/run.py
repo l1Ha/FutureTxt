@@ -106,6 +106,8 @@ def cmd_init(args: argparse.Namespace) -> None:
         "chapters_mode": args.chapters_mode,
         "min_chapters": args.min_chapters,
         "max_chapters": args.max_chapters,
+        "work_type": args.form,
+        "target_chapters": 1 if args.form == "short" else args.chapters,
     }
     proj.save_config(cfg)
     proj.save_state({"stages": {}, "summaries": {}})
@@ -324,6 +326,9 @@ def build_parser() -> argparse.ArgumentParser:
     i.add_argument("--keywords", help="题材关键词，逗号分隔，如 '赛博朋克,意识上传,侦探'")
     i.add_argument("--premise", help="一句话故事核心前提（Logline）")
     i.add_argument("--chapters", type=int, default=20, help="目标章节数，默认 20（auto 模式下作为规划参考）")
+    i.add_argument("--form", choices=["novel", "short"], default="novel",
+                   help="作品形态：novel 长篇多章（默认）/ short 短篇单篇"
+                        "（单章流水线，--words 为全篇字数，默认 6000）")
     i.add_argument("--chapters-mode", choices=["fixed", "auto"], default="fixed",
                    help="章数模式：fixed 写死章数（默认）/ auto 由情节决定（大纲自行定章数，后续阶段以大纲为准）")
     i.add_argument("--min-chapters", type=int, default=5, help="auto 模式下的建议最小章数，默认 5")

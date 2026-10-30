@@ -30,6 +30,29 @@ class TestStages(unittest.TestCase):
         self.assertIn("直到最后一章", last)
         self.assertIn("按实际章数自行换算比例", act)
 
+    def test_short_form_rules_and_single_piece_plan(self):
+        cfg = {"work_type": "short", "words_per_chapter": 6000}
+        self.assertEqual(stages.work_form(cfg), "short")
+        self.assertEqual(stages.work_form({}), "novel")
+        rules = stages.quality_rules(6000, "short")
+        self.assertIn("单一效果", rules)
+        self.assertIn("开场三十字内落地", rules)
+        self.assertIn("结尾不解释", rules)
+        self.assertNotIn("跨章唯一", rules)          # 短篇不适用长篇红线
+        auto, count_rule, act_rule, last = stages.outline_count_block(cfg)
+        self.assertTrue(auto)
+        self.assertIn("短篇单篇", count_rule)
+        self.assertIn("只输出**一个**章节块", count_rule)
+        self.assertIn("只有一个转折", act_rule)
+        self.assertIn("只输出第1章一个块", last)
+
+    def test_short_form_knowledge_modules(self):
+        import kb
+        self.assertIn("10-短篇写作", kb.stage_modules("draft", "short"))
+        self.assertIn("10-短篇写作", kb.stage_modules("concept", "short"))
+        self.assertNotIn("10-短篇写作", kb.stage_modules("draft", "novel"))
+        self.assertIn("09-质量规则", kb.stage_modules("concept", "short"))
+
     def test_quality_rules_includes_reality_mapping(self):
         # 「未来为镜：设定映射当下」必须作为红线注入写作/修订提示词
         rules = stages.quality_rules(2500)

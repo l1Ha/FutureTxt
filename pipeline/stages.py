@@ -86,8 +86,32 @@ def clean(text):
     return re.sub(r"\n{3,}", "\n\n", text)
 
 
-def quality_rules(per):
-    """注入写作/修订提示词的质量红线（源自两部作品品质复盘）。"""
+def work_form(cfg: Dict[str, Any]) -> str:
+    """作品形态：'short'＝短篇单篇 / 'novel'＝长篇多章（默认）。"""
+    return "short" if str(cfg.get("work_type", "novel")).lower() == "short" else "novel"
+
+
+def _kb(proj: Project, cfg: Dict[str, Any], stage: str, cap: Optional[int] = None) -> str:
+    """按作品形态注入知识模块（短篇追加 10-短篇写作）。"""
+    mods = kb.stage_modules(stage, work_form(cfg))
+    return kb.load(proj.root, mods, cap=cap) if cap else kb.load(proj.root, mods)
+
+
+def quality_rules(per, form: str = "novel"):
+    """注入写作/修订提示词的质量红线（源自作品品质复盘）。"""
+    if form == "short":
+        return (
+            "1) **单一效果**：全篇只服务一个统一印象（一个主角、一个处境、一个转折、一个余味）；"
+            "删掉后不损害该印象的段落一律不写。\n"
+            "2) **开场三十字内落地**：第一句须有具体的人、地点与压力；前 200 字出现具体麻烦；"
+            "禁止天气开场、抒情铺垫、世界观导览。\n"
+            "3) **只有一个转折**，且必须来自主角自己的选择（不得靠巧合/外力）；转折前须埋一个可复看的伏笔。\n"
+            "4) **结尾不解释**：落在动作、物件或一句话上，禁止旁白总结主题、禁止排比抒情拔高、禁止二次反转。\n"
+            "5) **语言经济**：删副词与形容词堆叠；细节须可触可量（价格/时长/温度/距离）；"
+            "对话不承担解释任务。\n"
+            "6) **未来为镜·映射当下**：只映射一件现实结构，靠人物付出的**具体代价**显形。\n"
+            "7) 长度：全篇实际汉字数须达到约 %d 字的 85%% 以上（不足将被闸门自动补足）。" % per
+        )
     return (
         "1) 跨章唯一：同一场景桥段（发现/备份/对峙/揭秘/牺牲）全书只展开一次；"
         "结尾句与章末钩子不得与任何已完成章节雷同；同一句台词不重复（口头禅每章至多2次）。\n"
@@ -409,10 +433,14 @@ def _project_brief(cfg: Dict[str, Any]) -> str:
 
 
 def stage_concept(proj: Project, cfg: Dict[str, Any], api: Dict[str, Any]) -> str:
-    knowledge = kb.load(proj.root, kb.STAGE_MODULES["concept"])
+    knowledge = _kb(proj, cfg, "concept")
+    form_note = (
+        "【形态：短篇单篇】全篇只有一个主角、一个处境、一个转折、一个余味；"
+        "三层冲突请收敛为「一处代价」；现实映射表至少 3 行即可——聚焦一件事，把它压到底。\n\n"
+        if work_form(cfg) == "short" else "")
     user = (
         "请为下面的项目生成「创作概念文档」。\n\n"
-        f"【项目信息】\n{_project_brief(cfg)}\n\n【知识库参考】\n{knowledge}\n\n"
+        f"【项目信息】\n{_project_brief(cfg)}\n\n{form_note}【知识库参考】\n{knowledge}\n\n"
         "按以下结构输出（Markdown）：\n"
         "# 创作概念\n"
         "## 一句话卖点（logline，80字内）\n"
@@ -438,9 +466,14 @@ def stage_concept(proj: Project, cfg: Dict[str, Any], api: Dict[str, Any]) -> st
 
 def stage_world(proj: Project, cfg: Dict[str, Any], api: Dict[str, Any]) -> str:
     concept = read(proj.f_concept())
-    knowledge = kb.load(proj.root, kb.STAGE_MODULES["world"], cap=14000)
+    knowledge = _kb(proj, cfg, "world", cap=14000)
+    form_note = (
+        "【形态：短篇单篇】无需五层全覆盖，只写与故事直接相关的那几层；"
+        "硬性设定 W1… 至少 5 条即可（不必 12 条），每条都要能在本篇里被用到；"
+        "现实映射表至少 3 行。\n\n" if work_form(cfg) == "short" else "")
     user = (
         "请基于创作概念，写出完整「世界观设定文档」。\n\n"
+        f"{form_note}"
         f"【项目信息】\n{_project_brief(cfg)}\n\n【创作概念】\n{concept}\n\n【知识库参考】\n{knowledge}\n\n"
         "按以下结构输出：\n"
         "# 世界观设定\n"
@@ -467,9 +500,14 @@ def stage_world(proj: Project, cfg: Dict[str, Any], api: Dict[str, Any]) -> str:
 def stage_characters(proj: Project, cfg: Dict[str, Any], api: Dict[str, Any]) -> str:
     concept = read(proj.f_concept())
     world = read(proj.f_world())
-    knowledge = kb.load(proj.root, kb.STAGE_MODULES["characters"])
+    knowledge = _kb(proj, cfg, "characters")
+    form_note = (
+        "【形态：短篇单篇】角色只保留出场所需的 2~3 人（主角 + 1~2 名配角/对立面），"
+        "每人必须有明确的语言指纹与一个可复看的标志物；一致性要点 C1… 至少 5 条即可。\n\n"
+        if work_form(cfg) == "short" else "")
     user = (
         "请基于创作概念与世界观，建立本小说的角色体系。\n\n"
+        f"{form_note}"
         f"【项目信息】\n{_project_brief(cfg)}\n\n【创作概念】\n{concept}\n\n【世界观（可截断）】\n{clip(world, 9000)}\n\n"
         f"【知识库参考】\n{knowledge}\n\n"
         "按以下结构输出：\n# 角色体系\n"
@@ -508,6 +546,18 @@ def outline_count_block(cfg: Dict[str, Any]) -> Tuple[bool, str, str, str]:
     - `chapters_mode: auto`：**章数由情节决定**（建议 min_chapters~max_chapters 章），
       大纲成为章数的唯一权威（正文/成书阶段均以解析大纲的章数为准）。
     """
+    if work_form(cfg) == "short":
+        per = int(cfg.get("words_per_chapter", 6000))
+        count_rule = (
+            "**本作为短篇单篇**：只输出**一个**章节块作为全篇结构方案，全篇约 %d 字；"
+            "不得拆分章节，不设多幕分章节点。\n" % per)
+        act_rule = (
+            "【短篇结构要点（都写进那一个章块里）】：\n"
+            "- 单一效果：一句话能说出「读完后读者应该感到 ___」\n"
+            "- 开场：三十字内落地（具体的人/地点/压力），前 200 字出现具体麻烦\n"
+            "- 中段：**只有一个转折**，必须来自主角自身的选择；转折前埋一个可复看的伏笔\n"
+            "- 结尾：落在动作/物件/台词上，不解释主题、不二次反转\n")
+        return True, count_rule, act_rule, "（只输出第1章一个块，不要更多章节）"
     n = int(cfg.get("target_chapters", 20))
     per = int(cfg.get("words_per_chapter", 3000))
     auto = str(cfg.get("chapters_mode", "fixed")).lower() == "auto"
@@ -543,7 +593,7 @@ def stage_outline(proj: Project, cfg: Dict[str, Any], api: Dict[str, Any]) -> st
     concept = read(proj.f_concept())
     world = clip(read(proj.f_world()), 7000)
     chars = clip(read(proj.f_characters()), 5000)
-    knowledge = kb.load(proj.root, kb.STAGE_MODULES["outline"])
+    knowledge = _kb(proj, cfg, "outline")
     n = int(cfg.get("target_chapters", 20))
     per = int(cfg.get("words_per_chapter", 3000))
     auto, count_rule, act_rule, last_line = outline_count_block(cfg)
@@ -620,7 +670,8 @@ def stage_draft(proj: Project, cfg: Dict[str, Any], api: Dict[str, Any], only: O
     # 章数以大纲为唯一权威（auto 模式下大纲自行决定章数）
     total = len(parsed) or int(cfg.get("target_chapters", 20))
     per = int(cfg.get("words_per_chapter", 3000))
-    knowledge = kb.load(proj.root, kb.STAGE_MODULES["draft"], cap=11000)
+    form = work_form(cfg)
+    knowledge = _kb(proj, cfg, "draft", cap=11000)
     world = clip(read(proj.f_world()), 9000)
     chars = clip(read(proj.f_characters()), 5000)
 
@@ -655,17 +706,32 @@ def stage_draft(proj: Project, cfg: Dict[str, Any], api: Dict[str, Any], only: O
             dyn_snippets = kb.retrieve_snippets(proj.root, dyn_query, cap=2000)
             dyn_block = f"\n\n【本章针对性科学与方法论参考】\n{dyn_snippets}" if dyn_snippets else ""
 
-            user = (
-                f"请写出第 {n} 章正文（章名可用：{title or '自拟'}）。\n\n"
-                f"【项目信息】\n{_project_brief(cfg)}\n\n【硬性设定与世界观】\n{world}\n\n【角色】\n{chars}\n\n"
-                f"【本章与邻章大纲】\n{_outline_block(proj, n)}\n\n【前情摘要】\n{_continuity_block(proj)}\n\n"
-                f"【上一章结尾（衔接用）】\n{prev_tail}\n\n"
-                f"【通用写作知识库】\n{knowledge}{dyn_block}\n\n"
-                f"【质量红线（违反即返工）】\n{quality_rules(per)}\n\n"
-                f"要求：正文以「# 第{n}章 {title or ''}」开头；长度约 {per} 字（±15%）；"
-                "开章尽快进入场景，章末落在钩子上；严格遵守硬性设定编号规则；"
-                "本章内容不得复用前情摘要或上一章结尾中已发生过的场景。"
-            )
+            if form == "short":
+                user = (
+                    f"请写出本短篇的**完整正文**（篇名可用：{title or '自拟'}）。\n\n"
+                    f"【项目信息】\n{_project_brief(cfg)}\n\n【硬性设定与世界观】\n{world}\n\n【角色】\n{chars}\n\n"
+                    f"【本篇结构方案】\n{_outline_block(proj, n)}\n\n"
+                    f"【通用写作知识库】\n{knowledge}{dyn_block}\n\n"
+                    f"【短篇质量红线（违反即返工）】\n{quality_rules(per, 'short')}\n\n"
+                    f"要求：正文以「# 第{n}章 {title or ''}」开头；**全篇约 {per} 字（±15%）**；"
+                    "严格遵守短篇工艺——开场三十字内落地（具体的人/地点/压力）、前 200 字出现具体麻烦、"
+                    "**全篇只有一个转折且必须来自主角自己的选择**、转折前埋一个可复看的伏笔、"
+                    "结尾落在动作/物件/台词上（不解释主题、不二次反转）；"
+                    "未来为镜：把设定映射到一个现实结构，并靠**一处具体代价**显形；"
+                    "不得出现任何章节外的元信息。"
+                )
+            else:
+                user = (
+                    f"请写出第 {n} 章正文（章名可用：{title or '自拟'}）。\n\n"
+                    f"【项目信息】\n{_project_brief(cfg)}\n\n【硬性设定与世界观】\n{world}\n\n【角色】\n{chars}\n\n"
+                    f"【本章与邻章大纲】\n{_outline_block(proj, n)}\n\n【前情摘要】\n{_continuity_block(proj)}\n\n"
+                    f"【上一章结尾（衔接用）】\n{prev_tail}\n\n"
+                    f"【通用写作知识库】\n{knowledge}{dyn_block}\n\n"
+                    f"【质量红线（违反即返工）】\n{quality_rules(per)}\n\n"
+                    f"要求：正文以「# 第{n}章 {title or ''}」开头；长度约 {per} 字（±15%）；"
+                    "开章尽快进入场景，章末落在钩子上；严格遵守硬性设定编号规则；"
+                    "本章内容不得复用前情摘要或上一章结尾中已发生过的场景。"
+                )
             out = llm.chat([{"role": "system", "content": SYSTEM_WRITER},
                             {"role": "user", "content": user}], api,
                           max_tokens=max(int(api["max_tokens"]), per * 3), what=f"第{n}章")
@@ -677,16 +743,17 @@ def stage_draft(proj: Project, cfg: Dict[str, Any], api: Dict[str, Any], only: O
             write(fpath, out_str)
             proj.track_usage("draft")
 
-            # 生成本章摘要，供后续章节衔接
-            try:
-                summary = llm.chat(
-                    [{"role": "system", "content": "你是剧情记录员。"},
-                     {"role": "user", "content": "用120字以内概括这章发生的关键事件、人物状态变化与悬念，只输出摘要：\n\n" + clip(out_str, 6000)}],
-                    api, temperature=0.3, max_tokens=400, what=f"第{n}章摘要")
-                proj.add_summary(n, str(summary).strip())
-                proj.track_usage("draft")
-            except Exception as e:
-                print(f"    · 第{n}章摘要生成失败（不影响正文）：{str(e)[:60]}")
+            # 生成本章摘要，供后续章节衔接（短篇单篇无需摘要）
+            if form != "short":
+                try:
+                    summary = llm.chat(
+                        [{"role": "system", "content": "你是剧情记录员。"},
+                         {"role": "user", "content": "用120字以内概括这章发生的关键事件、人物状态变化与悬念，只输出摘要：\n\n" + clip(out_str, 6000)}],
+                        api, temperature=0.3, max_tokens=400, what=f"第{n}章摘要")
+                    proj.add_summary(n, str(summary).strip())
+                    proj.track_usage("draft")
+                except Exception as e:
+                    print(f"    · 第{n}章摘要生成失败（不影响正文）：{str(e)[:60]}")
 
             done.append(n)
             print(f"    ✓ 第{n}章 完成（{word_count(out_str)}字）{gate_note}")
@@ -703,7 +770,7 @@ def stage_draft(proj: Project, cfg: Dict[str, Any], api: Dict[str, Any], only: O
 
 
 def stage_review(proj: Project, cfg: Dict[str, Any], api: Dict[str, Any], only: Optional[str] = None, force: bool = False) -> str:
-    checklist = kb.load(proj.root, kb.STAGE_MODULES["review"], cap=10000)
+    checklist = _kb(proj, cfg, "review", cap=10000)
     world = clip(read(proj.f_world()), 7000)
     chars = clip(read(proj.f_characters()), 4000)
     per = int(cfg.get("words_per_chapter", 3000))
@@ -844,7 +911,7 @@ def stage_continuity(proj, cfg, api, only=None, force=False):
             n, sums.get(str(n), "（无摘要，据首尾判断）"),
             re.sub(r"\s+", " ", body[:180]), re.sub(r"\s+", " ", body[-180:])))
     evidence = clip("\n\n".join(parts), 16000)
-    knowledge = kb.load(proj.root, kb.STAGE_MODULES["continuity"], cap=6000)
+    knowledge = _kb(proj, cfg, "continuity", cap=6000)
     user = (
         "请做全书连续性审校——只看跨章问题（单章内部问题已由章节审校负责）。\n\n"
         "【全书大纲（截断）】\n%s\n\n【质量红线与审校清单】\n%s\n\n"
@@ -874,8 +941,10 @@ def stage_assemble(proj: Project, cfg: Dict[str, Any], api: Optional[Dict[str, A
     if not files:
         raise RuntimeError("没有章节文件，无法汇编。")
     title = cfg.get("title", proj.name)
+    form = work_form(cfg)
     chapter_words = sum(word_count(clean(read(p))) for p in files)
     parts = ["---", f"title: {title}",
+             f"form: {form}",
              f"chapters: {len(files)}",
              f"words: {chapter_words}",
              "---", ""]
@@ -883,7 +952,10 @@ def stage_assemble(proj: Project, cfg: Dict[str, Any], api: Optional[Dict[str, A
     if concept:
         parts.append(f"## 简介\n\n{clip(concept, 600)}\n")
     for p in files:
-        parts.append(clean(read(p)).strip() + "\n\n")
+        body = clean(read(p)).strip()
+        if form == "short":  # 短篇单篇：去掉「# 第1章 …」行，正文即全篇
+            body = re.sub(r"^#\s*第\s*\d+\s*章[^\n]*\n+", "", body).strip()
+        parts.append(body + "\n\n")
 
     out_path = proj.path("manuscript", f"{title}·初稿.md")
     text = "\n".join(parts)
@@ -904,7 +976,8 @@ def stage_assemble(proj: Project, cfg: Dict[str, Any], api: Optional[Dict[str, A
     if target and chapter_words < target * 0.85:
         warn = f"；⚠ 全书字数为目标({target:,})的 {round(chapter_words * 100 / target)}%，低于 85% 闸门，建议补写"
 
-    return f"汇编完成：{os.path.relpath(out_path, proj.root)}（{len(files)} 章 / {total:,} 字{export_msg}）{warn}"
+    scale = "单篇" if form == "short" else f"{len(files)} 章"
+    return f"汇编完成：{os.path.relpath(out_path, proj.root)}（{scale} / {total:,} 字{export_msg}）{warn}"
 
 
 STAGES = ["concept", "world", "characters", "outline",

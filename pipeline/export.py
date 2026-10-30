@@ -921,17 +921,21 @@ def export_all(
         if not chapter_files:
             raise RuntimeError("项目尚无章节文件，请先执行 draft 阶段生成正文。")
 
+    # 作品形态：短篇单篇不显示「第 N 章」分隔，篇名即书名
+    is_short = str(cfg.get("work_type", "novel")).lower() == "short"
     valid_ids = _defined_anchor_ids(proj) if strip else None
     daily_titles = _defined_daily_titles(proj) if strip else None
     chapters: List[Tuple[str, str]] = []
     for path in chapter_files:
         with open(path, encoding="utf-8") as f:
             text = f.read()
+        if is_short:
+            text = re.sub(r"^#\s*第\s*\d+\s*章[^\n]*\n+", "", text, count=1)
         if strip:
             text = strip_anchors(text, valid_ids, daily_titles)
         no = re.search(r"chapter_(\d+)", os.path.basename(path))
         def_title = f"第 {int(no.group(1))} 章" if no else os.path.basename(path)
-        ch_title = _extract_title(text, def_title)
+        ch_title = title if is_short else _extract_title(text, def_title)
         chapters.append((ch_title, text))
 
     dist_dir = proj.path("dist_en" if is_en else "dist")

@@ -109,6 +109,45 @@ class TestExport(unittest.TestCase):
         self.assertIn("`3F9A…C2`", out)   # 哈希原样保留
         self.assertNotIn("（W6）", out)    # 锚点照常剥离
 
+    def test_export_short_form_single_piece(self):
+        # 短篇单篇：导出不应出现「第1章」分隔，篇名即书名
+        root = self.temp_dir.name
+        os.makedirs(os.path.join(root, "chapters"), exist_ok=True)
+        with open(os.path.join(root, "01-世界观.md"), "w", encoding="utf-8") as f:
+            f.write("- **W1 配给**：每日 2 L。\n")
+        with open(os.path.join(root, "chapters", "chapter_001.md"), "w",
+                  encoding="utf-8") as f:
+            f.write("# 第1章 冷凝水的价格\n\n他数着最后两升水（W1）。\n")
+
+        class _Short:
+            name = "shortproj"
+
+            def config(self):
+                return {"title": "一场小雨", "work_type": "short", "premise": "配额与代价"}
+
+            def f_concept(self):
+                return os.path.join(root, "00-创作概念.md")
+
+            def f_world(self):
+                return os.path.join(root, "01-世界观.md")
+
+            def f_characters(self):
+                return os.path.join(root, "02-角色.md")
+
+            def list_chapters(self):
+                return [os.path.join(root, "chapters", "chapter_001.md")]
+
+            def path(self, *p):
+                return os.path.join(root, *p)
+
+        res = export.export_all(_Short(), formats=["txt"])
+        with open(res["txt"], encoding="utf-8") as f:
+            txt = f.read()
+        self.assertNotIn("第1章", txt)              # 章标题被去掉
+        self.assertIn("《一场小雨》", txt)           # 篇名＝书名
+        self.assertIn("他数着最后两升水", txt)
+        self.assertNotIn("W1", txt)                 # 锚点照常剥离
+
     def test_defined_anchor_ids_accepts_titled_bold_definitions(self):
         # 定义式写法两种都要认：**W1** 与 **W1 标题**（实测模型常输出后者）；
         # 正文里的普通词（试剂 C12）不得被当作编号

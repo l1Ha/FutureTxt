@@ -28,6 +28,21 @@ STAGE_MODULES: Dict[str, List[str]] = {
     "continuity": ["09-质量规则", "08-参考/03"],
 }
 
+# 作品形态专用知识模块（在通用模块之外追加）
+FORM_MODULES: Dict[str, List[str]] = {
+    "short": ["10-短篇写作"],
+}
+
+
+def stage_modules(stage: str, form: str = "novel") -> List[str]:
+    """返回某阶段应注入的知识模块（通用 + 形态专用）。"""
+    mods = list(STAGE_MODULES.get(stage, []))
+    for m in FORM_MODULES.get((form or "novel").lower(), []):
+        if m not in mods:
+            mods.append(m)
+    return mods
+
+
 DEFAULT_CAP = 16000  # 单阶段注入知识的总字符上限
 
 
