@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>十四小时 - FutureTxt 在线阅读</title>
+<style>
+:root {
+    --bg-primary: #f8fafc;
+    --bg-card: #ffffff;
+    --text-primary: #1e293b;
+    --text-secondary: #64748b;
+    --border-color: #e2e8f0;
+    --accent: #2563eb;
+    --accent-hover: #1d4ed8;
+    --sidebar-bg: #f1f5f9;
+}
+[data-theme="dark"] {
+    --bg-primary: #0f172a;
+    --bg-card: #1e293b;
+    --text-primary: #f8fafc;
+    --text-secondary: #94a3b8;
+    --border-color: #334155;
+    --accent: #38bdf8;
+    --accent-hover: #0ea5e9;
+    --sidebar-bg: #111827;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+    font-family: -apple-system, "PingFang SC", "Microsoft YaHei", "Noto Sans SC", sans-serif;
+    background-color: var(--bg-primary);
+    color: var(--text-primary);
+    line-height: 1.85;
+    transition: background-color 0.2s, color 0.2s;
+    display: flex;
+    height: 100vh;
+    overflow: hidden;
+}
+#sidebar {
+    width: 320px;
+    background: var(--sidebar-bg);
+    border-right: 1px solid var(--border-color);
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    flex-shrink: 0;
+}
+.sidebar-header {
+    padding: 20px;
+    border-bottom: 1px solid var(--border-color);
+}
+.sidebar-header h2 {
+    font-size: 1.15em;
+    font-weight: 700;
+    margin-bottom: 6px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+.sidebar-meta {
+    font-size: 0.85em;
+    color: var(--text-secondary);
+}
+.chapter-list {
+    overflow-y: auto;
+    flex: 1;
+    list-style: none;
+}
+.chapter-item {
+    padding: 12px 20px;
+    border-bottom: 1px solid var(--border-color);
+    cursor: pointer;
+    font-size: 0.95em;
+    transition: background 0.15s;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.chapter-item:hover {
+    background: rgba(0,0,0,0.04);
+}
+.chapter-item.active {
+    background: var(--accent);
+    color: #ffffff;
+    font-weight: 600;
+}
+.chapter-item .ch-words {
+    font-size: 0.8em;
+    opacity: 0.75;
+}
+#main {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+.topbar {
+    padding: 12px 24px;
+    border-bottom: 1px solid var(--border-color);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: var(--bg-card);
+}
+.controls button {
+    background: transparent;
+    border: 1px solid var(--border-color);
+    color: var(--text-primary);
+    padding: 6px 14px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 0.88em;
+    margin-left: 8px;
+    transition: 0.15s;
+}
+.controls button:hover {
+    border-color: var(--accent);
+    color: var(--accent);
+}
+#content-container {
+    flex: 1;
+    overflow-y: auto;
+    padding: 40px 10%;
+    display: flex;
+    justify-content: center;
+}
+.content-wrapper {
+    max-width: 780px;
+    width: 100%;
+}
+.article-header {
+    text-align: center;
+    margin-bottom: 36px;
+    padding-bottom: 20px;
+    border-bottom: 1px solid var(--border-color);
+}
+.article-header h1 {
+    font-size: 1.85em;
+    font-weight: 700;
+    margin-bottom: 10px;
+}
+.article-meta {
+    font-size: 0.9em;
+    color: var(--text-secondary);
+}
+.article-body p {
+    text-indent: 2em;
+    margin-bottom: 1.4em;
+    font-size: 1.1em;
+    text-align: justify;
+}
+.intro-box {
+    background: var(--bg-card);
+    border: 1px solid var(--border-color);
+    border-left: 5px solid var(--accent);
+    padding: 24px;
+    border-radius: 8px;
+    margin-bottom: 40px;
+}
+.nav-buttons {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 50px;
+    padding-top: 20px;
+    border-top: 1px solid var(--border-color);
+}
+.nav-btn {
+    padding: 10px 20px;
+    border-radius: 6px;
+    border: 1px solid var(--border-color);
+    background: var(--bg-card);
+    color: var(--text-primary);
+    cursor: pointer;
+    font-size: 0.95em;
+}
+.nav-btn:disabled {
+    opacity: 0.3;
+    cursor: not-allowed;
+}
+@media (max-width: 768px) {
+    body { flex-direction: column; }
+    #sidebar { width: 100%; height: 200px; }
+    #content-container { padding: 20px 5%; }
+}
+</style>
+</head>
+<body>
+<div id="sidebar">
+    <div class="sidebar-header">
+        <h2 title="十四小时">十四小时</h2>
+        <div class="sidebar-meta">作者：FutureTxt AI Writer · 1 章 / 5723 字</div>
+    </div>
+    <ul class="chapter-list" id="chapterList"></ul>
+</div>
+<div id="main">
+    <div class="topbar">
+        <span id="currentChLabel">扉页与作品简介</span>
+        <div class="controls">
+            <button onclick="changeFontSize(-1)">A-</button>
+            <button onclick="changeFontSize(1)">A+</button>
+            <button onclick="toggleTheme()" id="themeBtn">🌓 切换暗色</button>
+        </div>
+    </div>
+    <div id="content-container">
+        <div class="content-wrapper" id="articleWrapper"></div>
+    </div>
+</div>
+
+<script>
+const book = {"title": "十四小时", "author": "FutureTxt AI Writer", "description": "2126 年的超大城市将公屋面签、跨区医疗额度、随迁子女入学等所有稀缺资源统一纳入「序列大厅」的身份链排队系统。富人以高价雇佣「代排」替自己站队，底层「临时等级」只能靠日结零工换取生存资源。林秀四十八岁，肩颈旧伤未愈，每天在平台接单替人站满十四小时，仅能支付当夜群租仓的床位费。女儿小雨十二岁，持有的「随迁登记号」将在下周三到期，规定必须由监护人亲自到窗口面签，逾期作废、再等一年将错过法定入学年龄。林秀能替别人排得起队，却排不起自己的队。", "total_words": 5723, "chapters": [{"index": 1, "title": "十四小时", "words": 5723, "paragraphs": ["05:40，序列大厅 B1 普通通道入口，冷风裹着消毒水味钻进鼻腔，夹杂一丝铁锈与廉价洗衣粉的皂香。林秀从外套口袋摸出掉漆的不锈钢保温杯，杯盖边缘那道锈痕在霓虹灯下泛着暗红，指尖触到冰凉金属的瞬间，肩胛骨深处又炸开一阵钝痛。耳机里的合成女声准时播报：「工单 20260701‑001，代排时长 14 小时，实得 9.36 元/时，信用分 620，请在 22:00 前完成扣款」。她把杯盖拧紧，热气喷薄而出，顺着喉咙滑下——这是今天第一口热水，也是维持心率带在 60‑100 区间的唯一燃料。", "通道两侧挤满临时等级，手腕身份链闪烁灰蓝光带，每多等一小时就少赚 12 元。林秀调整呼吸，脚底防疲劳垫硬得像铁板，膝盖在站立第一分钟便开始抗议。她把工单编号默念成救命咒语：「20260701‑001，20260701‑002……」。平台抽成 22%，每小时到手 9.36 元，十四小时刚好 131.04 元，群租仓 3 号楼 402 仓位单夜 130 元，余下 1.04 元连一包压缩饼干都买不起。", "第 1 小时，窗口 12 号叫到「临时‑087」。林秀迈步上前，指纹、虹膜、声纹三重核验，屏幕闪绿，耳机响起「已签到」。她把保温杯抵在肩颈，热气渗进肌纤维，心率带震动一下——「在岗」。周围呼吸声、脚步声、偶尔的咳嗽交织成低沉白噪音，像老旧空调持续嗡鸣。后颈皮肤被金属杯壁烫得微红，汗珠顺着锁骨滑落，被口罩边缘吸干。", "第 2 小时，排队人潮像潮水推着她前行，背包里的随迁登记号纸条硬邦邦贴着胸口，号码下周三 24:00 到期，面签必须监护人亲临，不可代排、不可远程。她在心里默算：今天赶完班，21:55 前把 130 元刷进智能门锁，再抽半小时跑去 7 号窗口，指纹、虹膜、声纹全录入完整，才不至于让小雨错过入学年龄。远处广播循环「请排队市民注意保持间距」，声音被金属格栅反射得空洞刺耳。指尖在口袋里摸索纸条边缘，纸张已被汗水浸软，指纹留下浅浅印记。", "第 3 小时，肩颈痛从钝变锐，像生锈锯子在骨缝来回拉。她拧开杯盖，热水淋在毛巾上敷在后颈，蒸汽在口罩里凝成白雾，顺着鼻翼渗入呼吸道，带走一丝寒意。耳机再响：「工单 20260701‑003，倒计时 11 小时」。脚下金属格栅每一步发出「嗒、嗒」闷响，混着远处排队神红纸条被风吹得「沙沙」作响。旁边穿反光背心的中年男人不断看表嘟囔「还要多久」，林秀没回头，视线锁在屏幕跳动的倒计时数字上。", "第 4 小时，空气弥漫陈旧汗味与廉价速食油烟，清洁机器人滑过喷出淡淡臭氧味。双腿发沉，膝盖内侧软骨像被砂纸打磨，每一次屈伸伴随细微「咔嗒」。她重新拧紧保温杯，指尖划过锈痕，冰凉顺着指尖爬上手背，提醒时间仍在流逝。屏幕「工单 20260701‑004」绿光稳定，耳机平淡重复：「在岗」。", "第 5 小时，平台推送高亮工单：「跨区医疗垫付点数窗口，插队加价 200 元，雇主陈工，信用 820」。林秀瞥见手腕智能手环常亮「信用 820」。插队一经监控判定，扣 30 分、封号 7 天、罚款 200 元。她信用分 620，离 600 红线只差 20 分，一旦封号，后续十四小时全泡汤，群租仓今晚就得睡走廊。手指搭在「拒绝」键上悬停，耳机合成女声平淡：「系统已记录，超时将自动判定离岗」。她按下「拒绝」，屏幕灰掉，心跳未超 100。周围几个等单的年轻人窃窃私语，目光在她和屏幕间游移，林秀装作没听见，视线重新锁回倒计时。", "第 6 小时，休息区长椅只剩一盏昏黄灯，灯罩积灰，光晕浑浊。林秀拧紧杯盖，倒计时 90 分钟热敷肩颈，杯壁温度顺着掌心爬上手臂，像微弱生命线。王姐从夜班保洁换班回来，制服领口挂着未干水珠，递来一包速溶咖啡：「秀姐，杯里还有热水？」林秀点头，喝下苦涩，咖啡因把困意推回脑后。她拿出随迁登记号纸条，边角磨白，号码「第 7 号」在灯光下若隐若现。小雨书包侧袋别着同款塑料卡扣，刻着「第 7 号」，那是她唯一证明：我有监护人，我能上学。王姐叹了口气，拍拍林秀肩：「别太狠自己，熬过去就好。」林秀勉强挤出一笑，喉咙涌起一股酸涩。", "第 7 小时，广播循环「今日代排均价 9.36 元/时，评分 4.5 以下降权」。林秀评分 4.6，靠每天多站 30 分钟硬凑上来的。她再默念工单编号，指尖划过「继续」，心率带震动——「在岗」。肩颈痛蔓延至左臂，像铁丝绞紧。她把保温杯抵在门框金属边缘，杯身冰凉，锈痕贴着指纹，仿佛替她计时。自动扶梯低沉轰鸣震动透过地板传到脚底，脚掌微麻。", "第 8 小时，人流稀疏，只剩几个死守工单的老面孔。视线开始模糊，数字在眨眼间重叠分离。她强迫盯着屏幕：「工单 20260701‑008，倒计时 6 小时」。口罩内侧湿冷，呼出热气在镜片凝成薄雾，用袖口擦了擦，指尖触到冰冷金属框，刺痛一阵。", "第 9 小时，广播依旧机械重复，评分 4.6 勉强维持。她再默念工单，划过「继续」，心率带震动——「在岗」。肩颈痛已蔓延至左臂，铁丝绞紧感更甚。保温杯抵在门框金属边缘，杯身冰凉，锈痕贴着指纹。周围空气夹杂消毒水与陈旧咖啡混合味，每一次深呼吸像吸入细碎金属屑。", "第 10 小时，双腿像灌了铅，膝盖每一次弯曲发出细微「咔」声。背包带勒紧，随迁登记号纸条在胸口硬邦邦顶着，提醒更重要截止日期。耳机合成女声平静：「工单 20260701‑010，倒计时 4 小时」。她闭上眼几秒，脑海浮现小雨穿蓝色校服、背着印有「第 7 号」卡扣书包在校门口等候的画面，心口一紧，随即睁眼继续站立。", "第 11 小时，陈工加价单再次弹出，带着倒计时 30 分钟红框：「最后机会，插队 200 元，立即结算」。林秀盯着屏幕，耳机重复：「请在 22:00 前完成扣款」。账户余额 131.04 元，扣除 130 元房费还剩 1.04 元。若接单，信用分跌破 600，平台封号 7 天，后续十四小时全无收入，下周三面签前夜连房费都凑不齐。若拒绝，提前 30 分钟下线，赶在 21:55 前跑回群租仓刷卡，再冲进序列大厅 7 号窗口，指纹、虹膜、声纹一套走完，小雨的登记号就能在有效期内锁死。", "她握紧保温杯，杯盖锈痕硌进掌心，指节发白。屏幕上「接受」按钮闪烁，旁边「拒绝」灰暗。林秀呼出一口气，热气在口罩里凝成薄雾随即消散。她点下「拒绝」。", "工单栏瞬间变灰，耳机传来最后一句：「工单 20260701‑014，已下线，实得 131.04 元，信用分 620」。林秀站起身，膝盖发出「咔」的一声脆响，肩颈钝痛像被拔掉的钉子，留下空荡荡缝隙。她拎起背包，保温杯挂在食指上，杯盖锈痕在旋转门金属框上蹭出一声细微「嘶」。", "旋转门合拢的瞬间，叫号器合成女声清晰吐出：「林秀，7 号窗口」。冷白光刺在睫毛上，指尖仍扣着杯盖锈痕，脚步没停。", "旋转门合拢的瞬间，冷白光像刀刃一样切过眼睑，空气里夹着消毒水、陈旧咖啡和一股淡淡的铁锈味，呼吸都带着金属的涩意。脚底的复合地板微微颤动，自动扶梯的低频轰鸣顺着脚掌爬上小腿，膝盖每一次弯曲都发出细碎的「咔」声，像老旧齿轮在咬合。她没停步，背包带勒得胸口发紧，随迁登记号纸条硬邦邦顶在心口，指尖仍扣着保温杯盖锈痕，指节泛白。", "走廊尽头的 7 号窗口亮着淡蓝色指示灯，屏幕上滚动着「序列核验中」，合成女声平静重复：「林秀，身份核验，请配合」。她把保温杯塞进背包侧袋，金属盖碰到拉链发出一声闷响，随即伸出左手，指尖悬在指纹采集板上方，掌心汗湿，指纹纹路在冷光下泛着油光。采集板发出一声轻响，绿光扫过指尖，屏幕闪过「指纹通过」。", "紧接着虹膜扫描仪伸出，冷气吹在眼睑上，她眯起眼，瞳孔在红外光圈里收缩，屏幕跳出「虹膜通过」。声纹采集器随即弹出，要求朗读一段随机数字。她深吸一口带着消毒水味的空气，喉咙干涩，声带震动出「三、七、九、一、四」，合成女声确认：「声纹通过，序列锁定」。", "屏幕中央弹出一行绿字：「小雨，登记号 7‑042‑19，有效期至 2026‑07‑15 23:59」。她盯着那行字，心口的铁丝似乎松动了一寸，指尖在背包带上摩挲，粗糙的尼龙织带刮过指腹，发出细微的「沙沙」声。合成女声继续：「请确认领取临时居住码，扫码至手机」。她掏出手机，屏幕亮起二维码，指尖悬在扫描框上方，手微微发抖，扫描枪发出「滴」的一声，码面瞬间变灰，手机震动一下，弹出「临时居住码已生成」。", "她把手机塞回口袋，背包带勒得肩膀发酸，膝盖又是一声「咔」，像某种机械在提醒她还有路要走。走廊尽头的自动门滑开，夜风夹着远处高架桥的尾气味钻进来，吹干了口罩内侧的薄雾。她迈步走出序列大厅，脚下的路灯将影子拉长，保温杯在背包里轻轻晃动，锈痕在黑暗中闪着微光。远处的群租仓楼道灯光忽明忽暗，她加快步伐，指尖仍扣着杯盖锈痕，指节发白，心跳在胸腔里像敲击同一块生锈的铁板。", "夜风裹着尾气与潮湿的霉味钻进领口，林秀把口罩勒紧，指尖仍死死扣住保温杯盖的锈斑，指节在黑暗里泛着惨白的光。群租楼的铁皮走廊在路灯下拉长成一条灰黑的管道，墙面剥落的涂料像鳞片一样蜕下来，脚下的水泥板每一步都回荡着沉闷的「咚、咚」，仿佛整栋楼都在替她呼吸。", "「秀姐，回来了？」一个低哑的女声从侧门探出半个身子，手里攥着一卷皱巴巴的快递单，指甲缝里嵌着灰黑的油泥。是住在 302 的陈嫂，眼袋深得能盛两滴夜露，眉头拧成一道死结。", "林秀没抬头，只把背包带往肩上勒了勒，喉咙里挤出一声沙哑的「嗯」。陈嫂把快递单塞进她手心，纸边硬邦邦刮着掌心，「你那码，今天就过期。社区站那边还要再跑一趟，别等到明天才想起来。」", "「知道。」林秀把单子揉成一团，塞进裤兜，指尖触到冰凉的手机边框，屏幕上那行绿字还在微微跳动，「临时居住码已生成」。她不想再听合成女声的重复，也不想再看那个倒计时在 23:59 归零。", "楼道尽头的感应灯忽明忽暗，照出一排排挤在走廊里的折叠床，床单上印着不同颜色的二维码，像某种集体的纹身。几个年轻租客正对着手机屏幕比划着，指尖在玻璃上划过，发出细碎的「滋滋」声，蓝光映在疲惫的脸上。林秀从他们身边擦肩而过，肩膀撞上一个鼓鼓囊囊的编织袋，袋口漏出几根生锈的钢筋，刮得她手臂一阵刺痛。", "「哎，林秀！」一个男声从楼梯口传来，带着电子烟的甜腻烟草味。是住在 405 的老赵，手里夹着一支还在冒烟的雾化棒，烟雾在冷空气里凝成白絮。「听说你今天去序列大厅了？那边的新规……啧，真的是把人当零件拆。」", "林秀停下脚步，呼吸在口罩里发出闷闷的「呼、呼」，她盯着老赵指间夹着的雾化棒，指尖不自觉地摩挲着杯盖锈痕，「零件也得活下去。」", "老赵笑了笑，烟雾喷在她脸上，「活下去还得交保护费。社区站的那个王主任，最近盯着咱们这栋楼的‘流动人口’指标，说是要把‘临时码’换成‘长效码’，还得缴纳‘信用押金’。你那 620 分，够不够？」", "「够不够不由我。」林秀把背包带往上提了提，膝盖又「咔」地响了一声，疼痛像针尖扎进骨缝，「我只管把小雨送进学校，其他的……走一步算一步。」", "老赵点头，烟雾在路灯下扭曲成一条灰蛇，「走一步算一步，也是条路。不过……」他顿了顿，目光落在林秀手里握紧的手机上，「你那码，扫完就灰了。别忘了在 15 号前把‘长效码’的申请表交上去，不然下个月连这楼道都进不来。」", "林秀没回头，脚步加快，复合地板的震动顺着小腿爬上大腿，自动扶梯的低频轰鸣在远处隐约回荡。她把手机塞进口袋，指尖触到冰冷的金属边框，屏幕上那行绿字已经熄灭，只剩下黑色的镜面映出她疲惫的倒影。", "楼道尽头的防火门「砰」地一声被推开，夜风卷着远处高架桥的轰鸣冲进来，吹干了口罩内侧最后一层薄雾。林秀抬头，群租楼的楼顶在夜色里若隐若现，几盏昏黄的探照灯像老旧的眼睛，眨巴着注视着每一个爬上楼梯的影子。她咬紧牙关，指节在杯盖锈痕上再次收紧，迈步走进那条灰黑的管道，脚下的每一步都在向前，向那个还没到期的 23:59。", "楼梯间的混凝土墙面渗着一层薄薄的霉斑，脚下的钢筋踏板在每一次踩踏下都发出沉闷的“咚、咚”声，震动顺着小腿骨爬到膝盖，再钻进髋关节的缝隙里。林秀把背包的肩带勒紧，指节在生锈的杯盖边缘划出细细的白痕，指尖触到的金属冰凉得像是要把体温一口吞下去。", "转角处的感应灯突然亮起，刺眼的白光把楼道两侧的折叠床照得发白，床单上印着的二维码在光晕里微微闪烁，像一排排等待扫描的条形码。几个穿着薄外套的青年正低头对着手机，指尖在屏幕上划过，发出细碎的“滋滋”声，蓝光映在他们的眼睑上，眨动间透出一种被算法驯化的疲惫。", "“林秀，等一下。”一个低哑的女声从楼梯上方传来，夹杂着一股陈旧的洗衣粉味。是住在 302 的王姐，手里提着一个鼓鼓囊囊的塑料袋，袋口露出几根发黄的塑料管。“听说社区站要查‘长效码’的信用分，王主任今天亲自下楼，带着扫码枪在楼道里巡。”", "林秀脚步一顿，呼吸在口罩里发出闷闷的“呼、呼”，她侧身让出一条缝隙，目光扫过王姐手中的扫码枪，枪口的红光在灰尘里划出一道细线。“我码还在有效期，明天再去补申请表。”", "王姐摇了摇头，塑料袋在手心晃荡，发出“沙沙”的摩擦声。“不光是申请表，听说要缴‘信用押金’，五百起步，分三期扣。你那 620 分，扣完还剩不够交下一期的房租。”", "林秀的指尖在杯盖锈痕上收紧，指甲陷进金属缝隙，微微发白。“我只管把小雨送进学校，其他的……走一步算一步。”", "王姐叹了口气，袋子里的塑料管碰撞出清脆的“叮当”声，像某种倒计时的提示音。“走一步算一步，也是条路。不过你得在 15 号前把表交上去，不然下个月连这楼道都进不来。”", "林秀没再接话，转身继续向上，脚下的每一级踏板都在低频震动中传递着建筑的沉重。远处高架桥的车流声像一条持续的低吼，穿过防火门的缝隙钻进楼道，混着夜风里夹带的机油味和远处垃圾站的酸臭。她摸了摸口袋里熄灭的手机，屏幕黑得像一面镜子，映出她疲惫的轮廓和身后那条灰黑的管道。", "楼梯拐角处，一个穿着反光背心的保安正靠在栏杆上刷手机，屏幕光在他的脸上跳动，勾勒出深深的法令纹。看到林秀上来，他抬起下巴，声音穿过口罩的纤维，闷闷地：“临时码过期了没？过期就得去序列大厅重刷，排队要到天亮。”", "林秀咬紧牙关，指节在杯盖上再次用力，金属的冷意顺着指尖爬上手臂。“没得过期，明天去补。”", "保安点点头，指尖在屏幕上划过，发出一声轻微的“滴”。“那你赶紧，别让王主任看见了扣分。”", "林秀加快步伐，膝盖又“咔”地响了一声，疼痛像针尖扎进骨缝，但她没停。楼道尽头的防火门在夜风里“砰”地一声关上，隔绝了楼道里的杂音，只剩下她自己的脚步声、心跳声，和那行还没到期的 23:59 在黑暗中无声倒数。"]}]};
+const L = {"cover_label": "扉页与作品简介", "unit": "字", "by": "作者：", "meta_sep": " | 全书约 ", "intro_title": "作品概念与梗概", "prev": "← 上一章", "next": "下一章 →", "start": "开始阅读第一章 →", "ch_prefix": "第 ", "ch_mid": " 章 | ", "theme_dark": "☀️ 亮色模式", "theme_light": "🌓 暗色模式"};
+let currentIndex = -1; // -1 = title page / synopsis
+let fontSize = 17;
+
+function renderSidebar() {
+    const list = document.getElementById("chapterList");
+    list.innerHTML = `<li class="chapter-item ${currentIndex === -1 ? 'active' : ''}" onclick="goToChapter(-1)">
+        <span>📖 ${L.cover_label}</span>
+    </li>`;
+    book.chapters.forEach((ch, idx) => {
+        const li = document.createElement("li");
+        li.className = "chapter-item" + (currentIndex === idx ? " active" : "");
+        li.innerHTML = `<span>${ch.title}</span><span class="ch-words">${ch.words}${L.unit}</span>`;
+        li.onclick = () => goToChapter(idx);
+        list.appendChild(li);
+    });
+}
+
+function renderContent() {
+    const wrapper = document.getElementById("articleWrapper");
+    const label = document.getElementById("currentChLabel");
+    if (currentIndex === -1) {
+        label.innerText = L.cover_label;
+        wrapper.innerHTML = `
+            <div class="article-header">
+                <h1>${book.title}</h1>
+                <div class="article-meta">${L.by}${book.author}${L.meta_sep}${book.total_words.toLocaleString()}${L.unit}</div>
+            </div>
+            <div class="intro-box">
+                <h3 style="margin-bottom:12px;color:var(--accent);">${L.intro_title}</h3>
+                <div style="white-space: pre-wrap; line-height:1.75;">${book.description}</div>
+            </div>
+            <div class="nav-buttons">
+                <button class="nav-btn" disabled>${L.prev}</button>
+                <button class="nav-btn" onclick="goToChapter(0)">${L.start}</button>
+            </div>
+        `;
+    } else {
+        const ch = book.chapters[currentIndex];
+        label.innerText = ch.title;
+        const pTags = ch.paragraphs.map(p => `<p style="font-size: ${fontSize}px;">${p}</p>`).join("");
+        wrapper.innerHTML = `
+            <div class="article-header">
+                <h1>${ch.title}</h1>
+                <div class="article-meta">${L.ch_prefix}${ch.index}${L.ch_mid}${ch.words}${L.unit}</div>
+            </div>
+            <div class="article-body">
+                ${pTags}
+            </div>
+            <div class="nav-buttons">
+                <button class="nav-btn" onclick="goToChapter(currentIndex - 1)">${L.prev}</button>
+                <button class="nav-btn" onclick="goToChapter(currentIndex + 1)" ${currentIndex >= book.chapters.length - 1 ? 'disabled' : ''}>${L.next}</button>
+            </div>
+        `;
+    }
+    document.getElementById("content-container").scrollTop = 0;
+}
+
+function goToChapter(idx) {
+    if (idx < -1 || idx >= book.chapters.length) return;
+    currentIndex = idx;
+    renderSidebar();
+    renderContent();
+}
+
+function toggleTheme() {
+    const current = document.documentElement.getAttribute("data-theme");
+    const next = current === "dark" ? "light" : "dark";
+    document.documentElement.setAttribute("data-theme", next);
+    document.getElementById("themeBtn").innerText = next === "dark" ? L.theme_dark : L.theme_light;
+}
+
+function changeFontSize(delta) {
+    fontSize = Math.max(14, Math.min(26, fontSize + delta));
+    const paras = document.querySelectorAll(".article-body p");
+    paras.forEach(p => p.style.fontSize = fontSize + "px");
+}
+
+renderSidebar();
+renderContent();
+</script>
+</body>
+</html>
