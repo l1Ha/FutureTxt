@@ -1,0 +1,59 @@
+{
+  "stages": {
+    "concept": "done",
+    "world": "done",
+    "characters": "done",
+    "outline": "done",
+    "draft": "done",
+    "review": "done",
+    "revise": "done",
+    "continuity": "done",
+    "assemble": "done"
+  },
+  "summaries": {},
+  "token_usage": {
+    "prompt_tokens": 87365,
+    "completion_tokens": 17712,
+    "total_tokens": 105077,
+    "by_stage": {
+      "concept": {
+        "prompt_tokens": 13737,
+        "completion_tokens": 2422,
+        "total_tokens": 16159
+      },
+      "world": {
+        "prompt_tokens": 14093,
+        "completion_tokens": 3468,
+        "total_tokens": 17561
+      },
+      "characters": {
+        "prompt_tokens": 14372,
+        "completion_tokens": 4168,
+        "total_tokens": 18540
+      },
+      "outline": {
+        "prompt_tokens": 21194,
+        "completion_tokens": 1542,
+        "total_tokens": 22736
+      },
+      "draft": {
+        "prompt_tokens": 1629,
+        "completion_tokens": 1505,
+        "total_tokens": 3134
+      },
+      "review": {
+        "prompt_tokens": 20670,
+        "completion_tokens": 2756,
+        "total_tokens": 23426
+      },
+      "revise": {
+        "prompt_tokens": 1670,
+        "completion_tokens": 1851,
+        "total_tokens": 3521
+      }
+    }
+  },
+  "scores": {
+    "1": 4.0
+  }
+}

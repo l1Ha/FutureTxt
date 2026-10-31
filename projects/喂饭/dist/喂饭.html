@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>喂饭 - FutureTxt 在线阅读</title>
+<style>
+:root {
+    --bg-primary: #f8fafc;
+    --bg-card: #ffffff;
+    --text-primary: #1e293b;
+    --text-secondary: #64748b;
+    --border-color: #e2e8f0;
+    --accent: #2563eb;
+    --accent-hover: #1d4ed8;
+    --sidebar-bg: #f1f5f9;
+}
+[data-theme="dark"] {
+    --bg-primary: #0f172a;
+    --bg-card: #1e293b;
+    --text-primary: #f8fafc;
+    --text-secondary: #94a3b8;
+    --border-color: #334155;
+    --accent: #38bdf8;
+    --accent-hover: #0ea5e9;
+    --sidebar-bg: #111827;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+    font-family: -apple-system, "PingFang SC", "Microsoft YaHei", "Noto Sans SC", sans-serif;
+    background-color: var(--bg-primary);
+    color: var(--text-primary);
+    line-height: 1.85;
+    transition: background-color 0.2s, color 0.2s;
+    display: flex;
+    height: 100vh;
+    overflow: hidden;
+}
+#sidebar {
+    width: 320px;
+    background: var(--sidebar-bg);
+    border-right: 1px solid var(--border-color);
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    flex-shrink: 0;
+}
+.sidebar-header {
+    padding: 20px;
+    border-bottom: 1px solid var(--border-color);
+}
+.sidebar-header h2 {
+    font-size: 1.15em;
+    font-weight: 700;
+    margin-bottom: 6px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+.sidebar-meta {
+    font-size: 0.85em;
+    color: var(--text-secondary);
+}
+.chapter-list {
+    overflow-y: auto;
+    flex: 1;
+    list-style: none;
+}
+.chapter-item {
+    padding: 12px 20px;
+    border-bottom: 1px solid var(--border-color);
+    cursor: pointer;
+    font-size: 0.95em;
+    transition: background 0.15s;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.chapter-item:hover {
+    background: rgba(0,0,0,0.04);
+}
+.chapter-item.active {
+    background: var(--accent);
+    color: #ffffff;
+    font-weight: 600;
+}
+.chapter-item .ch-words {
+    font-size: 0.8em;
+    opacity: 0.75;
+}
+#main {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+.topbar {
+    padding: 12px 24px;
+    border-bottom: 1px solid var(--border-color);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: var(--bg-card);
+}
+.controls button {
+    background: transparent;
+    border: 1px solid var(--border-color);
+    color: var(--text-primary);
+    padding: 6px 14px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 0.88em;
+    margin-left: 8px;
+    transition: 0.15s;
+}
+.controls button:hover {
+    border-color: var(--accent);
+    color: var(--accent);
+}
+#content-container {
+    flex: 1;
+    overflow-y: auto;
+    padding: 40px 10%;
+    display: flex;
+    justify-content: center;
+}
+.content-wrapper {
+    max-width: 780px;
+    width: 100%;
+}
+.article-header {
+    text-align: center;
+    margin-bottom: 36px;
+    padding-bottom: 20px;
+    border-bottom: 1px solid var(--border-color);
+}
+.article-header h1 {
+    font-size: 1.85em;
+    font-weight: 700;
+    margin-bottom: 10px;
+}
+.article-meta {
+    font-size: 0.9em;
+    color: var(--text-secondary);
+}
+.article-body p {
+    text-indent: 2em;
+    margin-bottom: 1.4em;
+    font-size: 1.1em;
+    text-align: justify;
+}
+.intro-box {
+    background: var(--bg-card);
+    border: 1px solid var(--border-color);
+    border-left: 5px solid var(--accent);
+    padding: 24px;
+    border-radius: 8px;
+    margin-bottom: 40px;
+}
+.nav-buttons {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 50px;
+    padding-top: 20px;
+    border-top: 1px solid var(--border-color);
+}
+.nav-btn {
+    padding: 10px 20px;
+    border-radius: 6px;
+    border: 1px solid var(--border-color);
+    background: var(--bg-card);
+    color: var(--text-primary);
+    cursor: pointer;
+    font-size: 0.95em;
+}
+.nav-btn:disabled {
+    opacity: 0.3;
+    cursor: not-allowed;
+}
+@media (max-width: 768px) {
+    body { flex-direction: column; }
+    #sidebar { width: 100%; height: 200px; }
+    #content-container { padding: 20px 5%; }
+}
+</style>
+</head>
+<body>
+<div id="sidebar">
+    <div class="sidebar-header">
+        <h2 title="喂饭">喂饭</h2>
+        <div class="sidebar-meta">作者：FutureTxt AI Writer · 1 章 / 5538 字</div>
+    </div>
+    <ul class="chapter-list" id="chapterList"></ul>
+</div>
+<div id="main">
+    <div class="topbar">
+        <span id="currentChLabel">扉页与作品简介</span>
+        <div class="controls">
+            <button onclick="changeFontSize(-1)">A-</button>
+            <button onclick="changeFontSize(1)">A+</button>
+            <button onclick="toggleTheme()" id="themeBtn">🌓 切换暗色</button>
+        </div>
+    </div>
+    <div id="content-container">
+        <div class="content-wrapper" id="articleWrapper"></div>
+    </div>
+</div>
+
+<script>
+const book = {"title": "喂饭", "author": "FutureTxt AI Writer", "description": "2126年，寿命延长技术让富人活过118岁，照护成为按分钟计费的“陪伴产业”。外来临时等级的周桂住进陆家，全天待命，接受“陪伴质量评分”考核；她七十八岁的母亲只能靠“远程照护包”（AI监护+每周钟点工）维持，最近一次视频已是四十七天前。陆老临终前要立遗嘱认亲周桂为女儿——平台规则规定照护工不得同时持有两份照护关系，接受认亲即刻切断与母亲的照护绑定，母亲将面临断供、评分归零、甚至被平台回收设备的后果。周桂必须在病床边、计费器滴答声中，用一勺米糊的温度决定自己与母亲的命运。", "total_words": 5538, "chapters": [{"index": 1, "title": "喂饭", "words": 5538, "paragraphs": ["周桂把第一勺米糊送进老人嘴里的时候，腕表在她腕骨上震了一下：计费开始，五点十二分，评分 4.62，距降级 0.02。", "米糊的温度靠她右腕那道旧疤试出来——三十八度，比标准低半度；她得在下一次评分刷新前，把剩下的十一勺喂完，再赶在六点前把床单换掉。", "“工单 20260714‑001，喂饭，第一餐。”合成音从腕表传来，夹着一丝金属的颤动。“评分 4.62，距降级 0.02。”", "她一天站满十六个小时，按分钟计费一元八，扣掉平台抽成 22%，到手约一千三百五十元；而老家的「远程照护包」每月扣两千一。第一年她还能两头照应，第二年她就把母亲的「每周一次钟点工」降成了「每两周一次」——账单上省下的那四小时，母亲在电话里从没提过。 周桂没回头，勺子伸向床头的老人。陆老的左耳后那枚微型节点在皮肤下微微隆起，像颗褪色的珍珠。他的嘴唇干裂，鼻饲管固定带勒出一道红痕，皮肤在灯光下泛着蜡黄的光泽。周桂把勺子送进他嘴里，动作快而轻，像在给精密仪器加注润滑油。老人喉头滚动，吞咽声被呼吸机的节奏吞没，呼吸机的活塞每一次推拉都震动着床板，传到她指尖的微颤。 上一次和母亲视频是四十七天前。那天她的评分从 4.64 掉到 4.62，平台把她的班从住家改成白班，她多出一个下午的空档。她拨过去，母亲举着手机在院子里转圈找信号，镜头里全是屋檐和天，谁都没看清谁的脸。通话时长四分十一秒，系统自动挂断，提示音冷静得像一句结账。", "“再算一分钟。”她在心里默念，腕表震动一次，扣款 ¥0.12。评分在屏幕上闪烁：4.61。", "喂完第七勺，老人闭上眼，喉间发出一声低哑的指令：“读信。”", "周桂把碗放回床头柜，缺口依然朝左。她从抽屉里抽出那叠泛黄的信纸，纸边已经脆得像干枯的树皮，翻动时发出细碎的脆响，灰尘在光柱里浮沉。第一封是三十年前写给已故妻子的，墨迹渗进纤维，字迹却仍工整，笔锋在纸面留下微微的凹陷。她清了清嗓子，声音压低到刚好能被麦克风捕捉，又不至于触发评分里的“语调异常”扣分。", "“第…三…行…‘春风不度玉门关’…”她一字一顿，指尖在纸面滑过，指腹感受到纸张的粗糙与岁月的粉尘，指尖微微发凉。", "“工单 20260714‑002，陪伴朗读，时长 12 分钟。”腕表又响了一遍，评分滑到 4.60。", "陆老的手指在被子上抓了一下，指甲刮过棉被发出细微的沙沙声，像干枯的树枝在风里摩擦。周桂知道他在等下一句，也在等那个“认亲”的时刻。平台规定：临时等级照护工不得同时持有两份照护关系。只要老人在数字遗嘱上签名，她的腕表就会弹出“身份升级·临时→正式”，而老家母亲端的远程照护包会同步弹出“照护关系解除·设备回收倒计时 48 h”。", "她偷偷瞥了一眼腕表右上角的小红点——母亲账号欠费 47 天，医疗联动已断，设备回收倒计时还在走。上周钟点工陈阿姨上门时，母亲只躺在床上，风扇“嗡嗡”响，公鸡在院子里啼叫，视频那头只留下一段没接通的语音：“桂儿，碗别烫着。”那声音里夹杂着风扇电机的电流噪音和公鸡尖锐的啼鸣，像一根细线把两地的晨昏缝合在一起。", "“读到第几行了？”陆老的声音像干枯的树枝摩擦，带着一丝沙哑的颤动。", "“第十二行。”周桂翻页，纸张发出脆响，纸角在指尖微微卷曲。", "“再读一遍。”", "她重复，语速放慢，呼吸与呼吸机同频。腕表每分钟震动一次，扣款、评分、计费、倒计时，所有数字在指尖下流动。评分 4.59。", "“工单 20260714‑003，遗嘱签署确认，请在老人最后一次呼吸前勾选‘已履行全部照护义务’。”合成音没有感情，只有固定的前缀和结尾的“滴—滴—”。", "陆老的手指颤抖着伸向平板，屏幕上浮现出一行行绿色的条款：《照护关系排他条例》第 4 款、第 5 款、第 7 款。他的指尖悬在“确认”键上方，指甲泛白，指腹的纹理在屏幕反光里清晰可辨。", "周桂的右腕疤痕在勺柄上磨出一道细细的白印。她感到掌心渗出冷汗，腕表的震动频率依旧每分钟一次，评分定格在 4.58。", "“签吧。”陆老的嘴角动了一下，像在笑，又像在咳嗽，喉头发出一声短促的气音。", "平板屏幕亮起，区块链写入完成的提示音比腕表更尖锐：“遗嘱已写入区块链，身份升级生效。”几乎同一秒，腕表弹出两行红字：", "**身份升级·临时→正式**", "**照护关系解除·设备回收倒计时 48 h**", "时间戳同步：2026‑07‑14 05:27:03。", "周桂盯着那两行字，指尖悬在“确认”键上。腕表的“滴—滴—”依然准点，评分定格在 4.58。她的呼吸声在呼吸机的节奏里变得清晰，右腕的疤痕又热了一下，像被无形的电流轻轻灼烧。", "她没有点下去。", "缺口搪瓷碗仍在床头，缺口朝左，米糊早已冷成一层薄皮，表面泛着微微的油光。周桂缓缓放下勺子，金属碰瓷发出一声轻响，像某种仪式的终止。", "她从口袋里摸出那部旧手机，屏幕划痕交错，边角磨圆，指纹油污在玻璃上留下模糊的光晕。拨号界面只有一个号码——远程照护包唯一服务热线。指尖悬在绿色拨号键上方，屏幕亮起“呼叫中”三字，背景是母亲那段语音里的风扇声和公鸡啼叫，风扇叶片切割空气的嗡嗡声与公鸡高亢的啼鸣交织成一首粗糙的二重奏。", "滴—滴—", "腕表继续计费，评分不动。屏幕上“呼叫中”闪烁，无人接听。周桂的指尖没有落下，定格在拨号键上方，像一根未拉紧的弦，绷紧在清晨的灰白光线里。", "（全文完）", "风扇叶片切割空气的嗡嗡声突然被一阵短促的忙音切断，随即传来一句机械女声：“您拨打的号码暂时无法接通，请稍后再试。”声波在狭窄的病房里折射，夹着消毒水的尖锐气味和陈年米糊的酸涩，钻进周桂的鼻腔。她指尖仍悬在绿色拨号键上方，指腹的纹理在屏幕反光里清晰可辨，腕表的震动依旧每分钟一次，评分纹丝不动地停在 4.58。", "陆老的呼吸机发出规律的嘶嘶声，像一台老旧的风箱在夜里拉扯。他的眼皮微微抬起，瞳孔在微弱的晨光里收缩，喉头滚动出一声低哑的“哼”，随后是一串断续的咳嗽，痰液在气管里翻涌，发出湿重的摩擦声。他没看平板，目光落在周桂的右腕，那道疤痕在勺柄上磨出的白印仍泛着微光。", "“别等了。”陆老的声音像干枯的树枝在风里摩擦，带着一丝不耐的沙哑，“系统不会等人，倒计时也不等人。”", "周桂的喉咙发紧，呼吸与呼吸机同频，腕表的“滴—滴—”在指尖下跳动，每一下都像在敲击她的心跳。她缓缓收回手指，屏幕熄灭，旧手机滑回口袋，边角磨圆的塑料外壳摩擦布料发出细微的沙沙声。缺口搪瓷碗里的米糊皮在晨光下泛着油光，周桂伸手揭开那层薄皮，冷气瞬间钻进指缝，指尖微微发麻。", "“签了就走不了。”她低声说，语速放慢，每一个字都像在称量分量，“设备回收倒计时四十八小时，回收车会在凌晨三点到。”", "陆老的手指在平板上颤抖，指甲泛白，指腹的纹理在屏幕反光里清晰可辨。他盯着“确认”键，指尖悬停，未落下。平板屏幕亮起，区块链写入完成的提示音比腕表更尖锐：“遗嘱已写入区块链，身份升级生效。”几乎同一秒，腕表弹出两行红字：", "**身份升级·临时→正式**", "**照护关系解除·设备回收倒计时 48 h**", "时间戳同步：2026‑07‑14 05:27:03。", "周桂盯着那两行字，指尖悬在“确认”键上。腕表的“滴—滴—”依然准点，评分定格在 4.58。她的呼吸声在呼吸机的节奏里变得清晰，右腕的疤痕又热了一下，像被无形的电流轻轻灼烧。", "她没有点下去。", "缺口搪瓷碗仍在床头，缺口朝左，米糊早已冷成一层薄皮，表面泛着微微的油光。周桂缓缓放下勺子，金属碰瓷发出一声轻响，像某种仪式的终止。", "她从口袋里摸出那部旧手机，屏幕划痕交错，边角磨圆，指纹油污在玻璃上留下模糊的光晕。拨号界面只有一个号码——远程照护包唯一服务热线。指尖悬在绿色拨号键上方，屏幕亮起“呼叫中”三字，背景是母亲那段语音里的风扇声和公鸡啼叫，风扇叶片切割空气的嗡嗡声与公鸡高亢的啼鸣交织成一首粗糙的二重奏。", "滴—滴—", "腕表继续计费，评分不动。屏幕上“呼叫中”闪烁，无人接听。周桂的指尖没有落下，定格在拨号键上方，像一根未拉紧的弦，绷紧在清晨的灰白光线里。", "忙音再次响起，紧接着是一阵短促的电子音，随即传来一句带着金属质感的男声：“周桂，照护包编号 20260714‑003，确认身份升级，请在十秒内按‘1’完成设备绑定解除。”声线冷硬，没有任何温度，仿佛从远方的服务器直穿耳膜。", "周桂的心跳漏了一拍，指尖微微收紧，指甲陷入掌心，指腹的汗珠渗出，顺着纹路滑向手腕。她听见陆老的呼吸机节奏骤然加快，嘶嘶声里夹杂着一丝急促的喘息，像是某种即将断裂的信号。", "“按‘1’。”陆老的声音在喉咙里滚动，带着一丝不容置疑的沙哑，“别让系统替你决定。”", "周桂的拇指悬在屏幕上方，指尖触碰到冰冷的玻璃，指纹油污在光晕里晃动。她闭上眼，风扇声、公鸡啼、呼吸机嘶嘶、腕表震动，所有声音汇成一股低沉的轰鸣，震得她耳膜发麻。十秒倒计时在腕表上无声流逝，红字的“48 h”在视网膜上燃烧。", "她的拇指终于落下，屏幕闪烁一下，绿色的“1”亮起，随即熄灭。合成音响起：“设备绑定解除确认，回收程序启动。”腕表的震动频率骤然加快，变成每十秒一次，评分依旧定格在 4.58。", "陆老的手指终于按下平板上的“确认”，屏幕泛起一阵绿光，区块链写入完成的提示音再次尖锐划破空气。他的指尖松开，指甲泛白的痕迹在屏幕上留下淡淡的压痕。", "周桂收回手机，塞进口袋，指尖触到旧布料的粗糙纹理。她抬头，晨光穿过窗帘缝隙，落在缺口搪瓷碗的油光上，也落在陆老枯瘦的手背上，青筋在皮肤下蜿蜒，像一条即将干涸的河。", "“走吧。”陆老低声说，声音里没有悲喜，只有风干后的平静，“回收车三点到，记得把充电器带上。”", "周桂点点头，没说话。她弯腰拾起床头的充电器，线缆缠绕在手指上，冰凉的金属插头刺痛掌心。她转身，脚步在病房的灰白地砖上发出轻微的摩擦声，像一根细线，把两地的晨昏再一次缝合。", "走出病房的那一刻，走廊尽头的消毒水味像一层薄膜贴在鼻腔里，混着陈旧的尿布味和远处食堂飘来的咸菜酸气。周桂的脚步在灰白地砖上发出细碎的“沙、沙”声，每一步都像在把腕表的震动频率踩进骨缝。腕表的红色倒计时仍在无声流逝，震动从十秒一次变成五秒一次，指尖传来的微弱电流顺着手腕爬上前臂，像一根细细的针在血管里轻轻扎动。", "电梯门滑开，冷气裹着一股机油味扑面而来。她走进去，指尖按下“1”楼，金属按键的凹陷处还残留着上一个病人指尖的温度。电梯轿厢内的荧光灯嗡嗡作响，光管末端闪烁着微弱的蓝紫光晕，映在她脸上，把眼下的青黑衬得更深。轿厢里只有一个穿蓝色工装的清洁工，手里攥着一卷黑色垃圾袋，袋口勒紧的绳结勒出指节的白印。他瞥了她一眼，目光在腕表上停留了不到一秒，随即低头继续擦拭扶手，动作机械而熟练。", "“周桂，回收车三点到，充电器别忘了。”陆老的声音从身后传来，沙哑得像砂纸摩擦金属。她没回头，只是在电梯门关上的瞬间，听见陆老的拐杖在地面上发出沉闷的“咚、咚”声，每一下都震得她心口一紧。", "电梯停在一楼，门开时一股热风卷着灰尘扑面而来，夹杂着远处高架桥下汽车尾气的焦糊味。周桂走出大厅，自动门两侧的红外感应器发出一声轻响，绿光扫过她的腕表，屏幕上“48 h”依旧刺眼，评分依旧卡在 4.58，仿佛时间在这一刻被钉死在同一张纸上。", "大厅角落的自助终端闪烁着幽蓝的界面，屏幕上滚动着“设备回收确认”“数据上传中”“信用积分结算”等字样。她把充电器插进终端的 USB‑C 接口，金属插头发出一声轻微的“咔嗒”，指尖传来的凉意顺着线缆爬上手背。终端弹出一行绿字：“充电器已识别，回收流程进入第二阶段，请在十分钟内前往指定回收点。”", "十分钟。她抬腕看表，震动已变成三秒一次，指尖的汗珠在表带下滑出细细的水痕。大厅的广播里插着一段合成女声：“尊敬的用户，您的照护包已解除绑定，回收车辆将于 15:00 准时到达，请携带全部配件至一号口等候。”声音平滑得没有任何温度，像从服务器直穿耳膜，绕过大脑直接落在皮肤上。", "周桂握紧充电器的线缆，指节泛白。她走向一号口，脚下的地砖在脚掌下发出细微的“吱、吱”声，像某种低沉的心跳。门口的自动卷帘门半开，露出外面灰白的天空和远处停着的白色厢式货车，车身印着“智护回收”四个红字，车顶的天线在风里微微晃动，发出“簌、簌”的金属摩擦声。", "车门滑开，一个穿灰色工装的年轻人跳下来，手里拿着一个扫码枪，枪口的红光扫过她的腕表，屏幕上跳出一串绿色代码，随即变成“回收确认”。年轻人没说话，只是把一个黑色的塑料箱递过来，箱盖上贴着条形码，边缘磨损得露出白色的塑料纤维。", "“把充电器放进去，签个字。”年轻人的声音干瘪，带着一丝不耐烦的鼻音。周桂把充电器塞进箱子，指尖触到箱底冰冷的金属板，指腹的汗珠瞬间被吸干。她在电子笔上划下名字，笔尖在屏幕上划出一道淡蓝的轨迹，随即消失。", "“完成。”年轻人收回箱子，按下车门关闭键，车身微微震动，发动机低沉的轰鸣声像远雷滚过。周桂站在原地，风吹起她鬓角的碎发，贴在额头湿冷的皮肤上。腕表的震动终于停了，屏幕上只剩下一个静止的“4.58”，红色的倒计时归零，绿色的“回收完成”图标在视网膜上闪烁一下，随即熄灭。", "她转身，脚步声在空旷的广场上回荡，每一步都像在把刚才的仪式一步步踩进尘土里。远处的公鸡又叫了一声，音调高亢而破碎，穿过高架桥的轰鸣，钻进她耳膜，像一根细细的针，扎在清晨的灰白光线里。", "周桂在站牌下停住，掏出那部旧手机，翻到通讯录最上面那个名字，按下拨号键。", "屏幕亮起，一行灰白色的小字在底部转了又转：**呼叫中**。", "她把手机贴在耳边等着，另一只手插进口袋，指腹按着那只缺口朝左的搪瓷碗边缘——碗底的凉意顺着指甲缝爬上来，提醒她这只碗已经不再属于任何一餐。", "她没有按第二次重拨。腕表在袖口里重新滴、滴地走起来——十五点，回收车到一号口；在那之前，她还有四个小时的照护工单要站。", "远处的回收货车已经启动，尾气在冷空气中凝成白色的细带，随风飘散。她加快步子，腕表上的倒计时从 4:58 跳到 4:57，催着她赶往下一个必须完成的「照护」。"]}]};
+const L = {"cover_label": "扉页与作品简介", "unit": "字", "by": "作者：", "meta_sep": " | 全书约 ", "intro_title": "作品概念与梗概", "prev": "← 上一章", "next": "下一章 →", "start": "开始阅读第一章 →", "ch_prefix": "第 ", "ch_mid": " 章 | ", "theme_dark": "☀️ 亮色模式", "theme_light": "🌓 暗色模式"};
+let currentIndex = -1; // -1 = title page / synopsis
+let fontSize = 17;
+
+function renderSidebar() {
+    const list = document.getElementById("chapterList");
+    list.innerHTML = `<li class="chapter-item ${currentIndex === -1 ? 'active' : ''}" onclick="goToChapter(-1)">
+        <span>📖 ${L.cover_label}</span>
+    </li>`;
+    book.chapters.forEach((ch, idx) => {
+        const li = document.createElement("li");
+        li.className = "chapter-item" + (currentIndex === idx ? " active" : "");
+        li.innerHTML = `<span>${ch.title}</span><span class="ch-words">${ch.words}${L.unit}</span>`;
+        li.onclick = () => goToChapter(idx);
+        list.appendChild(li);
+    });
+}
+
+function renderContent() {
+    const wrapper = document.getElementById("articleWrapper");
+    const label = document.getElementById("currentChLabel");
+    if (currentIndex === -1) {
+        label.innerText = L.cover_label;
+        wrapper.innerHTML = `
+            <div class="article-header">
+                <h1>${book.title}</h1>
+                <div class="article-meta">${L.by}${book.author}${L.meta_sep}${book.total_words.toLocaleString()}${L.unit}</div>
+            </div>
+            <div class="intro-box">
+                <h3 style="margin-bottom:12px;color:var(--accent);">${L.intro_title}</h3>
+                <div style="white-space: pre-wrap; line-height:1.75;">${book.description}</div>
+            </div>
+            <div class="nav-buttons">
+                <button class="nav-btn" disabled>${L.prev}</button>
+                <button class="nav-btn" onclick="goToChapter(0)">${L.start}</button>
+            </div>
+        `;
+    } else {
+        const ch = book.chapters[currentIndex];
+        label.innerText = ch.title;
+        const pTags = ch.paragraphs.map(p => `<p style="font-size: ${fontSize}px;">${p}</p>`).join("");
+        wrapper.innerHTML = `
+            <div class="article-header">
+                <h1>${ch.title}</h1>
+                <div class="article-meta">${L.ch_prefix}${ch.index}${L.ch_mid}${ch.words}${L.unit}</div>
+            </div>
+            <div class="article-body">
+                ${pTags}
+            </div>
+            <div class="nav-buttons">
+                <button class="nav-btn" onclick="goToChapter(currentIndex - 1)">${L.prev}</button>
+                <button class="nav-btn" onclick="goToChapter(currentIndex + 1)" ${currentIndex >= book.chapters.length - 1 ? 'disabled' : ''}>${L.next}</button>
+            </div>
+        `;
+    }
+    document.getElementById("content-container").scrollTop = 0;
+}
+
+function goToChapter(idx) {
+    if (idx < -1 || idx >= book.chapters.length) return;
+    currentIndex = idx;
+    renderSidebar();
+    renderContent();
+}
+
+function toggleTheme() {
+    const current = document.documentElement.getAttribute("data-theme");
+    const next = current === "dark" ? "light" : "dark";
+    document.documentElement.setAttribute("data-theme", next);
+    document.getElementById("themeBtn").innerText = next === "dark" ? L.theme_dark : L.theme_light;
+}
+
+function changeFontSize(delta) {
+    fontSize = Math.max(14, Math.min(26, fontSize + delta));
+    const paras = document.querySelectorAll(".article-body p");
+    paras.forEach(p => p.style.fontSize = fontSize + "px");
+}
+
+renderSidebar();
+renderContent();
+</script>
+</body>
+</html>
