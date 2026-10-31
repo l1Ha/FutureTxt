@@ -882,7 +882,7 @@ def export_all(
     """
     is_en = (lang or "zh").lower() == "en"
     if formats is None or "all" in formats:
-        formats = ["epub", "html", "txt"]
+        formats = ["epub", "html", "txt", "pdf"]
 
     cfg = proj.config()
     title = cfg.get("title", proj.name)
@@ -960,5 +960,14 @@ def export_all(
             out_file = os.path.join(dist_dir, f"{title}.txt")
             export_txt(out_file, title, author, description, chapters, lang=lang_key)
             results["txt"] = out_file
+        elif fmt == "pdf":
+            # 无 TeX 依赖的中文 PDF（子集化嵌入系统中文字体）；找不到字体时优雅跳过
+            out_file = os.path.join(dist_dir, f"{title}.pdf")
+            try:
+                from pdf import export_pdf
+                export_pdf(out_file, title, author, description, chapters)
+                results["pdf"] = out_file
+            except Exception as e:  # noqa: BLE001
+                print(f"  ⚠ 跳过 PDF（{str(e)[:80]}）")
 
     return results

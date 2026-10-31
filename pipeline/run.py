@@ -234,7 +234,7 @@ def cmd_export(args: argparse.Namespace) -> None:
     if not proj.exists():
         raise SystemExit(red(f"项目不存在：{args.name}"))
     lang = getattr(args, "lang", "zh")
-    fmts = [args.format] if args.format != "all" else ["epub", "html", "txt"]
+    fmts = [args.format] if args.format != "all" else ["epub", "html", "txt", "pdf"]
     suffix = "（英文版）" if lang == "en" else ""
     print(cyan(f"正在导出《{proj.config().get('title', proj.name)}》{suffix}..."))
     res = export.export_all(proj, formats=fmts, strip=not args.keep_anchors, lang=lang)
@@ -370,8 +370,8 @@ def build_parser() -> argparse.ArgumentParser:
     # export
     e = sub.add_parser("export", help="导出出版级电子书（EPUB 3.0 / 离线单文件 HTML 阅读器 / 规范排版 TXT）")
     e.add_argument("name", help="项目标识")
-    e.add_argument("--format", choices=["epub", "html", "txt", "all"], default="all",
-                   help="导出格式：epub / html / txt / all（默认 all）")
+    e.add_argument("--format", choices=["epub", "html", "txt", "pdf", "all"], default="all",
+                   help="导出格式：epub / html / txt / pdf（无 TeX 依赖）/ all（默认 all）")
     e.add_argument("--keep-anchors", action="store_true",
                    help="保留（W5）（C6）等设定编号锚点（默认剥离为出版净稿；章节/成书始终保留供审校）")
     e.add_argument("--lang", choices=["zh", "en"], default="zh",

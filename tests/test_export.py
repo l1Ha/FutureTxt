@@ -109,6 +109,30 @@ class TestExport(unittest.TestCase):
         self.assertIn("`3F9A…C2`", out)   # 哈希原样保留
         self.assertNotIn("（W6）", out)    # 锚点照常剥离
 
+    def test_export_pdf_without_tex(self):
+        # 无 TeX 依赖的 PDF：生成成功且含子集字体（环境无中文字体时跳过）
+        try:
+            import pdf as pdfmod
+            font = pdfmod.find_cjk_font()
+        except Exception as e:  # noqa: BLE001
+            self.skipTest("环境无中文字体：%s" % e)
+        out_path = os.path.join(self.temp_dir.name, "book.pdf")
+        chapters = [("第一章 试排", "他在液氮舱中醒来。\n\n雨水敲打着头盔面罩。\n" + "这是一段用于验证换行与子集嵌入的中文。" * 20)]
+        pdfmod.export_pdf(out_path, "PDF 测试", "作者", "简介文字。", chapters)
+        self.assertTrue(os.path.exists(out_path))
+        with open(out_path, "rb") as f:
+            data = f.read()
+        self.assertTrue(data.startswith(b"%PDF-1.7"))
+        self.assertIn(b"/Subtype /CIDFontType2", data)
+        self.assertIn(b"/Encoding /Identity-H", data)
+        self.assertIn(b"/FontFile2", data)
+        self.assertGreater(len(data), 20000)   # 子集字体确实嵌入
+        # 文字回读：证明字形编码链路自洽（中文能正确映射到嵌入字形）
+        text = pdfmod.extract_text(out_path)
+        self.assertIn("PDF 测试", text)
+        self.assertIn("他在液氮舱中醒来", text)
+        self.assertIn("验证换行与子集嵌入的中文", text)
+
     def test_export_strips_anchors_in_description(self):
         # 简介（作品简介/premise）也可能带锚点，必须与正文一样剥离
         root = self.temp_dir.name

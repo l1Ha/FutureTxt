@@ -27,7 +27,7 @@ from stages import Project, read
 
 ASCII_RE = re.compile(r"^[A-Za-z0-9._-]+$")
 TAG_RE = re.compile(r"novels-v(\d+)\.(\d+)$")
-FORMATS = ("epub", "html", "txt")
+FORMATS = ("epub", "html", "txt", "pdf")
 
 
 # ---------------------------------------------------------------- 纯函数（可离线测试）
@@ -164,6 +164,7 @@ def compose_notes(proj: Project, prefix: str, tag: str) -> str:
         "| `.epub` | 推荐：Kindle / 微信读书 / Kobo 等主流阅读器可导入 |",
         "| `.html` | 浏览器双击直接阅读（含侧栏目录与暗色模式） |",
         "| `.txt` | 纯文本，任意设备可读 |",
+        "| `.pdf` | A4 中文排版（字形子集化嵌入，无 TeX 依赖，可直接打印） |",
         "",
         "## 版本说明\n",
         "- **出版净稿**：设定编号锚点（W/C 规则、日常细节、条目标题标签）已自动剥离；"

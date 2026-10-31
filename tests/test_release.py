@@ -31,9 +31,9 @@ class TestReleasePure(unittest.TestCase):
     def test_asset_names_ascii_only(self):
         names = release.asset_names("QuanJuan", has_en=False)
         self.assertEqual([n for _, n in names],
-                         ["QuanJuan.epub", "QuanJuan.html", "QuanJuan.txt"])
+                         ["QuanJuan.epub", "QuanJuan.html", "QuanJuan.txt", "QuanJuan.pdf"])
         both = release.asset_names("QuanJuan", has_en=True)
-        self.assertEqual(len(both), 6)
+        self.assertEqual(len(both), 8)
         self.assertIn(("en", "QuanJuan-EN.epub"), both)
         for _, n in both:
             self.assertTrue(release.ASCII_RE.match(n), n)
@@ -55,7 +55,7 @@ class TestReleasePackage(unittest.TestCase):
         with open(os.path.join(self.proj_dir, "chapters", "chapter_001.md"), "w",
                   encoding="utf-8") as f:
             f.write("# 第1章 债务枷锁\n\n" + "他欠下的债永远还不清。" * 20)
-        for ext in ("epub", "html", "txt"):
+        for ext in ("epub", "html", "txt", "pdf"):
             with open(os.path.join(self.proj_dir, "dist", "圈养纪元." + ext), "w",
                       encoding="utf-8") as f:
                 f.write("zh-" + ext)
@@ -79,8 +79,9 @@ class TestReleasePackage(unittest.TestCase):
         assets = release.collect_assets(self.proj, out, "JuanYangJiYuan")
         names = sorted(os.path.basename(d) for _, _, d in assets)
         self.assertEqual(names, [
-            "JuanYangJiYuan-EN.epub", "JuanYangJiYuan-EN.html", "JuanYangJiYuan-EN.txt",
-            "JuanYangJiYuan.epub", "JuanYangJiYuan.html", "JuanYangJiYuan.txt"])
+            "JuanYangJiYuan-EN.epub", "JuanYangJiYuan-EN.html", "JuanYangJiYuan-EN.pdf",
+            "JuanYangJiYuan-EN.txt", "JuanYangJiYuan.epub", "JuanYangJiYuan.html",
+            "JuanYangJiYuan.pdf", "JuanYangJiYuan.txt"])
         for kind, src, dst in assets:
             with open(dst, encoding="utf-8") as f:
                 body = f.read()
