@@ -30,6 +30,15 @@ class TestStages(unittest.TestCase):
         self.assertIn("直到最后一章", last)
         self.assertIn("按实际章数自行换算比例", act)
 
+    def test_revision_keeps_length_guard(self):
+        # 原稿已达标时，修订稿被压缩 10% 以上 → 拒绝（保留原稿）
+        self.assertFalse(stages.revision_keeps_length(5700, 2446, 6500))
+        self.assertFalse(stages.revision_keeps_length(5747, 4666, 6500))
+        # 正常修订（幅度小）→ 放行
+        self.assertTrue(stages.revision_keeps_length(5700, 5400, 6500))
+        # 原稿本就不足 85% → 放行（后续由字数闸门补足）
+        self.assertTrue(stages.revision_keeps_length(3000, 1200, 6500))
+
     def test_short_form_rules_and_single_piece_plan(self):
         cfg = {"work_type": "short", "words_per_chapter": 6000}
         self.assertEqual(stages.work_form(cfg), "short")

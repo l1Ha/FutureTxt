@@ -127,6 +127,18 @@ def quality_rules(per, form: str = "novel"):
     )
 
 
+def revision_keeps_length(before_wc: int, after_wc: int, per: int) -> bool:
+    """修订稿篇幅是否可接受。
+
+    推理型模型在「重写/对齐」类任务上会本能压缩（实测把 5747 字压到 2446 字）。
+    规则：原稿已达标（≥85%）时，修订稿不得低于原文的 90%；原稿本就不足则放行
+    （后续由字数闸门补足）。
+    """
+    if before_wc < int(per * 0.85):
+        return True
+    return after_wc >= int(before_wc * 0.9)
+
+
 def _enforce_length(api, n, title, per, text):
     """字数闸门：低于目标 85% 时自动补足。返回 (text, note)。
 
@@ -850,6 +862,7 @@ def stage_revise(proj: Project, cfg: Dict[str, Any], api: Dict[str, Any], only: 
                 print(f"    - 第{n}章 审校结论为通过，跳过（--force 可强制修订）")
                 continue
             src_text = clean(read(src))
+            before_wc = word_count(src_text)
             cont_report = read(proj.path("reviews", "全书连续性报告.md"))
             next_sum = "\n【下一章摘要（不得提前消耗其事件）】\n第%d章：%s\n" % (
                 n + 1, proj.summary(n + 1)) if proj.summary(n + 1) else ""
@@ -863,6 +876,8 @@ def stage_revise(proj: Project, cfg: Dict[str, Any], api: Dict[str, Any], only: 
                 f"【原文章节】\n{src_text}\n\n【审校报告】\n{review}\n\n"
                 "特别注意：重写不得引入其他章节已出现过的场景、对白、结尾句；"
                 "不得复用前情摘要中已发生过的桥段；只修复报告所列问题。\n"
+                f"**篇幅纪律**：修订后字数不得低于原文的 90%（原文约 {before_wc} 字）——"
+                "只修问题，不要重写整篇、不要压缩删减；若报告要求删减重复，请用等量新细节补回。\n"
                 f"输出完整重写后的章节全文（以「# 第{n}章 …」开头），长度约 {per} 字（±15%），"
                 "纯 Markdown 正文，无任何解释。"
             )
@@ -877,6 +892,10 @@ def stage_revise(proj: Project, cfg: Dict[str, Any], api: Dict[str, Any], only: 
                                               out_str)) if mtitle else f"# 第{n}章\n\n{out_str}"
                 out_str = clean(out_str)
                 out_str, gate_note = _enforce_length(api, n, "", per, out_str)
+                after_wc = word_count(META_NOTE_RE.sub("", out_str))
+                if not revision_keeps_length(before_wc, after_wc, per):
+                    print(f"    ⚠ 第{n}章修订压缩过度（{before_wc}→{after_wc}字 < 原文90%），已保留原稿")
+                    continue
                 write(src + ".bak", read(src))
                 write(src, out_str)
                 proj.track_usage("revise")
