@@ -34,11 +34,20 @@ FORM_MODULES: Dict[str, List[str]] = {
 }
 
 
-def stage_modules(stage: str, form: str = "novel") -> List[str]:
-    """返回某阶段应注入的知识模块（通用 + 形态专用）。"""
+def stage_modules(stage: str, form: str = "novel",
+                  extra: Optional[Sequence[str]] = None) -> List[str]:
+    """返回某阶段应注入的知识模块（通用 + 形态专用 + 项目级）。
+
+    extra 来自 project.json 的 `kb_modules`：只对当前项目生效，
+    用于挂载题材专用模块（如乡村消亡、深海、法庭），不污染其它项目。
+    """
     mods = list(STAGE_MODULES.get(stage, []))
     for m in FORM_MODULES.get((form or "novel").lower(), []):
         if m not in mods:
+            mods.append(m)
+    for m in (extra or []):
+        m = str(m).strip()
+        if m and m not in mods:
             mods.append(m)
     return mods
 

@@ -30,6 +30,17 @@ class TestStages(unittest.TestCase):
         self.assertIn("直到最后一章", last)
         self.assertIn("按实际章数自行换算比例", act)
 
+    def test_end_marker_and_continuation_repeat_guard(self):
+        self.assertEqual(stages.find_end_marker("正文在这里结束。（全文完）"), "（全文完）")
+        self.assertEqual(stages.find_end_marker("正文还在继续。"), "")
+        before = ("他沿着河岸一直走到天黑才停下来。"
+                  "她把那盏灯留在窗台上没有关。"
+                  "远处传来一声很长的汽笛。")
+        self.assertTrue(stages.continuation_repeats(
+            before, "她把那盏灯留在窗台上没有关。然后她转身进屋。"))
+        self.assertFalse(stages.continuation_repeats(
+            before, "天亮了，街上有了第一班电车，卖早点的人推开了卷帘门。"))
+
     def test_revision_keeps_length_guard(self):
         # 原稿已达标时，修订稿被压缩 10% 以上 → 拒绝（保留原稿）
         self.assertFalse(stages.revision_keeps_length(5700, 2446, 6500))

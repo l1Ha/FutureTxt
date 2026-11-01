@@ -9,6 +9,7 @@
   python pipeline/run.py status 赛博侦探                     # 查看项目进度与 Token 消耗
   python pipeline/run.py stats 赛博侦探                      # 小说数据全景与文学工艺指标
   python pipeline/run.py audit 赛博侦探                      # 设定、角色与大纲伏笔一致性审计
+  python pipeline/run.py lint 赛博侦探                       # 文风体检：套话/AI腔/长句/重复/虚词密度
   python pipeline/run.py export 赛博侦探 --format all        # 导出 EPUB 电子书、HTML 阅读器、规范 TXT
   python pipeline/run.py translate 赛博侦探                  # 双语支线：译为出版级英文（chapters_en/）
   python pipeline/run.py export 赛博侦探 --lang en           # 导出英文版（dist_en/，标题带 English Edition）
@@ -33,6 +34,7 @@ import kb  # noqa: E402
 import llm  # noqa: E402
 import release  # noqa: E402
 import stages  # noqa: E402
+import style  # noqa: E402
 import translate  # noqa: E402
 from stages import Project  # noqa: E402
 
@@ -108,6 +110,7 @@ def cmd_init(args: argparse.Namespace) -> None:
         "max_chapters": args.max_chapters,
         "work_type": args.form,
         "target_chapters": 1 if args.form == "short" else args.chapters,
+        "kb_modules": [m.strip() for m in (args.kb_modules or "").split(",") if m.strip()],
     }
     proj.save_config(cfg)
     proj.save_state({"stages": {}, "summaries": {}})
@@ -229,6 +232,20 @@ def cmd_audit(args: argparse.Namespace) -> None:
     print(audit.format_audit_report(res))
 
 
+def cmd_lint(args: argparse.Namespace) -> None:
+    """确定性文风体检：套话、AI 腔、长句、重复、虚词密度（不调用模型）。"""
+    proj = Project(ROOT, args.name)
+    if not proj.exists():
+        raise SystemExit(red(f"项目不存在：{args.name}"))
+    res = style.analyze_project(proj, chapter=args.chapter)
+    report = style.format_report(res)
+    print(report)
+    if args.write:
+        out = proj.path("reviews", "文风体检.md")
+        stages.write(out, report)
+        print(green(f"\n✔ 体检报告已写入：{os.path.relpath(out, ROOT)}"))
+
+
 def cmd_export(args: argparse.Namespace) -> None:
     proj = Project(ROOT, args.name)
     if not proj.exists():
@@ -339,6 +356,7 @@ def build_parser() -> argparse.ArgumentParser:
     i.add_argument("--audience", default="成人科幻读者", help="目标读者画像")
     i.add_argument("--extra", help="作者补充的特殊设定或硬性要求")
     i.add_argument("--asset-prefix", help="发行附件用的 ASCII 前缀（拼音），如 JuanYangJiYuan")
+    i.add_argument("--kb-modules", help="项目级知识模块（逗号分隔的目录名），如 11-社会推演；只对本项目生效")
     i.add_argument("--overwrite", action="store_true", help="如项目已存在则强制重置覆盖")
     i.set_defaults(func=cmd_init)
 
@@ -366,6 +384,13 @@ def build_parser() -> argparse.ArgumentParser:
     a = sub.add_parser("audit", help="设定、角色一致性与大纲伏笔闭环自动化审计")
     a.add_argument("name", help="项目标识")
     a.set_defaults(func=cmd_audit)
+
+    # lint
+    ln = sub.add_parser("lint", help="文风体检：陈词滥调 / AI 腔 / 长句 / 重复 / 虚词密度（不调用模型）")
+    ln.add_argument("name", help="项目标识")
+    ln.add_argument("--chapter", type=int, help="仅体检指定章节（默认全书）")
+    ln.add_argument("--write", action="store_true", help="把报告写入 reviews/文风体检.md")
+    ln.set_defaults(func=cmd_lint)
 
     # export
     e = sub.add_parser("export", help="导出出版级电子书（EPUB 3.0 / 离线单文件 HTML 阅读器 / 规范排版 TXT）")

@@ -13,6 +13,7 @@ from typing import Any, Dict, List, Optional, Tuple
 import export
 import kb
 import llm
+import style
 
 # ---------------------------------------------------------------- 基础工具
 
@@ -92,8 +93,8 @@ def work_form(cfg: Dict[str, Any]) -> str:
 
 
 def _kb(proj: Project, cfg: Dict[str, Any], stage: str, cap: Optional[int] = None) -> str:
-    """按作品形态注入知识模块（短篇追加 10-短篇写作）。"""
-    mods = kb.stage_modules(stage, work_form(cfg))
+    """按作品形态 + 项目级模块注入知识（短篇追加 10-短篇写作）。"""
+    mods = kb.stage_modules(stage, work_form(cfg), extra=cfg.get("kb_modules") or [])
     return kb.load(proj.root, mods, cap=cap) if cap else kb.load(proj.root, mods)
 
 
@@ -125,6 +126,27 @@ def quality_rules(per, form: str = "novel"):
         "且须在情节中以**人物付出的具体代价**显形；不得只做科技奇观或悬空设定。\n"
         "7) 长度：实际汉字数须达到约 %d 字的 85%% 以上（不足将被闸门自动扩写一次）。" % per
     )
+
+
+END_MARKERS = ("（全文完）", "(全文完)", "【全文完】", "——全文完——", "（完）", "(完)")
+
+
+def find_end_marker(text: str) -> str:
+    """返回文末（或文中）出现的完结标记；无则空串。"""
+    for marker in END_MARKERS:
+        if marker in (text or ""):
+            return marker
+    return ""
+
+
+def continuation_repeats(before: str, continuation: str) -> bool:
+    """续写是否在复述原文尾部（≥12 字的整句原样重现）。"""
+    tail = (before or "")[-900:]
+    tail_sents = [re.sub(r"[^\u4e00-\u9fffa-zA-Z0-9]", "", s)
+                  for s in re.split(r"[。！？!?\n]+", tail)]
+    tail_sents = [s for s in tail_sents if len(s) >= 12]
+    cont_norm = re.sub(r"[^\u4e00-\u9fffa-zA-Z0-9]", "", continuation or "")
+    return any(s in cont_norm for s in tail_sents)
 
 
 def revision_keeps_length(before_wc: int, after_wc: int, per: int) -> bool:
@@ -172,6 +194,12 @@ def _enforce_length(api, n, title, per, text):
     except Exception:  # noqa: BLE001
         pass
 
+    # 完结保护：已有「全文完」等标记时，绝不再往后拼接（否则会出现两套结尾）
+    marker = find_end_marker(best)
+    if marker:
+        wc_now = word_count(META_NOTE_RE.sub("", best))
+        return best, "；⚠字数闸门：检测到完结标记「%s」，不再续写（%d字，低于目标85%%）" % (marker, wc_now)
+
     # ② 续写拼接兜底（最多两轮；单轮索取封顶，防止模型单次暴涨 3~5 倍）
     for _ in range(2):
         wc = word_count(META_NOTE_RE.sub("", best))
@@ -185,7 +213,7 @@ def _enforce_length(api, n, title, per, text):
                   "这是本章的结尾片段：\n\n%s\n\n"
                   "请**接着往下写**约 %d 字的续写内容（同一场景、紧接的下一步动作与对话），"
                   "不要重复或概括上述已有情节，不要加章标题，不要任何解释性文字，"
-                  "直接输出续写正文。" % (best[-1000:], add)}],
+                  "不要写「全文完」「完」等完结标记，直接输出续写正文。" % (best[-1000:], add)}],
                 api, max_tokens=max(int(api["max_tokens"]), add * 3),
                 what="第%d章续写" % n)
         except Exception as e:  # noqa: BLE001
@@ -194,6 +222,8 @@ def _enforce_length(api, n, title, per, text):
         cont = re.sub(r"^#{1,3}\s*第\s*\d+\s*章[^\n]*\n+", "", cont).strip()
         if word_count(cont) < 150:
             break
+        if continuation_repeats(best, cont):
+            return best, "；⚠字数闸门：续写复述原文尾部，已拒绝（%d字）" % wc
         best = best.rstrip() + "\n\n" + cont
 
     wc1 = word_count(META_NOTE_RE.sub("", best))
@@ -805,12 +835,22 @@ def stage_review(proj: Project, cfg: Dict[str, Any], api: Dict[str, Any], only: 
             if proj.summary(n + 1):
                 neigh.append("- 第%d章：%s" % (n + 1, proj.summary(n + 1)))
             neigh_block = ("\n【相邻章节摘要（供跨章检查）】\n%s\n" % "\n".join(neigh)) if neigh else ""
+            src_text = read(src)
+            # 确定性文风体检：给审校模型一份可定位的线索（不替代其判断）
+            try:
+                style_block = style.digest(style.analyze_text(src_text))
+            except Exception:  # noqa: BLE001
+                style_block = ""
+            style_section = (
+                "\n【机器文体体检（确定性指标，仅作定位线索；若与你的阅读判断冲突，以你为准）】\n%s\n"
+                % style_block) if style_block else ""
             user = (
                 "请审校下面这一章。\n\n"
                 f"【审校清单】\n{checklist}\n\n【质量红线】\n{quality_rules(per)}\n\n"
                 f"【世界观硬性设定】\n{world}\n\n【角色要点】\n{chars}\n\n"
                 f"【大纲中的本章任务】\n{_outline_block(proj, n)}\n{neigh_block}"
-                f"【章节正文（约目标 {per} 字）】\n{read(src)}\n\n"
+                f"{style_section}"
+                f"【章节正文（约目标 {per} 字）】\n{src_text}\n\n"
                 f"输出格式：\n# 第{n}章 审校报告\n"
                 "## 总评分（1-10，含扣分理由）\n"
                 "## 问题清单\n每条：【严重度 高/中/低】位置（引用原文片段≤30字）→ 问题 → 修改建议\n"
@@ -863,6 +903,13 @@ def stage_revise(proj: Project, cfg: Dict[str, Any], api: Dict[str, Any], only: 
                 continue
             src_text = clean(read(src))
             before_wc = word_count(src_text)
+            try:
+                style_block = style.digest(style.analyze_text(src_text))
+            except Exception:  # noqa: BLE001
+                style_block = ""
+            style_section = (
+                "\n【机器文体体检（确定性指标；优先消除，但不得为此压缩剧情）】\n%s\n"
+                % style_block) if style_block else ""
             cont_report = read(proj.path("reviews", "全书连续性报告.md"))
             next_sum = "\n【下一章摘要（不得提前消耗其事件）】\n第%d章：%s\n" % (
                 n + 1, proj.summary(n + 1)) if proj.summary(n + 1) else ""
@@ -870,7 +917,7 @@ def stage_revise(proj: Project, cfg: Dict[str, Any], api: Dict[str, Any], only: 
                           % clip(cont_report, 3000)) if cont_report else ""
             user = (
                 "请根据审校报告重写该章，保留原有剧情与硬性设定，只修正报告指出的问题。\n\n"
-                f"【质量红线（违反即返工）】\n{quality_rules(per)}\n\n"
+                f"【质量红线（违反即返工）】\n{quality_rules(per)}\n{style_section}\n"
                 f"【大纲中的本章任务与邻章】\n{_outline_block(proj, n)}\n\n【前情摘要】\n{_continuity_block(proj)}\n{next_sum}"
                 f"【世界观硬性设定（截断）】\n{world}\n{cont_block}"
                 f"【原文章节】\n{src_text}\n\n【审校报告】\n{review}\n\n"

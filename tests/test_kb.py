@@ -30,6 +30,17 @@ class TestKB(unittest.TestCase):
         self.assertTrue("戴森" in content or "dyson" in content.lower())
         self.assertIsInstance(line_no, int)
 
+    def test_project_level_extra_modules(self):
+        base = kb.stage_modules("concept", "short")
+        self.assertIn("10-短篇写作", base)
+        self.assertNotIn("11-社会推演", base)
+        extra = kb.stage_modules("concept", "short", extra=["11-社会推演"])
+        self.assertIn("11-社会推演", extra)
+        self.assertIn("10-短篇写作", extra)
+        # 去重
+        again = kb.stage_modules("concept", "short", extra=["10-短篇写作", "11-社会推演"])
+        self.assertEqual(again.count("10-短篇写作"), 1)
+
     def test_load_budget_distribution(self):
         # 验证 world 阶段加载不会饿死 03-科学顾问
         text = kb.load(ROOT, ["02-世界观", "03-科学顾问"], cap=6000)
