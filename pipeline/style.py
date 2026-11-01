@@ -117,6 +117,13 @@ VERY_LONG_PARAGRAPH = 300   # 非空白字符数
 DUP_SENTENCE_MIN = 14       # 重复句最短长度（归一化后）
 DUP_OPENING_LEN = 8         # 段首取样长度
 NGRAM_SIZE = 4
+TRAIL_AFTER_END = 150       # 完结标记之后仍有的正文长度（超过即疑似"双结尾"）
+CHAPTER_SIM_MIN = 0.20      # 两章 5 字滑窗重叠度（含盖率）达到即"高度相似"
+SHINGLE_SIZE = 5
+
+END_MARKERS: Sequence[str] = (
+    "（全文完）", "(全文完)", "【全文完】", "——全文完——", "（完）", "(完)",
+)
 
 
 # ---------------------------------------------------------------- 基础工具
@@ -299,6 +306,64 @@ def find_dup_openings(chapters: Sequence[Tuple[int, str]]) -> List[Dict[str, Any
     return out
 
 
+def find_end_markers(text: str) -> Dict[str, Any]:
+    """完结标记检测：出现次数 + 最后一次标记之后的正文长度（双结尾线索）。"""
+    body = text or ""
+    positions: List[Tuple[str, int]] = []
+    for marker in END_MARKERS:
+        start = 0
+        while True:
+            i = body.find(marker, start)
+            if i < 0:
+                break
+            positions.append((marker, i))
+            start = i + len(marker)
+    positions.sort(key=lambda x: x[1])
+    if not positions:
+        return {"count": 0, "markers": [], "trail_chars": 0}
+    # 取"任意完结标记之后"的最长正文：多重收尾或闸门在完结后继续续写都会被标出
+    trail = max(_prose_len(body[i + len(m):]) for m, i in positions)
+    return {
+        "count": len(positions),
+        "markers": sorted({m for m, _ in positions}),
+        "trail_chars": trail,
+    }
+
+
+def _shingle_set(text: str) -> set:
+    """章节正文的 5 字滑窗集合（先归一化为纯文字）。"""
+    norm = _normalize(text)
+    if len(norm) < SHINGLE_SIZE:
+        return set()
+    return {norm[i:i + SHINGLE_SIZE] for i in range(len(norm) - SHINGLE_SIZE + 1)}
+
+
+def find_similar_chapters(chapters: Sequence[Tuple[int, str]],
+                          threshold: float = CHAPTER_SIM_MIN) -> List[Dict[str, Any]]:
+    """跨章高度相似检测：改头换面的重复章（如第 5 章是第 4 章的换名重写）。
+
+    用重叠系数 |A∩B|/min(|A|,|B|)：只要一章的大部分内容出现在另一章里即命中，
+    对"复制后局部改写"的稿子比 Jaccard 更敏感。
+    """
+    shingles = [(n, _shingle_set(t)) for n, t in chapters]
+    out: List[Dict[str, Any]] = []
+    for i in range(len(shingles)):
+        ni, si = shingles[i]
+        if not si:
+            continue
+        for j in range(i + 1, len(shingles)):
+            nj, sj = shingles[j]
+            if not sj:
+                continue
+            inter = len(si & sj)
+            cover = inter / min(len(si), len(sj))
+            if cover >= threshold:
+                out.append({"a": ni, "b": nj, "cover": round(cover, 3),
+                            "shared": inter, "smaller": min(len(si), len(sj))})
+    out.sort(key=lambda x: -x["cover"])
+    return out
+
+
 def top_ngrams(text: str, min_count: int = 5, limit: int = 8) -> List[Dict[str, Any]]:
     """高频四字串（可能是设定术语，也可能是口头禅；仅作线索）。"""
     counter: Dict[str, int] = {}
@@ -326,6 +391,7 @@ def analyze_text(text: str) -> Dict[str, Any]:
         "template_hits": find_ai_templates(text),
         "tic_words": count_tic_words(text),
         "top_ngrams": top_ngrams(text),
+        "end_markers": find_end_markers(text),
     }
 
 
@@ -337,6 +403,8 @@ def _score(res: Dict[str, Any]) -> Tuple[int, str]:
     tic_density = tic_total * 1000.0 / max(res["words"], 1)
     dup_s = len(res["dup_sentences"])
     dup_o = len(res["dup_openings"])
+    bad_ends = len(res.get("end_marker_flags") or [])
+    sim_pairs = len(res.get("similar_chapters") or [])
 
     score = 100.0
     score -= min(30, cliche * 3)
@@ -345,6 +413,8 @@ def _score(res: Dict[str, Any]) -> Tuple[int, str]:
     score -= min(12, max(0.0, tic_density - 10) * 1.2)
     score -= min(10, dup_s * 2)
     score -= min(8, dup_o * 1.5)
+    score -= min(15, bad_ends * 8)    # 多重收尾/完结后仍在正文：结构性缺陷
+    score -= min(18, sim_pairs * 9)   # 跨章高度相似：结构性缺陷（复制章）
     score = max(0, int(round(score)))
     grade = "A" if score >= 90 else ("B" if score >= 80 else ("C" if score >= 70 else "D"))
     return score, grade
@@ -412,7 +482,18 @@ def analyze_project(proj: Any, chapter: Optional[int] = None) -> Dict[str, Any]:
         "top_ngrams": top_ngrams("\n".join(t for _n, t in chapter_texts)),
         "dup_sentences": find_dup_sentences(chapter_texts),
         "dup_openings": find_dup_openings(chapter_texts),
+        "end_marker_flags": [],
+        "similar_chapters": find_similar_chapters(chapter_texts),
     }
+    for c in chapters:
+        em = c.get("end_markers") or {}
+        if em.get("count", 0) >= 2 or em.get("trail_chars", 0) > TRAIL_AFTER_END:
+            res["end_marker_flags"].append({
+                "chapter": c["chapter"],
+                "count": em.get("count", 0),
+                "trail_chars": em.get("trail_chars", 0),
+                "markers": em.get("markers", []),
+            })
     for c in chapters:
         for h in c["cliche_hits"]:
             res["cliche_hits"].append(dict(h, chapter=c["chapter"]))
@@ -464,6 +545,24 @@ def format_report(res: Dict[str, Any], max_items: int = 12) -> str:
                 c["chapter"], c["title"][:18], format(c["words"], ","),
                 c["sentences"]["avg"], c["dialogue_ratio"] * 100,
                 len(c["cliche_hits"]), len(c["template_hits"])))
+        lines.append("")
+
+    sim_pairs = res.get("similar_chapters") or []
+    if sim_pairs:
+        lines.append("【高】跨章高度相似 %d 对（疑似复制章/换名重写）" % len(sim_pairs))
+        for pair in sim_pairs[:max_items]:
+            lines.append("  第%d章 vs 第%d章：重叠 %.0f%%（较小章 %d 个滑窗中 %d 个重复）" % (
+                pair["a"], pair["b"], pair["cover"] * 100, pair["smaller"], pair["shared"]))
+        lines.append("")
+
+    end_flags = res.get("end_marker_flags") or []
+    if end_flags:
+        lines.append("【高】收尾异常 %d 章（多重「全文完」或完结后仍有正文）" % len(end_flags))
+        for f in end_flags[:max_items]:
+            detail = "标记 %d 个" % f["count"]
+            if f["trail_chars"] > TRAIL_AFTER_END:
+                detail += "，标记后仍有 %d 字" % f["trail_chars"]
+            lines.append("  第%d章：%s（可能是字数闸门在完结后继续续写）" % (f["chapter"], detail))
         lines.append("")
 
     cliches = res["cliche_hits"]
@@ -523,11 +622,15 @@ def format_report(res: Dict[str, Any], max_items: int = 12) -> str:
         lines.append("  " + "、".join("%s×%d" % (g["phrase"], g["count"]) for g in ngrams))
         lines.append("")
 
-    if not (cliches or templates or dups or openings):
-        lines.append("✔ 未发现高置信度套话、AI 腔或重复句。")
+    if not (cliches or templates or dups or openings or end_flags or sim_pairs):
+        lines.append("✔ 未发现高置信度套话、AI 腔、重复句、相似章或收尾异常。")
         lines.append("")
 
     lines.append("【建议】")
+    if sim_pairs:
+        lines.append("  · 相似章优先重写：保留其中信息量更大的一章，另一章换成新场景或新代价。")
+    if end_flags:
+        lines.append("  · 收尾异常优先处理：删掉完结标记之后的续写，或整体只保留一套结尾。")
     if cliches:
         lines.append("  · 套话优先换成**这个人物此刻的具体动作/感官**，不要换同义套话。")
     if templates:
@@ -572,6 +675,15 @@ def digest(res: Dict[str, Any], max_items: int = 6) -> str:
     if res["dup_sentences"] or res["dup_openings"]:
         lines.append("- 重复：整句 %d 组、段首 %d 组" % (
             len(res["dup_sentences"]), len(res["dup_openings"])))
+    end_flags = res.get("end_marker_flags") or []
+    if end_flags:
+        lines.append("- 收尾异常 %d 章（多重完结标记或完结后续写），优先删除后一套结尾"
+                     % len(end_flags))
+    sim_pairs = res.get("similar_chapters") or []
+    if sim_pairs:
+        lines.append("- 跨章高度相似 %d 对：%s"
+                     % (len(sim_pairs), "、".join("第%d/%d章" % (p["a"], p["b"])
+                                                 for p in sim_pairs[:4])))
     if res["top_ngrams"]:
         lines.append("- 高频四字串：" + "、".join(
             "%s×%d" % (g["phrase"], g["count"]) for g in res["top_ngrams"][:5]))

@@ -54,6 +54,26 @@ class TestStyleDetectors(unittest.TestCase):
         self.assertTrue(openings)
         self.assertGreaterEqual(openings[0]["count"], 3)
 
+    def test_similar_chapters_detection(self):
+        same = "他沿着河岸一直走，风从背后吹来，水面上浮着一层薄雾。" * 40
+        other = "她坐在窗边，把一张旧车票翻来覆去地看，车票边角已经卷了。" * 40
+        chapters = [(1, same), (2, same.replace("薄雾", "雾气")), (3, other)]
+        pairs = style.find_similar_chapters(chapters)
+        self.assertEqual(len(pairs), 1)
+        self.assertEqual((pairs[0]["a"], pairs[0]["b"]), (1, 2))
+        self.assertGreaterEqual(pairs[0]["cover"], style.CHAPTER_SIM_MIN)
+
+    def test_end_marker_detection(self):
+        clean = style.find_end_markers("他把碗放回桌上，走了。")
+        self.assertEqual(clean["count"], 0)
+        single = style.find_end_markers("他走了。\n\n（全文完）")
+        self.assertEqual(single["count"], 1)
+        self.assertEqual(single["trail_chars"], 0)
+        double = style.find_end_markers(
+            "他走了。（全文完）\n\n" + "第二天，施工队又来了。" * 20 + "\n\n（全文完）")
+        self.assertEqual(double["count"], 2)
+        self.assertGreater(double["trail_chars"], style.TRAIL_AFTER_END)
+
     def test_top_ngrams(self):
         text = "照护关系很重要。" * 6
         grams = style.top_ngrams(text, min_count=5)

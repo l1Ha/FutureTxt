@@ -23,6 +23,7 @@ import argparse
 import json
 import os
 import sys
+from typing import Any, Dict, Optional
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 
@@ -232,18 +233,52 @@ def cmd_audit(args: argparse.Namespace) -> None:
     print(audit.format_audit_report(res))
 
 
-def cmd_lint(args: argparse.Namespace) -> None:
-    """确定性文风体检：套话、AI 腔、长句、重复、虚词密度（不调用模型）。"""
-    proj = Project(ROOT, args.name)
-    if not proj.exists():
-        raise SystemExit(red(f"项目不存在：{args.name}"))
-    res = style.analyze_project(proj, chapter=args.chapter)
+def _lint_one(proj: Project, chapter: Optional[int], write: bool) -> Dict[str, Any]:
+    res = style.analyze_project(proj, chapter=chapter)
     report = style.format_report(res)
     print(report)
-    if args.write:
+    if write and res.get("chapters"):
         out = proj.path("reviews", "文风体检.md")
         stages.write(out, report)
         print(green(f"\n✔ 体检报告已写入：{os.path.relpath(out, ROOT)}"))
+    return res
+
+
+def cmd_lint(args: argparse.Namespace) -> None:
+    """确定性文风体检：套话、AI 腔、长句、重复、虚词密度（不调用模型）。"""
+    if getattr(args, "all", False):
+        base = os.path.join(ROOT, "projects")
+        rows = []
+        for name in sorted(os.listdir(base)):
+            if not os.path.exists(os.path.join(base, name, "project.json")):
+                continue
+            proj = Project(ROOT, name)
+            if not proj.list_chapters():
+                continue
+            res = style.analyze_project(proj)
+            if args.write:
+                stages.write(proj.path("reviews", "文风体检.md"), style.format_report(res))
+            rows.append(res)
+        if not rows:
+            print("未找到含章节的项目。")
+            return
+        print("《全库文风体检总览》")
+        print("━" * 64)
+        print("%-10s %-6s %8s %6s %6s %6s %6s" % ("项目", "形态", "字数", "分", "等级", "套话", "AI腔"))
+        for r in sorted(rows, key=lambda x: x["score"]):
+            mark = green if r["score"] >= 80 else (cyan if r["score"] >= 60 else red)
+            print(mark("%-10s %-6s %8s %6d %6s %6d %6d" % (
+                r["title"][:10], r["form"], format(r["total_words"], ","),
+                r["score"], r["grade"], len(r["cliche_hits"]), len(r["template_hits"]))))
+        if args.write:
+            print(green("✔ 各项目 reviews/文风体检.md 已更新。"))
+        return
+    if not args.name:
+        raise SystemExit(red("请给出项目标识，或使用 --all 体检全部项目。"))
+    proj = Project(ROOT, args.name)
+    if not proj.exists():
+        raise SystemExit(red(f"项目不存在：{args.name}"))
+    _lint_one(proj, args.chapter, args.write)
 
 
 def cmd_export(args: argparse.Namespace) -> None:
@@ -387,9 +422,10 @@ def build_parser() -> argparse.ArgumentParser:
 
     # lint
     ln = sub.add_parser("lint", help="文风体检：陈词滥调 / AI 腔 / 长句 / 重复 / 虚词密度（不调用模型）")
-    ln.add_argument("name", help="项目标识")
+    ln.add_argument("name", nargs="?", help="项目标识（--all 时可省略）")
+    ln.add_argument("--all", action="store_true", help="体检全部含章节的项目，输出总览")
     ln.add_argument("--chapter", type=int, help="仅体检指定章节（默认全书）")
-    ln.add_argument("--write", action="store_true", help="把报告写入 reviews/文风体检.md")
+    ln.add_argument("--write", action="store_true", help="把报告写入各项目 reviews/文风体检.md")
     ln.set_defaults(func=cmd_lint)
 
     # export

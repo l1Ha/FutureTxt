@@ -211,8 +211,10 @@ python pipeline/run.py audit 赛博侦探
 python pipeline/run.py lint 赛博侦探            # 全书体检（不调用模型、零 API 成本）
 python pipeline/run.py lint 赛博侦探 --chapter 3
 python pipeline/run.py lint 赛博侦探 --write    # 报告写入 reviews/文风体检.md
+python pipeline/run.py lint --all --write       # 体检全部项目并输出总览
 ```
-确定性检测**陈词滥调、AI 腔句式、超长句、重复整句/段首、虚词口头禅密度、高频四字串**，
+确定性检测**陈词滥调、AI 腔句式、超长句、重复整句/段首、跨章高度相似（复制章）、
+多重收尾（完结标记之后仍在续写）、虚词口头禅密度、高频四字串**，
 给出句长/段长/对白比与 0–100 体检分；同一份摘要会自动注入 `review` 与 `revise` 提示词，
 让模型优先处理可定位的坏习惯。它**不判优劣、不改正文**，所有命中都只是"请看一眼"的线索。
 
