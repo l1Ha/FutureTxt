@@ -149,6 +149,26 @@ def continuation_repeats(before: str, continuation: str) -> bool:
     return any(s in cont_norm for s in tail_sents)
 
 
+def continuation_restarts(text: str, continuation: str) -> bool:
+    """续写是否在"从头重写整章"（把开篇的整句原样搬进续写）。
+
+    实测事故：《销号》字数闸门的续写模型没有沿章尾接写，而是从第一句重新讲了一遍全篇，
+    拼接后正文出现完整两遍。此判据专拦这种「重启式续写」。
+    """
+    head = (text or "")[:900]
+    head_sents = [re.sub(r"[^\u4e00-\u9fffa-zA-Z0-9]", "", s)
+                  for s in re.split(r"[。！？!?\n]+", head)]
+    head_sents = list(dict.fromkeys(s for s in head_sents if len(s) >= 12))
+    cont_norm = re.sub(r"[^\u4e00-\u9fffa-zA-Z0-9]", "", continuation or "")
+    if not head_sents:
+        return False
+    hits = sum(1 for s in head_sents if s in cont_norm)
+    ratio = hits / len(head_sents)
+    if hits >= 2 or ratio >= 0.5:
+        return True
+    return hits >= 1 and len(cont_norm) > len(head) * 1.2
+
+
 def revision_keeps_length(before_wc: int, after_wc: int, per: int) -> bool:
     """修订稿篇幅是否可接受。
 
@@ -222,8 +242,8 @@ def _enforce_length(api, n, title, per, text):
         cont = re.sub(r"^#{1,3}\s*第\s*\d+\s*章[^\n]*\n+", "", cont).strip()
         if word_count(cont) < 150:
             break
-        if continuation_repeats(best, cont):
-            return best, "；⚠字数闸门：续写复述原文尾部，已拒绝（%d字）" % wc
+        if continuation_repeats(best, cont) or continuation_restarts(best, cont):
+            return best, "；⚠字数闸门：续写复述原文（尾部/开篇），已拒绝（%d字）" % wc
         best = best.rstrip() + "\n\n" + cont
 
     wc1 = word_count(META_NOTE_RE.sub("", best))

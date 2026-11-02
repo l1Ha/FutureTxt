@@ -41,6 +41,14 @@ class TestStages(unittest.TestCase):
         self.assertFalse(stages.continuation_repeats(
             before, "天亮了，街上有了第一班电车，卖早点的人推开了卷帘门。"))
 
+    def test_continuation_restart_guard(self):
+        head = "拐杖尖磨出的光斑在石板上滑了一下。晨雾裹着松脂味钻进鼻腔。无人机从山脊后飞来。"
+        chapter = head + "后面还有很长的正文，一直讲到天黑。" * 30
+        restart = head + "他签字。然后是漫长的直播。" * 20
+        self.assertTrue(stages.continuation_restarts(chapter, restart))
+        self.assertFalse(stages.continuation_restarts(
+            chapter, "他拄着拐杖走进院子，把门闩上，没再回头。"))
+
     def test_machine_precheck_flags_similar_chapters_and_bad_end(self):
         import tempfile
         same = "他沿着河岸一直走，风从背后吹来，水面上浮着一层薄雾。" * 30

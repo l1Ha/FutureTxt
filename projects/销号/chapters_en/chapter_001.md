@@ -1,0 +1,130 @@
+# Chapter 1: The Last Livestream Room
+
+The copper-coin-sized bright spot worn into the cane tip slid once across the wet bluestone slab, and the rusted spring inside Chen Laoshuan's kneecap coiled tight again. Morning mist carried pine resin and the sour rot of decaying leaves into his nostrils; the fine whine of drone propellers drifted from the ridge behind, like a giant mosquito grinding against his eardrum. Three columns of data jumped in the dim light at the lower-right corner of the phone screen: Remaining On-Camera Time 719:59:00, Credit Score 89, Nostalgia Voucher Balance 958,432.00.
+
+A fine layer of ash coated the screen glass—last night's crop-stubble burn drifting up. His fingertip rubbed across it, gritty. Touching the warm glass, the stylus tip traced over Clause Seven of the Authorization Agreement—round-the-clock authorization of likeness, voice, and labor; Article Twelve—monthly on-camera time below twenty hours, voucher deduction of two hundred per hour; Appendix Three—breach triggers automatic voucher freeze, initiates Drone Surface Clearance Operation System work order. The font was ant-small. He wasn't wearing reading glasses, didn't read it a second time. The faded red string on his right ring finger bit white into his skin, the only thing his late wife left behind—besides an enamel jar buried under the cypress roots, holding two unsown rice grains. The string's edges had frayed, several threads broken, exposing yellowed cotton core. He never took it off: bathing, hoeing, sleeping. Years of wear had cut a pale brown groove into the flesh.
+
+"Done. Signature."
+
+"Grandpa, just follow procedure, no problem." Chen Xiaoyu's voice drilled from the receiver, the NFC sticker on her badge behind her right ear brushing her collar with a faint *zzt*. "Authorization effective. The cypresses and that mu of land are exempt. Clearance Countdown still forty hours. I secured you an On-Site Witness position, three thousand vouchers monthly, lifetime appointment."
+
+The phone's other end mixed with the low hum of an AC condenser unit and rapid, even keystrokes—insects gnawing dry leaf veins. Chen Laoshuan heard the rasp in her throat; she'd likely pulled another all-nighter revising those "Compliance Audit Reports," blue light burning her eye sockets raw.
+
+"No good, then forget it." He stared at the red "Confirm Authorization" button on screen. The instant his fingertip pressed down, a dry cough tore from deep in his chest, iron-sweet rust blooming in his throat. The phone vibrated once. Green text popped up: **Authorization Effective. Welcome as Yunling Village's First On-Site Witness. Livestream Auto-Start at 06:00.**
+
+A drone skimmed the treetops. Wind pressure set the three century-old cypresses rustling, needles shaking fine droplets into the mist, pattering on the bluestone *pa-pa*. Chen Laoshuan turned on his cane; the polished spot on the hawthorn wood head caught cold light in the dawn, like an old copper coin. He'd whittled the cane himself—hawthorn core hard, twelve years of use, tip wrapped in three layers of copper sheet with an old bicycle inner tube between for shock absorption. Behind him, the yellow paper ash on the earthen mound hadn't fully dispersed. The bluestone stele inscribed "Grave of the Late Wife, Surnamed Li" had a clearance notice pinned beneath—**Surface Attachments Clearance Notice: Dismantle Within 48 Hours, Overdue Enforced at Own Expense.** The paper yellowed, edges curled, red official seal ink bleeding into a blurred halo, like an unwilling eye.
+
+Terraces cascaded beneath his feet, mud reflecting gray-white sky. One mu of paddy, twelve mu of dryland—only this one mu still bore the Chen name. The other eleven had long signed the Carbon Sink Forest Management Rights Smart Contract; tree density algorithm-specified, even hoe depth written in the annex—no deeper than fifteen centimeters, no shallower than eight, breach compensated per tree. He bent, fingers brushing the wet terrace ridge mud, old calluses in the creases rubbing soil grains, mentally tallying: rice one mu net eight hundred a year; carbon sink forest one mu dividend twelve hundred, minus fifteen percent management fee, net one thousand twenty. But the contract locked thirty years; early exit paid one-and-a-half times breach penalty. He wouldn't live to term. Wind crossed the terraces, carrying the cloying sweet of rotting aquatic grass mixed with alkaline dust from the distant cement plant, tightening in his lung lobes.
+
+The phone screen lit. The livestream auto-pushed. Lower-right three columns began counting down: Remaining On-Camera Time 719:58:45. Brightness maxed automatically, stabbing his eyes narrow, the ache of contracting irises drilling back along the optic nerve.
+
+"Villagers, good morning. I'm Yunling Village's last household, Chen Laoshuan." He spoke to the lens, voice hoarse as two sheets of sandpaper grinding, vocal cords tugging at poorly healed old scars on the trachea wall. "Hoeing today."
+
+Barrages stacked one atop another, scrolling the upper screen, font too small to read—only the lower-right Credit Score flickered, 89 to 90. The barrage area background semi-transparent, white characters flowing, like watching someone else's funeral.
+
+"Nostalgia's nice."
+"Last village guardian, salute."
+"Streamer works hard, sending a rocket."
+
+He lifted the hoe. The blade sliced wet earth with a dull *ji*. Mud turned up, sour with humus and the fishy wriggle of earthworms. The handle was Chinese ash, grip worn shiny, fitting every palm crease; calluses pressed into wood grain, a bone-deep fusion illusion. Old right knee injury stabbed like an iron nail driven into the kneecap seam; every exertion required biting his teeth and holding breath. Sweat beads slid from forehead into eye sockets, stinging him squinting; through the blur he saw gift effects explode on screen—"Village Guardian" soaring, "Rivers and Mountains Intact" blooming. Colors garishly bright, gold dust jarringly out of place in the mud-reflected sky.
+
+"Streamer coughing bad."
+"Take care, don't overdo."
+"This environment, negative ions maxed."
+
+Third hour, the cough couldn't be held. He leaned on the hoe handle, folded like a shrimp, windpipe scraping as if layered with torn cloth, hacking up a mouthful of gray-black sputum onto the terrace ridge. Fine blood threads laced the sputum, blooming dark red flowers on wet mud. A red warning box flashed top-right of the phone screen, border pulsing at a stabbing frequency: **Negative Emotional Expression Detected (Severe Coughing), Credit Score -15, Current Credit Score 75.**
+
+Barrages accelerated, font auto-enlarging under backend algorithm pressure, squeezing the livestream frame.
+
+"How's he coughing like that?"
+"Platform care? This counts as passive labor."
+"Suggest voucher deduction for rectification."
+
+Chen Laoshuan straightened, gasping, cane tip rapping stone twice—*men, men*—numbing his palm. He reached to wipe his mouth corner, fingertip brushing the cold screen frame. Lower-right Nostalgia Voucher balance grayed out, unclickable dark gray: **Voucher Code Frozen: Single Deduction Exceeds 10 Points Triggered Risk Control. Unfreeze Requires Credit Score Recovery Above 80.** That string 958,432.00 remained, two decimal zeros immobile, like an engraved epitaph.
+
+He opened the Nostalgia Mall, wanted a pain-relief patch. Homepage only three columns: Tourism Packages, Agri-Specialty Gift Boxes, Medical Deluxe Pack. Cheapest Medical Deluxe: 5,800 vouchers, two remote consultations and one vitamin bottle. Pain patches under "Pharmaceuticals," icon grayed, fine print: *This category not yet integrated with Nostalgia Vouchers.*
+
+"Grandpa?" Chen Xiaoyu's voice squeezed from the receiver, background noisy—office sounds, someone shouting "Director Zhao signed yet?", another arguing "Model rollback needs arbitration"—"System auto-judged, backend logs show barrage sentiment value below threshold… I tried manual unfreeze, but risk model is auto-audited, Engineer Zhang's side rolled back."
+
+"Medicine." One word, adam's apple bobbing. "Painkillers."
+
+"Voucher frozen, can't buy meds, I know. I'll find Director Zhao…" Rapid keystrokes on the other end, a heavy sigh, chair wheels rolling on carpet. "Director Zhao says targets are hard, process is dead. Credit model doesn't recognize people, only numbers. Unless you maintain four continuous hours zero negative performance, score auto-recovers."
+
+"Fine."
+
+He hung up, clean motion, no hesitation. Cane to the cypresses—three trees in a *pin* formation, trunks thick as two grown men linking fingertips. The bluestone stele back face bore small characters, acid rain blurred, barely legible in sidelight: **Yunling Village Deregistration Public Notice Period Expired, Administrative Code 532922108201 Deregistered Effective Immediately.** Code revoked, ambulances couldn't locate, couriers couldn't deliver, household registry showed no such person. He touched the rough bark, fingertips sinking into fissures, nail beds packed with black mud. Spiders hid in bark cracks, startled scattering, spindly legs tracing near-invisible *shasha* on the rough surface.
+
+Livestream continued. Lens auto-tracked, frame center always his back, or profile, or close-up of hoe flying. Lower-right three columns frozen: Remaining On-Camera Time 716:23:11, Credit Score 75, Nostalgia Voucher Balance 958,432.00 (Frozen). The three characters "Frozen" alternated gray-white, like breathing.
+
+Barrage someone typed: "Is streamer protesting?"
+"Don't overthink, peasants are like that."
+"Vouchers frozen but still streaming? Platform generous."
+
+Seventh hour, right knee swollen like a large steamed bun, trouser leg cutting into flesh, fabric edges pressing two purple-red marks. Each step, cane tip spot *men* on the slab, like striking his own heart. Cough turned to dry heaves, stomach acid burning throat, sour water scalding esophageal mucosa. He dared not stop; stop meant credit drop, drop below eighty meant permanent voucher freeze—painkillers, rice, kerosene all unbuyable. After administrative code revocation, county hospital registration showed "No Such Resident," ambulance navigation couldn't find Yunling Village. Only this livestream's Nostalgia Vouchers stayed hot—as long as he performed. Sweat soaked his collar, clung cold to his spine; wind blew like a layer of ice.
+
+"Streamer drink water."
+"Backend send streamer a case of painkillers."
+"This is real countryside, not those fake influencer villages."
+
+Twelfth hour, Chen Xiaoyu called again, voice hoarse, nasal: "Grandpa, I set your account backend to 'Self-Visible Only.' Director Zhao's in a meeting, says Yunling Village deregistration 98% complete, last household must cooperate. I… I wrote the three cypresses' coordinates in my personal memo, didn't report to system."
+
+Phone receiver carried her sniffle, wet. "Okay." He answered, hoe *ji* severing a tree root, thumb-thick, blade impact sending dull vibration up the handle straight to his shoulder. "Not reported, good."
+
+"Grandpa don't scare me, why're your hands shaking?" She lowered voice, background someone playing *The Internationale* ringtone. "Backend shows your heart rate 112, blood oxygen 89. Smartwatch data synced up."
+
+Watch strap chafed wrist itchy, blue veins rising and sinking under skin. "Old, useless." He tossed the hoe, slumped on the terrace ridge, cane *men* falling into mud, copper tip sinking three centimeters into soft earth. Phone screen faced sky; livestream frame all gray-white clouds and three cypress silhouettes. Clouds low as if pressing onto treetops, edges curling and rolling, a vast gray net. Lower-right Credit Score ticking: 74, 73, 72.
+
+Barrage quieted a moment, then went wild.
+
+"Streamer collapsed?"
+"Call ambulance!"
+"Where's Yunling Village? Navigation finds nothing."
+"@PlatformCS @CountyGov Save him!"
+
+"Ambulance can't enter." He spoke to the lens, voice light as wind through needles, vocal cords barely vibrating, pure airflow through glottis. "Code revoked, navigation has no this place."
+
+He remembered his wife. She left this same season, rice just soaked. She picked two plump grains, wrapped in coarse cloth, said: Keep them, plant next year. Next spring, that one mu was zoned into carbon sink forest planning. The jar was her pickled radish jar, rim chipped, she wired it tight, said still usable; later held her ashes, buried under the three cypresses. He put the two rice grains in too—not buried, kept.
+
+Cypresses were three. She'd said, grave-plant cypress, wind strong they still stand.
+
+Screen scrolled a row of red text, font enlarged to occupy third of screen, background flushed red: **System Detects Host Long-Term Static, Suspected Device Anomaly. 300-Second Countdown Then Auto-Judge Breach, Initiate Drone Surface Clearance Operation System Work Order.**
+
+That giant mosquito behind the ridge sounded again, closer. Drone inspection red light cut fine lines in the mist, sweeping cypresses, mound, terraces, the enamel jar at his feet. Red light grazed retinal afterimage, a ruler measuring his bones. Countdown center-screen huge: 04:59, 04:58, 04:57… Each jump flashed the screen border red, mapping his face light-dark.
+
+Chen Xiaoyu weeping in the phone, fragmented, voice compression-encoded with metallic brittleness: "Grandpa… I applied emergency medical vouchers… but needs manual review… Director Zhao signature needs process… process takes 24 hours…"
+
+"Not urgent." He reached out, fingertip touching cold screen glass, hovering over the gray "End Livestream" button for three seconds. Fingerprint left an oil smear on the glass, refracting red light. The only action today not in contract workflow. No script, no KPI, no algorithm prediction. Wind paused an instant, cypress needles stilled, drone propeller whine sharper, like a fine slit carved on his eardrum.
+
+Fingertip pressed.
+
+Screen instant black. Lower-right three columns zeroed: Remaining On-Camera Time 00:00:00, Credit Score --, Nostalgia Voucher Balance --. Black screen reflected his face—deep eye sockets, stubble prickly, mouth corners cracked with blood scabs.
+
+Livestream barrage froze on the last line: **"Nostalgia's nice."** That barrage centered, white text gray background, like a piece of unburnt joss paper.
+
+Backend log auto-generated a red line, scrolling in unseen server logs: **Breach: Active Termination of Collection. Initiate Drone Surface Clearance Operation System Work Order. Countdown 00:00:00.**
+
+Chen Laoshuan threw the phone. *Pa* into wet mud, mud droplets spattering his cloth shoes. Stood on the cane. The rusted spring in his knee snapped straight, pain blacking his vision, peripheral vision tunneling—but no cough, no groan. Sweat trailed from temples, dove into collar, ice-cold. One step, one pause toward the cypress roots. The copper-coin spot on the hawthorn cane tip *men, men, men* three dull thuds on fallen leaves. Each vibration in his chest cavity, like tolling something.
+
+The hoe leaned by the tree. Blade up, mud dried to gray-white crust, rolled edge still holding half a severed root. He bent to pick it up, lumbar *ka* crisp crack, blade aimed at the bulging soil at the cypress roots—where the enamel jar lay, where his wife's ashes scattered. Wild grass grew on the mound, broad leaves, serrated edges sharp.
+
+He raised the hoe. Not at the lens, not at the sky, not at the county town below where a red light flashed on a drone. Drone hovered twenty meters up, red-green nav lights blinking, downwash pressing cypress needles flat against trunks, lidar hum drilling into ear canals.
+
+Blade fell.
+
+"*Men.*"
+
+Mud turned, revealing the enamel jar's faded blue-green rim, rusted iron wire still twisted on the lid. Wire long brittle, snap on bending, rust seeped into fine enamel glaze cracks like winding rivers on a map.
+
+He dropped the hoe, crouched, kneecap hitting stone, *si* sucking breath, trembling hand grabbing the lid. Fingernail shattered on the wire, blood beads welling, mixing with mud into the jar mouth. Blood bloomed dark red at the jar rim.
+
+No rice grains inside.
+
+Only two sprouted seedlings, pale yellow, frailly pushing through damp soil, stubbornly alive in absolute darkness. Tips slightly curved, like two question marks, like two hunchbacked elders, in utter darkness completing the most ancient, most obstinate stretch.
+
+He gently replaced the lid, rewound the rusted wire two turns. After the livestream's red light died, the slope quiet enough to hear dew dropping from needles. Morning mist thinned; half a roofline of the county town showed below.
+
+Clearance notice wrote process: cut trees first, push stele after, finally turn soil, plant carbon sink standard seedlings. He'd read that sheet once, only once. Overhead, drone red light swept treetops, swept past, swept back—counting how long he could still sit on this slope.
+
+Chen Laoshuan cradled the jar on his knees, both hands circling it like holding a bowl. Forty-eight-hour clearance countdown still ticking. This small patch of earth under the cypresses—no one had touched it yet.
+
+He just sat there, waiting for dawn to break through.

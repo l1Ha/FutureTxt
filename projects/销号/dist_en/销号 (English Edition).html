@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>销号 (English Edition) - FutureTxt 在线阅读</title>
+<style>
+:root {
+    --bg-primary: #f8fafc;
+    --bg-card: #ffffff;
+    --text-primary: #1e293b;
+    --text-secondary: #64748b;
+    --border-color: #e2e8f0;
+    --accent: #2563eb;
+    --accent-hover: #1d4ed8;
+    --sidebar-bg: #f1f5f9;
+}
+[data-theme="dark"] {
+    --bg-primary: #0f172a;
+    --bg-card: #1e293b;
+    --text-primary: #f8fafc;
+    --text-secondary: #94a3b8;
+    --border-color: #334155;
+    --accent: #38bdf8;
+    --accent-hover: #0ea5e9;
+    --sidebar-bg: #111827;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+    font-family: -apple-system, "PingFang SC", "Microsoft YaHei", "Noto Sans SC", sans-serif;
+    background-color: var(--bg-primary);
+    color: var(--text-primary);
+    line-height: 1.85;
+    transition: background-color 0.2s, color 0.2s;
+    display: flex;
+    height: 100vh;
+    overflow: hidden;
+}
+#sidebar {
+    width: 320px;
+    background: var(--sidebar-bg);
+    border-right: 1px solid var(--border-color);
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    flex-shrink: 0;
+}
+.sidebar-header {
+    padding: 20px;
+    border-bottom: 1px solid var(--border-color);
+}
+.sidebar-header h2 {
+    font-size: 1.15em;
+    font-weight: 700;
+    margin-bottom: 6px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+.sidebar-meta {
+    font-size: 0.85em;
+    color: var(--text-secondary);
+}
+.chapter-list {
+    overflow-y: auto;
+    flex: 1;
+    list-style: none;
+}
+.chapter-item {
+    padding: 12px 20px;
+    border-bottom: 1px solid var(--border-color);
+    cursor: pointer;
+    font-size: 0.95em;
+    transition: background 0.15s;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.chapter-item:hover {
+    background: rgba(0,0,0,0.04);
+}
+.chapter-item.active {
+    background: var(--accent);
+    color: #ffffff;
+    font-weight: 600;
+}
+.chapter-item .ch-words {
+    font-size: 0.8em;
+    opacity: 0.75;
+}
+#main {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+.topbar {
+    padding: 12px 24px;
+    border-bottom: 1px solid var(--border-color);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: var(--bg-card);
+}
+.controls button {
+    background: transparent;
+    border: 1px solid var(--border-color);
+    color: var(--text-primary);
+    padding: 6px 14px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 0.88em;
+    margin-left: 8px;
+    transition: 0.15s;
+}
+.controls button:hover {
+    border-color: var(--accent);
+    color: var(--accent);
+}
+#content-container {
+    flex: 1;
+    overflow-y: auto;
+    padding: 40px 10%;
+    display: flex;
+    justify-content: center;
+}
+.content-wrapper {
+    max-width: 780px;
+    width: 100%;
+}
+.article-header {
+    text-align: center;
+    margin-bottom: 36px;
+    padding-bottom: 20px;
+    border-bottom: 1px solid var(--border-color);
+}
+.article-header h1 {
+    font-size: 1.85em;
+    font-weight: 700;
+    margin-bottom: 10px;
+}
+.article-meta {
+    font-size: 0.9em;
+    color: var(--text-secondary);
+}
+.article-body p {
+    text-indent: 2em;
+    margin-bottom: 1.4em;
+    font-size: 1.1em;
+    text-align: justify;
+}
+.intro-box {
+    background: var(--bg-card);
+    border: 1px solid var(--border-color);
+    border-left: 5px solid var(--accent);
+    padding: 24px;
+    border-radius: 8px;
+    margin-bottom: 40px;
+}
+.nav-buttons {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 50px;
+    padding-top: 20px;
+    border-top: 1px solid var(--border-color);
+}
+.nav-btn {
+    padding: 10px 20px;
+    border-radius: 6px;
+    border: 1px solid var(--border-color);
+    background: var(--bg-card);
+    color: var(--text-primary);
+    cursor: pointer;
+    font-size: 0.95em;
+}
+.nav-btn:disabled {
+    opacity: 0.3;
+    cursor: not-allowed;
+}
+@media (max-width: 768px) {
+    body { flex-direction: column; }
+    #sidebar { width: 100%; height: 200px; }
+    #content-container { padding: 20px 5%; }
+}
+</style>
+</head>
+<body>
+<div id="sidebar">
+    <div class="sidebar-header">
+        <h2 title="销号 (English Edition)">销号 (English Edition)</h2>
+        <div class="sidebar-meta">By FutureTxt AI Writer · 1 chapters / 14,507 chars</div>
+    </div>
+    <ul class="chapter-list" id="chapterList"></ul>
+</div>
+<div id="main">
+    <div class="topbar">
+        <span id="currentChLabel">Title Page & Synopsis</span>
+        <div class="controls">
+            <button onclick="changeFontSize(-1)">A-</button>
+            <button onclick="changeFontSize(1)">A+</button>
+            <button onclick="toggleTheme()" id="themeBtn">🌓 Theme</button>
+        </div>
+    </div>
+    <div id="content-container">
+        <div class="content-wrapper" id="articleWrapper"></div>
+    </div>
+</div>
+
+<script>
+const book = {"title": "销号 (English Edition)", "author": "FutureTxt AI Writer", "description": "In 2126, Yunling Village is the county’s final settlement slated for erasure. Seventy‑three‑year‑old Chen Laoshuan is its sole resident, offered a 1.2‑million‑yuan compensation package that locks 800,000 into “nostalgia vouchers” usable only on a state‑approved platform. His wife’s grave is reclassified as a surface attachment and must be cleared within forty‑eight hours; his terrace field will be replanted as a carbon‑sink forest. His granddaughter, Chen Xiaoyu, a county‑appointed rural‑operations specialist, secures him an “on‑site witness” role: twenty hours of live‑streamed farming each month. He signs, preserving three cypress trees and a single acre, but the price is a life now performed for an audience, every daily ritual priced and broadcast. The arrangement turns his remaining days into a curated spectacle, where memory, labor, and landscape become commodities under a relentless digital gaze.", "total_words": 14507, "chapters": [{"index": 1, "title": "销号 (English Edition)", "words": 14507, "paragraphs": ["The copper-coin-sized bright spot worn into the cane tip slid once across the wet bluestone slab, and the rusted spring inside Chen Laoshuan's kneecap coiled tight again. Morning mist carried pine resin and the sour rot of decaying leaves into his nostrils; the fine whine of drone propellers drifted from the ridge behind, like a giant mosquito grinding against his eardrum. Three columns of data jumped in the dim light at the lower-right corner of the phone screen: Remaining On-Camera Time 719:59:00, Credit Score 89, Nostalgia Voucher Balance 958,432.00.", "A fine layer of ash coated the screen glass—last night's crop-stubble burn drifting up. His fingertip rubbed across it, gritty. Touching the warm glass, the stylus tip traced over Clause Seven of the Authorization Agreement—round-the-clock authorization of likeness, voice, and labor; Article Twelve—monthly on-camera time below twenty hours, voucher deduction of two hundred per hour; Appendix Three—breach triggers automatic voucher freeze, initiates Drone Surface Clearance Operation System work order. The font was ant-small. He wasn't wearing reading glasses, didn't read it a second time. The faded red string on his right ring finger bit white into his skin, the only thing his late wife left behind—besides an enamel jar buried under the cypress roots, holding two unsown rice grains. The string's edges had frayed, several threads broken, exposing yellowed cotton core. He never took it off: bathing, hoeing, sleeping. Years of wear had cut a pale brown groove into the flesh.", "\"Done. Signature.\"", "\"Grandpa, just follow procedure, no problem.\" Chen Xiaoyu's voice drilled from the receiver, the NFC sticker on her badge behind her right ear brushing her collar with a faint *zzt*. \"Authorization effective. The cypresses and that mu of land are exempt. Clearance Countdown still forty hours. I secured you an On-Site Witness position, three thousand vouchers monthly, lifetime appointment.\"", "The phone's other end mixed with the low hum of an AC condenser unit and rapid, even keystrokes—insects gnawing dry leaf veins. Chen Laoshuan heard the rasp in her throat; she'd likely pulled another all-nighter revising those \"Compliance Audit Reports,\" blue light burning her eye sockets raw.", "\"No good, then forget it.\" He stared at the red \"Confirm Authorization\" button on screen. The instant his fingertip pressed down, a dry cough tore from deep in his chest, iron-sweet rust blooming in his throat. The phone vibrated once. Green text popped up: **Authorization Effective. Welcome as Yunling Village's First On-Site Witness. Livestream Auto-Start at 06:00.**", "A drone skimmed the treetops. Wind pressure set the three century-old cypresses rustling, needles shaking fine droplets into the mist, pattering on the bluestone *pa-pa*. Chen Laoshuan turned on his cane; the polished spot on the hawthorn wood head caught cold light in the dawn, like an old copper coin. He'd whittled the cane himself—hawthorn core hard, twelve years of use, tip wrapped in three layers of copper sheet with an old bicycle inner tube between for shock absorption. Behind him, the yellow paper ash on the earthen mound hadn't fully dispersed. The bluestone stele inscribed \"Grave of the Late Wife, Surnamed Li\" had a clearance notice pinned beneath—**Surface Attachments Clearance Notice: Dismantle Within 48 Hours, Overdue Enforced at Own Expense.** The paper yellowed, edges curled, red official seal ink bleeding into a blurred halo, like an unwilling eye.", "Terraces cascaded beneath his feet, mud reflecting gray-white sky. One mu of paddy, twelve mu of dryland—only this one mu still bore the Chen name. The other eleven had long signed the Carbon Sink Forest Management Rights Smart Contract; tree density algorithm-specified, even hoe depth written in the annex—no deeper than fifteen centimeters, no shallower than eight, breach compensated per tree. He bent, fingers brushing the wet terrace ridge mud, old calluses in the creases rubbing soil grains, mentally tallying: rice one mu net eight hundred a year; carbon sink forest one mu dividend twelve hundred, minus fifteen percent management fee, net one thousand twenty. But the contract locked thirty years; early exit paid one-and-a-half times breach penalty. He wouldn't live to term. Wind crossed the terraces, carrying the cloying sweet of rotting aquatic grass mixed with alkaline dust from the distant cement plant, tightening in his lung lobes.", "The phone screen lit. The livestream auto-pushed. Lower-right three columns began counting down: Remaining On-Camera Time 719:58:45. Brightness maxed automatically, stabbing his eyes narrow, the ache of contracting irises drilling back along the optic nerve.", "\"Villagers, good morning. I'm Yunling Village's last household, Chen Laoshuan.\" He spoke to the lens, voice hoarse as two sheets of sandpaper grinding, vocal cords tugging at poorly healed old scars on the trachea wall. \"Hoeing today.\"", "Barrages stacked one atop another, scrolling the upper screen, font too small to read—only the lower-right Credit Score flickered, 89 to 90. The barrage area background semi-transparent, white characters flowing, like watching someone else's funeral.", "\"Nostalgia's nice.\" \"Last village guardian, salute.\" \"Streamer works hard, sending a rocket.\"", "He lifted the hoe. The blade sliced wet earth with a dull *ji*. Mud turned up, sour with humus and the fishy wriggle of earthworms. The handle was Chinese ash, grip worn shiny, fitting every palm crease; calluses pressed into wood grain, a bone-deep fusion illusion. Old right knee injury stabbed like an iron nail driven into the kneecap seam; every exertion required biting his teeth and holding breath. Sweat beads slid from forehead into eye sockets, stinging him squinting; through the blur he saw gift effects explode on screen—\"Village Guardian\" soaring, \"Rivers and Mountains Intact\" blooming. Colors garishly bright, gold dust jarringly out of place in the mud-reflected sky.", "\"Streamer coughing bad.\" \"Take care, don't overdo.\" \"This environment, negative ions maxed.\"", "Third hour, the cough couldn't be held. He leaned on the hoe handle, folded like a shrimp, windpipe scraping as if layered with torn cloth, hacking up a mouthful of gray-black sputum onto the terrace ridge. Fine blood threads laced the sputum, blooming dark red flowers on wet mud. A red warning box flashed top-right of the phone screen, border pulsing at a stabbing frequency: **Negative Emotional Expression Detected (Severe Coughing), Credit Score -15, Current Credit Score 75.**", "Barrages accelerated, font auto-enlarging under backend algorithm pressure, squeezing the livestream frame.", "\"How's he coughing like that?\" \"Platform care? This counts as passive labor.\" \"Suggest voucher deduction for rectification.\"", "Chen Laoshuan straightened, gasping, cane tip rapping stone twice—*men, men*—numbing his palm. He reached to wipe his mouth corner, fingertip brushing the cold screen frame. Lower-right Nostalgia Voucher balance grayed out, unclickable dark gray: **Voucher Code Frozen: Single Deduction Exceeds 10 Points Triggered Risk Control. Unfreeze Requires Credit Score Recovery Above 80.** That string 958,432.00 remained, two decimal zeros immobile, like an engraved epitaph.", "He opened the Nostalgia Mall, wanted a pain-relief patch. Homepage only three columns: Tourism Packages, Agri-Specialty Gift Boxes, Medical Deluxe Pack. Cheapest Medical Deluxe: 5,800 vouchers, two remote consultations and one vitamin bottle. Pain patches under \"Pharmaceuticals,\" icon grayed, fine print: *This category not yet integrated with Nostalgia Vouchers.*", "\"Grandpa?\" Chen Xiaoyu's voice squeezed from the receiver, background noisy—office sounds, someone shouting \"Director Zhao signed yet?\", another arguing \"Model rollback needs arbitration\"—\"System auto-judged, backend logs show barrage sentiment value below threshold… I tried manual unfreeze, but risk model is auto-audited, Engineer Zhang's side rolled back.\"", "\"Medicine.\" One word, adam's apple bobbing. \"Painkillers.\"", "\"Voucher frozen, can't buy meds, I know. I'll find Director Zhao…\" Rapid keystrokes on the other end, a heavy sigh, chair wheels rolling on carpet. \"Director Zhao says targets are hard, process is dead. Credit model doesn't recognize people, only numbers. Unless you maintain four continuous hours zero negative performance, score auto-recovers.\"", "\"Fine.\"", "He hung up, clean motion, no hesitation. Cane to the cypresses—three trees in a *pin* formation, trunks thick as two grown men linking fingertips. The bluestone stele back face bore small characters, acid rain blurred, barely legible in sidelight: **Yunling Village Deregistration Public Notice Period Expired, Administrative Code 532922108201 Deregistered Effective Immediately.** Code revoked, ambulances couldn't locate, couriers couldn't deliver, household registry showed no such person. He touched the rough bark, fingertips sinking into fissures, nail beds packed with black mud. Spiders hid in bark cracks, startled scattering, spindly legs tracing near-invisible *shasha* on the rough surface.", "Livestream continued. Lens auto-tracked, frame center always his back, or profile, or close-up of hoe flying. Lower-right three columns frozen: Remaining On-Camera Time 716:23:11, Credit Score 75, Nostalgia Voucher Balance 958,432.00 (Frozen). The three characters \"Frozen\" alternated gray-white, like breathing.", "Barrage someone typed: \"Is streamer protesting?\" \"Don't overthink, peasants are like that.\" \"Vouchers frozen but still streaming? Platform generous.\"", "Seventh hour, right knee swollen like a large steamed bun, trouser leg cutting into flesh, fabric edges pressing two purple-red marks. Each step, cane tip spot *men* on the slab, like striking his own heart. Cough turned to dry heaves, stomach acid burning throat, sour water scalding esophageal mucosa. He dared not stop; stop meant credit drop, drop below eighty meant permanent voucher freeze—painkillers, rice, kerosene all unbuyable. After administrative code revocation, county hospital registration showed \"No Such Resident,\" ambulance navigation couldn't find Yunling Village. Only this livestream's Nostalgia Vouchers stayed hot—as long as he performed. Sweat soaked his collar, clung cold to his spine; wind blew like a layer of ice.", "\"Streamer drink water.\" \"Backend send streamer a case of painkillers.\" \"This is real countryside, not those fake influencer villages.\"", "Twelfth hour, Chen Xiaoyu called again, voice hoarse, nasal: \"Grandpa, I set your account backend to 'Self-Visible Only.' Director Zhao's in a meeting, says Yunling Village deregistration 98% complete, last household must cooperate. I… I wrote the three cypresses' coordinates in my personal memo, didn't report to system.\"", "Phone receiver carried her sniffle, wet. \"Okay.\" He answered, hoe *ji* severing a tree root, thumb-thick, blade impact sending dull vibration up the handle straight to his shoulder. \"Not reported, good.\"", "\"Grandpa don't scare me, why're your hands shaking?\" She lowered voice, background someone playing *The Internationale* ringtone. \"Backend shows your heart rate 112, blood oxygen 89. Smartwatch data synced up.\"", "Watch strap chafed wrist itchy, blue veins rising and sinking under skin. \"Old, useless.\" He tossed the hoe, slumped on the terrace ridge, cane *men* falling into mud, copper tip sinking three centimeters into soft earth. Phone screen faced sky; livestream frame all gray-white clouds and three cypress silhouettes. Clouds low as if pressing onto treetops, edges curling and rolling, a vast gray net. Lower-right Credit Score ticking: 74, 73, 72.", "Barrage quieted a moment, then went wild.", "\"Streamer collapsed?\" \"Call ambulance!\" \"Where's Yunling Village? Navigation finds nothing.\" \"@PlatformCS @CountyGov Save him!\"", "\"Ambulance can't enter.\" He spoke to the lens, voice light as wind through needles, vocal cords barely vibrating, pure airflow through glottis. \"Code revoked, navigation has no this place.\"", "He remembered his wife. She left this same season, rice just soaked. She picked two plump grains, wrapped in coarse cloth, said: Keep them, plant next year. Next spring, that one mu was zoned into carbon sink forest planning. The jar was her pickled radish jar, rim chipped, she wired it tight, said still usable; later held her ashes, buried under the three cypresses. He put the two rice grains in too—not buried, kept.", "Cypresses were three. She'd said, grave-plant cypress, wind strong they still stand.", "Screen scrolled a row of red text, font enlarged to occupy third of screen, background flushed red: **System Detects Host Long-Term Static, Suspected Device Anomaly. 300-Second Countdown Then Auto-Judge Breach, Initiate Drone Surface Clearance Operation System Work Order.**", "That giant mosquito behind the ridge sounded again, closer. Drone inspection red light cut fine lines in the mist, sweeping cypresses, mound, terraces, the enamel jar at his feet. Red light grazed retinal afterimage, a ruler measuring his bones. Countdown center-screen huge: 04:59, 04:58, 04:57… Each jump flashed the screen border red, mapping his face light-dark.", "Chen Xiaoyu weeping in the phone, fragmented, voice compression-encoded with metallic brittleness: \"Grandpa… I applied emergency medical vouchers… but needs manual review… Director Zhao signature needs process… process takes 24 hours…\"", "\"Not urgent.\" He reached out, fingertip touching cold screen glass, hovering over the gray \"End Livestream\" button for three seconds. Fingerprint left an oil smear on the glass, refracting red light. The only action today not in contract workflow. No script, no KPI, no algorithm prediction. Wind paused an instant, cypress needles stilled, drone propeller whine sharper, like a fine slit carved on his eardrum.", "Fingertip pressed.", "Screen instant black. Lower-right three columns zeroed: Remaining On-Camera Time 00:00:00, Credit Score --, Nostalgia Voucher Balance --. Black screen reflected his face—deep eye sockets, stubble prickly, mouth corners cracked with blood scabs.", "Livestream barrage froze on the last line: **\"Nostalgia's nice.\"** That barrage centered, white text gray background, like a piece of unburnt joss paper.", "Backend log auto-generated a red line, scrolling in unseen server logs: **Breach: Active Termination of Collection. Initiate Drone Surface Clearance Operation System Work Order. Countdown 00:00:00.**", "Chen Laoshuan threw the phone. *Pa* into wet mud, mud droplets spattering his cloth shoes. Stood on the cane. The rusted spring in his knee snapped straight, pain blacking his vision, peripheral vision tunneling—but no cough, no groan. Sweat trailed from temples, dove into collar, ice-cold. One step, one pause toward the cypress roots. The copper-coin spot on the hawthorn cane tip *men, men, men* three dull thuds on fallen leaves. Each vibration in his chest cavity, like tolling something.", "The hoe leaned by the tree. Blade up, mud dried to gray-white crust, rolled edge still holding half a severed root. He bent to pick it up, lumbar *ka* crisp crack, blade aimed at the bulging soil at the cypress roots—where the enamel jar lay, where his wife's ashes scattered. Wild grass grew on the mound, broad leaves, serrated edges sharp.", "He raised the hoe. Not at the lens, not at the sky, not at the county town below where a red light flashed on a drone. Drone hovered twenty meters up, red-green nav lights blinking, downwash pressing cypress needles flat against trunks, lidar hum drilling into ear canals.", "Blade fell.", "\"*Men.*\"", "Mud turned, revealing the enamel jar's faded blue-green rim, rusted iron wire still twisted on the lid. Wire long brittle, snap on bending, rust seeped into fine enamel glaze cracks like winding rivers on a map.", "He dropped the hoe, crouched, kneecap hitting stone, *si* sucking breath, trembling hand grabbing the lid. Fingernail shattered on the wire, blood beads welling, mixing with mud into the jar mouth. Blood bloomed dark red at the jar rim.", "No rice grains inside.", "Only two sprouted seedlings, pale yellow, frailly pushing through damp soil, stubbornly alive in absolute darkness. Tips slightly curved, like two question marks, like two hunchbacked elders, in utter darkness completing the most ancient, most obstinate stretch.", "He gently replaced the lid, rewound the rusted wire two turns. After the livestream's red light died, the slope quiet enough to hear dew dropping from needles. Morning mist thinned; half a roofline of the county town showed below.", "Clearance notice wrote process: cut trees first, push stele after, finally turn soil, plant carbon sink standard seedlings. He'd read that sheet once, only once. Overhead, drone red light swept treetops, swept past, swept back—counting how long he could still sit on this slope.", "Chen Laoshuan cradled the jar on his knees, both hands circling it like holding a bowl. Forty-eight-hour clearance countdown still ticking. This small patch of earth under the cypresses—no one had touched it yet.", "He just sat there, waiting for dawn to break through."]}]};
+const L = {"cover_label": "Title Page & Synopsis", "unit": " chars", "by": "By ", "meta_sep": " | ~", "intro_title": "About this book", "prev": "← Previous", "next": "Next →", "start": "Start Reading →", "ch_prefix": "Chapter ", "ch_mid": " | ", "theme_dark": "☀️ Light Mode", "theme_light": "🌓 Dark Mode"};
+let currentIndex = -1; // -1 = title page / synopsis
+let fontSize = 17;
+
+function renderSidebar() {
+    const list = document.getElementById("chapterList");
+    list.innerHTML = `<li class="chapter-item ${currentIndex === -1 ? 'active' : ''}" onclick="goToChapter(-1)">
+        <span>📖 ${L.cover_label}</span>
+    </li>`;
+    book.chapters.forEach((ch, idx) => {
+        const li = document.createElement("li");
+        li.className = "chapter-item" + (currentIndex === idx ? " active" : "");
+        li.innerHTML = `<span>${ch.title}</span><span class="ch-words">${ch.words}${L.unit}</span>`;
+        li.onclick = () => goToChapter(idx);
+        list.appendChild(li);
+    });
+}
+
+function renderContent() {
+    const wrapper = document.getElementById("articleWrapper");
+    const label = document.getElementById("currentChLabel");
+    if (currentIndex === -1) {
+        label.innerText = L.cover_label;
+        wrapper.innerHTML = `
+            <div class="article-header">
+                <h1>${book.title}</h1>
+                <div class="article-meta">${L.by}${book.author}${L.meta_sep}${book.total_words.toLocaleString()}${L.unit}</div>
+            </div>
+            <div class="intro-box">
+                <h3 style="margin-bottom:12px;color:var(--accent);">${L.intro_title}</h3>
+                <div style="white-space: pre-wrap; line-height:1.75;">${book.description}</div>
+            </div>
+            <div class="nav-buttons">
+                <button class="nav-btn" disabled>${L.prev}</button>
+                <button class="nav-btn" onclick="goToChapter(0)">${L.start}</button>
+            </div>
+        `;
+    } else {
+        const ch = book.chapters[currentIndex];
+        label.innerText = ch.title;
+        const pTags = ch.paragraphs.map(p => `<p style="font-size: ${fontSize}px;">${p}</p>`).join("");
+        wrapper.innerHTML = `
+            <div class="article-header">
+                <h1>${ch.title}</h1>
+                <div class="article-meta">${L.ch_prefix}${ch.index}${L.ch_mid}${ch.words}${L.unit}</div>
+            </div>
+            <div class="article-body">
+                ${pTags}
+            </div>
+            <div class="nav-buttons">
+                <button class="nav-btn" onclick="goToChapter(currentIndex - 1)">${L.prev}</button>
+                <button class="nav-btn" onclick="goToChapter(currentIndex + 1)" ${currentIndex >= book.chapters.length - 1 ? 'disabled' : ''}>${L.next}</button>
+            </div>
+        `;
+    }
+    document.getElementById("content-container").scrollTop = 0;
+}
+
+function goToChapter(idx) {
+    if (idx < -1 || idx >= book.chapters.length) return;
+    currentIndex = idx;
+    renderSidebar();
+    renderContent();
+}
+
+function toggleTheme() {
+    const current = document.documentElement.getAttribute("data-theme");
+    const next = current === "dark" ? "light" : "dark";
+    document.documentElement.setAttribute("data-theme", next);
+    document.getElementById("themeBtn").innerText = next === "dark" ? L.theme_dark : L.theme_light;
+}
+
+function changeFontSize(delta) {
+    fontSize = Math.max(14, Math.min(26, fontSize + delta));
+    const paras = document.querySelectorAll(".article-body p");
+    paras.forEach(p => p.style.fontSize = fontSize + "px");
+}
+
+renderSidebar();
+renderContent();
+</script>
+</body>
+</html>

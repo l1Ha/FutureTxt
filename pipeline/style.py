@@ -81,6 +81,12 @@ CLICHES: Dict[str, str] = {
     "仿佛在告诉他": "拟人套话",
 }
 
+# 少数套话会作为更长词语的一部分出现（如「长时间静止」「一段时间静止」），命中前先排除
+CLICHE_PREFIX_EXCLUDE: Dict[str, Sequence[str]] = {
+    "时间静止": ("长", "段"),
+    "空气凝固": (),
+}
+
 # AI 腔句式（正则，标签）
 AI_TEMPLATES: Sequence[Tuple[str, str]] = (
     (r"不是[^，。！？\n]{1,24}，?\s*而是", "对举句式「不是…而是…」"),
@@ -183,6 +189,10 @@ def find_cliches(text: str) -> List[Dict[str, Any]]:
                 if i < 0:
                     break
                 j = i + len(phrase)
+                bad_prefix = tuple(CLICHE_PREFIX_EXCLUDE.get(phrase) or ())
+                if bad_prefix and any(line[:i].endswith(p) for p in bad_prefix):
+                    start = j
+                    continue
                 if not any(i < e and s < j for s, e in occupied):
                     occupied.append((i, j))
                     hits.append({
