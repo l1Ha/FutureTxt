@@ -41,6 +41,23 @@ class TestStages(unittest.TestCase):
         self.assertFalse(stages.continuation_repeats(
             before, "天亮了，街上有了第一班电车，卖早点的人推开了卷帘门。"))
 
+    def test_machine_precheck_flags_similar_chapters_and_bad_end(self):
+        import tempfile
+        same = "他沿着河岸一直走，风从背后吹来，水面上浮着一层薄雾。" * 30
+        other = "她把旧车票翻来覆去地看，车票边角已经卷了，像一片干枯的叶子。" * 30
+        with tempfile.TemporaryDirectory() as tmpdir:
+            files = []
+            for i, body in enumerate((same, same.replace("薄雾", "雾气") + "\n\n（全文完）\n\n" + other),
+                                     start=1):
+                p = os.path.join(tmpdir, "chapter_%03d.md" % i)
+                with open(p, "w", encoding="utf-8") as f:
+                    f.write("# 第%d章 测试\n\n%s\n" % (i, body))
+                files.append(p)
+            report, problems = stages.machine_precheck(files, 2000)
+        self.assertIn("跨章高度相似", report)
+        self.assertIn("收尾异常", report)
+        self.assertGreaterEqual(problems, 2)
+
     def test_revision_keeps_length_guard(self):
         # 原稿已达标时，修订稿被压缩 10% 以上 → 拒绝（保留原稿）
         self.assertFalse(stages.revision_keeps_length(5700, 2446, 6500))

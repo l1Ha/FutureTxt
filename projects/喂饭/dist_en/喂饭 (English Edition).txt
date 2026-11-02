@@ -1,156 +1,140 @@
 喂饭 (English Edition)
 By FutureTxt AI Writer
-Scope: 1 chapters / ~14626 chars
-Generated: 2026-10-31
+Scope: 1 chapters / ~13977 chars
+Generated: 2026-11-02
 ================================================
 [ SYNOPSIS ]
-In 2126, life‑extension lets the wealthy live past 118, turning care into a minutely billed “companionship industry.” Migrant caregiver Zhou Gui lives in the Lu household, on constant standby and judged by a real‑time “companionship score.” Her own seventy‑eight‑year‑old mother survives only on a remote‑care package—AI monitoring plus a weekly aide—yet the last video call was forty‑seven days ago. When the dying patriarch drafts a will that would adopt Zhou Gui as his daughter, platform rules forbid a caregiver from holding two care contracts; accepting the adoption would instantly sever her mother’s support, zero her score, and trigger device reclamation. As the bedside meter ticks, Zhou Gui must decide whether a spoonful of warm gruel can buy both their futures in a system that measures love in minutes.
+In 2126, life‑extension technology has pushed the wealthy past a century, turning caregiving into a minute‑by‑minute “companionship” market. Migrant worker Zhou Gui lives in the Lu household, on constant call and scored on every interaction, while her seventy‑eight‑year‑old mother survives on a remote‑care package — AI monitoring plus a weekly aide — whose last video call was forty‑seven days ago. When the dying patriarch attempts to adopt Zhou Gui as his legal daughter, platform rules force an immediate severance of her mother’s care contract: loss of subsidies, a zeroed rating, and possible reclamation of the monitoring hardware. Trapped beside the bedside, with the billing meter ticking, Zhou Gui must decide whether a spoonful of warm gruel can buy both their futures.
 ================================================
 
 
 
 ==================== 喂饭 (English Edition) ====================
 
-When Zhou Gui slipped the first spoonful of nutrient paste into the old man’s mouth, her wrist terminal buzzed against the bone: billing started, 05:12, rating 4.62, 0.02 from downgrade.
+Zhou Gui slid the first spoonful of nutrient paste into the old man’s mouth; the wrist terminal on her radial bone buzzed once: billing started, 05:12, score 4.62, 0.02 from downgrade.
 
-She gauged the paste’s temperature with the old scar on her right wrist — thirty‑eight degrees, half a degree below standard; she had to finish the remaining eleven spoonfuls before the next rating refresh and change the sheets before six.
+She gauged the paste’s temperature with the old scar on her right wrist—thirty‑eight degrees Celsius, half a degree below standard. She had to finish the remaining eleven spoonfuls before the next score refresh and still change the sheets before 06:00.
 
-“Work Order 20260714‑001, Feeding, First Meal.” The synthetic voice emanated from the wrist terminal, edged with a metallic tremor. “Rating 4.62, 0.02 from downgrade.”
+“Work order 20260714‑001, feeding, first meal.” The synthetic voice rose from the wrist terminal, edged with a metallic tremor. “Score 4.62, 0.02 from downgrade.”
 
-She worked a full sixteen‑hour shift, billed at ¥1.80 per minute; after the Platform’s 22 % cut she took home roughly ¥1,350, while the Remote Care Package (RCP‑V3) back home deducted ¥2,100 a month. The first year she could manage both ends; the second year she reduced Mother’s “weekly hourly caregiver” to “bi‑weekly” — the four hours saved on the bill were never mentioned by Mother on the phone.
+She worked sixteen hours a day, billed at ¥1.8 per minute; after the Platform Cut of 22 % she took home roughly ¥1,350. The Remote Care Package (RCP‑V3) back home deducted ¥2,100 a month. The first year she could juggle both; the second year she downgraded her mother’s “weekly hourly caregiver” to “bi‑weekly”—the four saved hours never appeared in her mother’s phone calls.
 
-Zhou Gui did not turn; the spoon extended toward the bedside old man. The micro physiological monitoring node behind Lu Lao’s left ear protruded faintly beneath the skin, like a faded pearl. His lips were cracked, the nasal‑tube strap leaving a red groove; his skin shone waxy under the lamp. She fed him quickly and gently, as if lubricating a precision instrument. His throat moved, the swallow drowned by the ventilator’s rhythm; each piston stroke shuddered the bed frame, a micro‑tremor reaching her fingertips.
+Zhou Gui didn’t turn. The spoon reached the bedside. A micro physio‑monitoring node under Lu Jingxing’s left ear bulged like a faded pearl. His lips were cracked, the nasogastric tube strap left a red groove, skin waxy under the lamp. She fed him quickly and gently, as if lubricating a precision instrument. His throat moved; the swallow was swallowed by the ventilator’s rhythm, each piston push shuddering the bed frame and transmitting a micro‑tremor to her fingertips.
 
-The last video call with Mother was forty‑seven days ago. That day her rating fell from 4.64 to 4.62, and the Platform switched her shift from live‑in to day shift, giving her an extra free afternoon. She dialed; Mother waved the phone in the yard hunting signal, the camera showing only eaves and sky — neither face was clear. The call lasted four minutes eleven seconds; the system auto‑hung up, its tone as calm as a checkout receipt.
+The last video call with her mother was forty‑seven days ago. That day her score slipped from 4.64 to 4.62; the Platform switched her from live‑in to day shift, giving her an extra afternoon. She dialed; her mother waved the phone in the courtyard hunting signal, the lens filled with eaves and sky—neither saw the other’s face. Call duration four minutes eleven seconds; the system auto‑hung up with a calm tone like a receipt.
 
-“Count one more minute.” She whispered internally; the wrist terminal buzzed once, deducting ¥0.12. The rating flickered: 4.61.
+“One more minute.” She whispered internally; the wrist terminal buzzed, ¥0.12 deducted. The score flickered: 4.61.
 
-After the seventh spoonful the old man closed his eyes and a low, rasping command rose from his throat: “Read the letter.”
+After the seventh spoonful the old man closed his eyes and rasped, “Read the letter.”
 
-Zhou Gui set the bowl back on the bedside table, the chip still facing left. She pulled the yellowed stack of letters from the drawer; the edges were brittle as dry bark, each turn releasing a faint crackle, dust motes drifting in the shaft of light. The first was written thirty years ago to his late wife; the ink had seeped into the fibers, yet the script remained neat, the pen strokes leaving shallow impressions on the paper. She cleared her throat, lowering her voice just enough for the microphone to capture it without triggering a “tone anomaly” penalty in the rating.
+Zhou Gui set the bowl back on the nightstand, the chip still facing left. She pulled the yellowed stack from the drawer; paper edges brittle as dry bark, turning released fine dust that floated in the light shaft. The first letter, thirty years old, addressed to his late wife—ink soaked into fibers, script still neat, pen strokes leaving shallow depressions. She cleared her throat, voice lowered just enough for the microphone to catch it without triggering an “abnormal tone” penalty.
 
-“Line… three… ‘The spring wind does not cross the Jade Gate Pass’…”
+“Line… three… ‘Spring wind never crosses Jade Gate Pass’…” She enunciated each character, fingertip tracing the page, feeling the paper’s roughness and the dust of decades, fingertips cooling.
 
-“Work Order 20260714‑002, Companion Reading, duration 12 minutes.” The wrist terminal chimed again; rating slid to 4.60.
+“Work order 20260714‑002, companionship reading, duration 12 minutes.” The wrist terminal chimed again; score slid to 4.60.
 
-Lu Lao’s fingers clawed at the blanket, nails scraping the cotton with a faint rustle, like dry branches rubbing in the wind. Zhou Gui knew he was waiting for the next line, and for the “Kinship Recognition” moment. Platform rules: a Temporary Grade caregiver may not hold two Care Relationships simultaneously. Once the old man signed the Digital Will, her Wrist Terminal would pop up “Identity Upgrade·Temporary→Permanent,” while Mother’s Remote Care Package back home would simultaneously display “Care Relationship Terminated·Device Reclamation Countdown 48 h.”
+Lu Jingxing’s fingers clawed the blanket, nails scraping cotton with a dry hiss, like dead branches rubbing in wind. Zhou Gui knew he waited for the next line—and for the Kinship Registration moment. Platform rule: a Temporary Grade caregiver may not hold two Care Relationships simultaneously. Once the old man signed the Digital Will, her wrist terminal would flash “Identity Upgrade·Temporary→Permanent,” while her mother’s RCP‑V3 would simultaneously pop “Care Relationship Terminated·Device Reclamation Countdown 48 h.”
 
-She stole a glance at the tiny red dot in the upper‑right corner of her Wrist Terminal — Mother’s account was 47 days overdue, the Utilities‑Medical Linkage severed, the Device Reclamation Countdown still ticking. Last week when hourly caregiver Chen Zhongdian visited, Mother lay in bed, the fan droning, a rooster crowing in the yard; the video left only an unanswered voice message: “Gui’er, don’t burn the bowl.” The message carried the fan’s electrical hum and the rooster’s sharp crow, a thin thread stitching the two dawns together.
+She glanced at the tiny red dot in the upper‑right of the wrist terminal—her mother’s account overdue forty‑seven days, medical link severed, the reclamation clock still ticking. Last week the hourly caregiver Chen Zhongdian visited; her mother lay in bed, fan droning, rooster crowing in the yard. The video left only an unanswered voice message: “Gui’er, don’t burn the bowl.” That voice carried the fan’s electrical hum and the rooster’s shrill call, stitching the two dawns together.
 
-“Which line are you on?” Lu Lao’s voice sounded like dry branches rubbing, edged with a hoarse tremor.
+The village had lost its primary school last year, its clinic this year. The village committee became a “Neighborhood Center,” open two days a week; the county’s mobile service van arrived, measured blood pressure, then left. Only three households remained, the youngest seventy‑one. On her last visit the village’s two streetlights were out; her mother said no need to fix them—no one goes out at night.
 
-“Twelfth line.” Zhou Gui turned the page; the paper crackled, its corner curling slightly at her fingertips.
+She had run the numbers: bring mother to the city, rent an elevator apartment ¥4,800/month, day‑shift caregiver ¥3,500, her score would drop another 0.2 for lacking a fixed live‑in address, losing premium gigs. Keep mother in the village, RCP‑V3 ¥2,100/month, could last till year‑end. She’d calculated it for three years; the result never changed.
+
+The old phone lit again. The RCP‑V3 push stacked on the lock screen: Mother’s heart rate 78, meds taken 2/3, companionship time 0 min, weekly score 3.1. Bottom line in red: if seven consecutive days without a manual visit, the account enters “Unmonitored State,” device reclamation accelerated to 24 hours. She swiped it away; the screen darkened, reflecting the dark circles under her eyes.
+
+“Which line?” Lu Jingxing’s voice was dry branch friction, a hoarse tremor.
+
+“Twelfth.” Zhou Gui turned the page; paper crisped, corner curling at her fingertip.
 
 “Read it again.”
 
-She repeated, slowing her cadence, breathing in sync with the ventilator. The Wrist Terminal buzzed once per minute — deduction, rating, billing, countdown — all numbers flowing beneath her fingers. Rating 4.59.
+She repeated, slower, breathing synced to the ventilator. The wrist terminal buzzed each minute—deduction, score, billing, countdown—all numbers flowing beneath her fingertips. Score 4.59.
 
-“Work Order 20260714‑003, Will Signature Confirmation — please check ‘All Care Obligations Fulfilled’ before the old man’s final breath.” The synthetic voice carried no affect, only its fixed prefix and the trailing “beep—beep.”
+“Work order 20260714‑003, will‑sign confirmation, please check ‘All care obligations fulfilled’ before the care recipient’s final breath.” The synthetic voice was affectless, fixed prefix and trailing “beep‑beep.”
 
-Lu Lao’s fingers trembled toward the tablet; green clauses scrolled on screen: Article 4, 5, 7 of the Prohibition of Dual Care Relationships. His fingertip hovered over “Confirm,” nail blanched, the ridge pattern clear in the screen’s glare.
+Lu Jingxing’s finger trembled toward the tablet; green clauses scrolled: “Care Relationship Exclusivity Regulation” Articles 4, 5, 7. His fingertip hovered over “Confirm,” nail blanched, fingerprint ridges sharp in the screen glare.
 
-The white scar on Zhou Gui’s right wrist left a fine pale line on the spoon handle. Cold sweat prickled her palm; the Wrist Terminal kept its one‑per‑minute pulse, rating frozen at 4.58.
+Zhou Gui’s right‑wrist scar left a fine white line on the spoon handle. Cold sweat seeped in her palm; the wrist terminal kept its one‑per‑minute pulse, score frozen at 4.58.
 
-“Sign it.” Lu Lao’s mouth twitched, half smile, half cough, a short burst of air from his throat.
+“Sign it.” Lu Jingxing’s mouth twitched, half smile, half cough, a short breathy exhale.
 
-The tablet lit up; the blockchain write‑complete tone pierced sharper than the Wrist Terminal: “Will recorded on Blockchain Ledger, Identity Upgrade effective.” Almost simultaneously the Wrist Terminal flashed two red lines:
+The chipped enamel bowl remained on the nightstand, chip left, nutrient paste already cold, a thin skin of oil on the surface. Zhou Gui set the spoon down; metal on porcelain gave a soft click, like a ritual’s end.
+
+That bowl came from home. Mother used it thirty years; the rim chipped, chip left, perfectly aligned with the seat she occupied as a child. First year in the city, mother slipped the bowl into her luggage, saying city bowls are too thin, burn the hand. Now it held another’s paste, temperature judged by her scar—38 °C, half a degree low. She suddenly recalled the last time mother fed her, a fever night; the same chip, mother turned it away with her thumb, fearing it would cut her lip.
+
+A tiny flake of enamel missing at the bowl’s base exposed black iron, like an old coin. She returned the bowl to the nightstand, chip left. The village stove was earthen; the bowl wobbled. The city nightstand was flat; the bowl made no sound.
+
+She fished out the old phone, screen spider‑webbed with scratches, corners rounded, fingerprint smudges a hazy halo on the glass. The dial screen held a single number—the RCP‑V3 sole service hotline. Thumb hovered over the green call button; the screen read “Calling…” against the background of her mother’s voice message: fan whir and rooster crow, fan blades slicing air in a low duet with the rooster’s piercing cry.
+
+The fan’s whir was abruptly cut by a short busy tone, then a mechanical female voice: “The number you dialed is temporarily unavailable. Please try again later.” The sound bounced in the cramped ward, mingling with antiseptic sharpness and the sour stale paste, drilling into Zhou Gui’s nostrils. Her thumb still hovered, fingerprint ridges clear in the screen glare; the wrist terminal kept its one‑per‑minute buzz, score unmoving at 4.58.
+
+Lu Jingxing’s ventilator hissed a steady rhythm, an old bellows pulling night air. His eyelids lifted slightly; pupils contracted in the dim morning light; a low “hm” rose from his throat, followed by a broken cough, phlegm rattling wetly in the airway. He didn’t look at the tablet; his gaze settled on Zhou Gui’s right wrist, the scar’s white imprint on the spoon still faintly luminous.
+
+“Don’t wait.” Lu Jingxing’s voice was dry branch friction, edged with impatient rasp. “The system won’t wait for anyone; the countdown doesn’t wait either.”
+
+Zhou Gui’s throat tightened; breath matched the ventilator; the wrist terminal’s “beep‑beep” tapped her heartbeat. She slowly withdrew her finger; the screen dimmed, the old phone slid back into her pocket, the worn plastic shell whispering against fabric. The nutrient‑paste skin on the bowl glimmered in the morning light; she lifted the thin film, cold air instantly biting her fingertips, numbness creeping.
+
+“If you sign, you can’t leave.” She spoke low, each word weighed. “Device reclamation countdown forty‑eight hours; the truck arrives at 03:00.”
+
+Lu Jingxing’s finger trembled on the tablet, nail white, fingerprint ridges sharp in the screen glare. He stared at “Confirm,” fingertip suspended, not descending.
+
+She pulled the old phone again, hit redial.
+
+Busy tone again, then a brief electronic chirp, then a metallic male voice: “Zhou Gui, Care Package ID 20260714‑003, confirm Identity Upgrade, press ‘1’ within ten seconds to complete device unbinding.” The tone was cold, temperatureless, as if transmitted straight from a distant server into the eardrum.
+
+Zhou Gui’s heart skipped; fingertips tightened, nails digging into palm, sweat beads tracing lines to her wrist. She heard the ventilator’s rhythm surge, a hurried gasp mixed in, like a signal about to snap.
+
+“Press ‘1’.” Lu Jingxing’s voice rolled in his throat, rasp edged with undeniable authority. “Don’t let the system decide for you.”
+
+Zhou Gui’s thumb hovered over the glass, fingerprint oil shimmering in the glow. She closed her eyes; fan, rooster, ventilator hiss, wrist terminal buzz—all merged into a low roar vibrating her eardrums. Ten‑second countdown silently elapsed on the wrist terminal; the red “48 h” burned on her retina.
+
+Her thumb finally fell; the screen flashed, a green “1” lit then faded. Synthetic voice: “Device unbinding confirmed, reclamation program initiated.” The wrist terminal’s pulse accelerated to every ten seconds; score still locked at 4.58.
+
+Lu Jingxing’s finger finally pressed “Confirm” on the tablet; a green ripple washed the screen, the blockchain write‑complete tone slicing the air again. His fingertip released, leaving a faint pressure imprint on the glass.
+
+Almost simultaneously the wrist terminal popped two red lines:
 
 **Identity Upgrade·Temporary→Permanent**
 
 **Care Relationship Terminated·Device Reclamation Countdown 48 h**
 
-Timestamp synced: 2026‑07‑14 05:27:03.
+Timestamp synced: 2026‑07‑14 05:27:03.
 
-Zhou Gui stared at the two lines, fingertip hovering over “Confirm.” The Wrist Terminal’s beep‑beep remained metronomic, rating stuck at 4.58. Her breath became distinct within the ventilator rhythm; the scar on her right wrist warmed again, as if an invisible current lightly seared it.
+Zhou Gui stared at the two lines, fingertip suspended over the wrist terminal. The “beep‑beep” kept its metronomic cadence; score frozen at 4.58. Her breath became audible within the ventilator’s rhythm; the scar on her right wrist warmed again, as if an invisible current lightly seared it.
 
-She did not press it.
+She pocketed the phone, fingers brushing the coarse fabric. She looked up; morning light slipped through the curtain gap, catching the oil sheen on the chipped enamel bowl and the veins mapping Lu Jingxing’s withered hand, blue rivers about to dry.
 
-The Chipped Enamel Bowl remained on the bedside table, chip still leftward; the nutrient paste had cooled into a thin skin, a faint oil sheen on its surface. Zhou Gui set the spoon down slowly; metal met porcelain with a soft click, like the end of a ritual.
+“Go.” Lu Jingxing said softly, voice stripped of sorrow or joy, only wind‑dry calm. “The truck comes at three; don’t forget the charger.”
 
-She fished the old phone from her pocket — screen spider‑webbed with scratches, corners worn smooth, fingerprint smudges leaving a hazy glow. The dial screen held a single number — the Remote Care Package’s sole service hotline. Her fingertip hovered over the green call button; the display read “Calling,” backed by the fan’s whir and the rooster’s crow from Mother’s voice note, the fan blades slicing air and the rooster’s piercing cry weaving a rough duet.
+Zhou Gui nodded, silent. She bent, retrieved the charger from the nightstand, cable coiling around her fingers, cold metal plug pricking her palm. She turned; footsteps on the ward’s gray‑white tiles gave a faint “shh‑shh,” each step stitching the wrist terminal’s pulse into her bones. The corridor’s antiseptic film clung to her nostrils, mixed with stale diaper odor and distant canteen’s sour pickle tang. Her steps echoed “shh‑shh” on the tiles, each one driving the terminal’s vibration deeper into marrow. The terminal’s red countdown still ticked silently; vibration shifted from ten‑second to five‑second intervals, a faint current crawling up her forearm like a fine needle slipping into a vein.
 
-Beep—beep—
+The elevator doors slid open; a gust of cold air carried a whiff of machine oil. She entered, pressed “1” on the metal button—its recess still warm from the previous passenger’s fingertip. The cabin’s fluorescent tubes buzzed, ends flickering a weak violet halo, casting her face in a deeper shade. Only a blue‑clad cleaner occupied the cabin, clutching a rolled black trash bag, the knot’s tension whitening his knuckles. He glanced at her, eyes lingering on the wrist terminal less than a second, then resumed polishing the handrail with mechanical precision.
 
-The Wrist Terminal kept billing; rating unchanged. “Calling” blinked, no answer. Zhou Gui’s fingertip did not descend, frozen above the call key like an untuned string stretched tight in the pale morning light.
+“Zhou Gui, the truck at three, charger—don’t forget.” Lu Jingxing’s voice came from behind, rasp like sandpaper on metal. She didn’t turn; as the doors closed she heard his cane thud “thump‑thump” on the floor, each impact tightening her chest.
 
-(End of text)
+The elevator stopped at the lobby; doors opened onto a blast of hot wind laden with dust, tinged with the acrid bite of exhaust from the elevated highway. Zhou Gui stepped out; the automatic doors’ infrared sensors chimed softly, a green sweep across her wrist terminal—“48 h” still glaring, score still stuck at 4.58, as if time had been nailed to a single sheet of paper.
 
-The fan’s whir was suddenly cut by a short busy tone, then a mechanical female voice: “The number you dialed is temporarily unavailable; please try again later.” The sound waves refracted in the cramped ward, mixed with the sharp scent of disinfectant and the sour tang of stale nutrient paste, drilling into Zhou Gui’s nostrils. Her fingertip still hovered over the green call button, the ridge pattern clear in the screen’s glare; the Wrist Terminal’s vibration persisted once per minute, rating immobile at 4.58.
+A self‑service terminal in the lobby corner pulsed a dim blue UI, scrolling “Device Reclamation Confirmation,” “Data Uploading,” “Credit Settlement.” She inserted the charger into the USB‑C port; the metal plug clicked, a chill traveling up the cable to her hand. The terminal flashed green: “Charger recognized, reclamation phase two entered, please proceed to designated reclamation point within ten minutes.”
 
-Lu Lao’s ventilator hissed rhythmically, like an old bellows pulling night air. His eyelids lifted slightly, pupils contracting in the weak dawn light; a low guttural “hm” rose from his throat, followed by a series of broken coughs, phlegm rattling wetly in his airway. He did not look at the tablet; his gaze settled on Zhou Gui’s right wrist, the scar’s white imprint on the spoon handle still faintly luminous.
+Ten minutes. She lifted her wrist; the terminal now vibrated every three seconds, sweat beads sliding thin tracks under the strap. The lobby PA inserted a smooth synthetic female voice: “Dear user, your care package has been unbound; the reclamation vehicle will arrive at 15:00 sharp. Please bring all accessories to Gate 1.” The voice was temperature‑less, as if piped straight from a server past the brain onto skin.
 
-“Don’t wait.” Lu Lao’s voice was dry branches rubbing, edged with impatient rasp. “The system won’t wait for anyone; the countdown won’t wait either.”
+Zhou Gui gripped the charger cable, knuckles white. She walked toward Gate 1; each tile underfoot emitted a faint “creak‑creak,” a low heartbeat. The rolling shutter was half‑open, revealing a gray sky and a white box truck parked outside, “智护回收” in red on its side, roof antenna swaying with a soft “rustle‑rustle.”
 
-Zhou Gui’s throat tightened; her breath locked to the ventilator’s cadence. The Wrist Terminal’s beep‑beep tapped under her fingertips, each pulse striking like a heartbeat. She slowly withdrew her finger; the screen dimmed, the old phone slid back into her pocket, the worn plastic shell rasping against fabric. The nutrient‑paste skin in the Chipped Enamel Bowl gleamed with oil in the morning light; Zhou Gui lifted the thin film, cold air stabbing her fingertips, numbing them.
+The truck’s side door slid; a young man in gray coveralls jumped down, handheld scanner in hand. The scanner’s red beam swept her wrist terminal; green code flared then turned “Reclamation Confirmed.” He said nothing, only handed her a black plastic case, its lid bar‑coded, edges worn to white plastic fiber.
 
-“If I sign, I can’t leave.” She spoke slowly, each word weighed. “Device Reclamation Countdown forty‑eight hours; the retrieval truck arrives at 03:00.”
+“Put the charger in, sign.” His voice was flat, a hint of impatient nasal tone. Zhou Gui slipped the charger inside; fingertips touched the cold metal base, sweat instantly absorbed. She signed on the electronic pen; a pale blue trace streaked the screen then vanished.
 
-Lu Lao’s fingers trembled on the tablet, nails blanched, ridge pattern sharp in the screen’s glare. He stared at “Confirm,” fingertip suspended, not descending. The tablet lit up; the blockchain write‑complete tone shrieked again: “Will recorded on Blockchain Ledger, Identity Upgrade effective.” Almost simultaneously the Wrist Terminal flashed two red lines:
+“Done.” He reclaimed the case, hit the door‑close button; the truck shuddered, engine a low rumble like distant thunder. Zhou Gui stood still; wind lifted stray hairs onto her damp forehead. The wrist terminal’s vibration finally ceased; the screen showed only a static “4.58,” the red countdown zeroed, a green “Reclamation Complete” icon flashing once on her retina then fading.
 
-**Identity Upgrade·Temporary→Permanent**
+She turned; footsteps echoed across the empty plaza, each step treading the ritual into dust. Far off a rooster crowed again, high and broken, cutting through the highway roar, piercing her eardrum like a fine needle lodged in the gray‑white dawn.
 
-**Care Relationship Terminated·Device Reclamation Countdown 48 h**
+Zhou Gui paused at the bus stop, pulled out the old phone, scrolled to the top contact, pressed call.
 
-Timestamp synced: 2026‑07‑14 05:27:03.
+The screen lit, a line of gray text looping at the bottom: **Calling**.
 
-Zhou Gui stared at the two lines, fingertip hovering over “Confirm.” The Wrist Terminal’s beep‑beep remained metronomic, rating stuck at 4.58. Her breath became distinct within the ventilator rhythm; the scar on her right wrist warmed again, as if an invisible current lightly seared it.
+She held the phone to her ear, the other hand in her pocket, fingertip pressing the rim of the chipped enamel bowl—its cool base climbing her nail bed, reminding her the bowl no longer belonged to any meal.
 
-She did not press it.
+She didn’t redial. The wrist terminal inside her cuff resumed its steady “beep‑beep”—15:00, truck at Gate 1; before that she still had four hours of care work orders to fulfill.
 
-The Chipped Enamel Bowl remained on the bedside table, chip still leftward; the nutrient paste had cooled into a thin skin, a faint oil sheen on its surface. Zhou Gui set the spoon down slowly; metal met porcelain with a soft click, like the end of a ritual.
-
-She fished the old phone from her pocket — screen spider‑webbed with scratches, corners worn smooth, fingerprint smudges leaving a hazy glow. The dial screen held a single number — the Remote Care Package’s sole service hotline. Her fingertip hovered over the green call button; the display read “Calling,” backed by the fan’s whir and the rooster’s crow from Mother’s voice note, the fan blades slicing air and the rooster’s piercing cry weaving a rough duet.
-
-Beep—beep—
-
-The Wrist Terminal kept billing; rating unchanged. “Calling” blinked, no answer. Zhou Gui’s fingertip did not descend, frozen above the call key like an untuned string stretched tight in the pale morning light.
-
-A busy tone sounded again, followed by a brief electronic chirp, then a metallic male voice: “Zhou Gui, Care Package ID 20260714‑003, confirm Identity Upgrade; press ‘1’ within ten seconds to complete device unbinding.” The tone was cold, devoid of temperature, as if transmitted straight from a distant server into the eardrum.
-
-Zhou Gui’s heart missed a beat; her fingertip tightened, nails digging into her palm, a bead of sweat tracing the lines toward her wrist. She heard Lu Lao’s ventilator accelerate, the hiss now laced with a frantic gasp, like a signal about to snap.
-
-“Press ‘1’.” Lu Lao’s voice rolled in his throat, edged with an unyielding rasp. “Don’t let the system decide for you.”
-
-Zhou Gui’s thumb hovered over the screen, fingertip touching cold glass, fingerprint smudges shimmering in the glow. She closed her eyes; fan, rooster, ventilator hiss, wrist‑terminal buzz merged into a low roar that made her eardrums ache. Ten seconds ticked silently on the Wrist Terminal; the red “48 h” burned on her retina.
-
-Her thumb finally fell; the screen flashed a green “1” then dimmed. Synthetic voice: “Device unbinding confirmed; reclamation procedure initiated.” The Wrist Terminal’s vibration frequency spiked to every ten seconds; rating remained frozen at 4.58.
-
-Lu Lao’s finger finally pressed “Confirm” on the tablet; a green ripple spread, the blockchain write‑complete tone slicing the air again. His fingertip released, the blanched nail imprint lingering faintly on the screen.
-
-Zhou Gui pocketed the phone, fingers brushing the coarse fabric. She looked up; morning light slipped through the curtain gap, catching the oil sheen on the Chipped Enamel Bowl and the veins mapping Lu Lao’s withered hand, blue rivers about to dry.
-
-“Go.” Lu Lao said low, voice stripped of sorrow or joy, only the calm of wind‑dried wood. “The retrieval truck arrives at three; remember the charger.”
-
-Zhou Gui nodded, silent. She bent, retrieved the charger from the bedside, cable coiling around her fingers; the cold metal plug pricked her palm. She turned, footsteps whispering on the gray‑white tiles, each step stitching the two dawns together once more.
-
-Stepping out of the ward, the corridor’s antiseptic scent clung like a thin film inside her nose, mingling with stale diaper odor and the distant sour tang of pickles from the cafeteria. Her steps on the tiles produced a soft “sh‑sh” — each one driving the Wrist Terminal’s vibration deeper into bone. The terminal’s red countdown still ticked silently; vibration shifted from ten‑second to five‑second intervals, a faint current crawling up her forearm like a fine needle threading a vein.
-
-The elevator doors slid open; a gust of cold air carried a hint of machine oil. She entered, pressed “1” — the metal button still warm from the previous passenger’s fingertip. Fluorescent tubes buzzed, their ends flickering a weak violet halo that deepened the shadows under her eyes. Only a cleaner in blue overalls occupied the car, clutching a black trash bag, the knot tightening white knuckles. He glanced at her, eyes pausing on the Wrist Terminal for less than a second, then resumed polishing the handrail with mechanical precision.
-
-“Zhou Gui, retrieval truck at three, don’t forget the charger.” Lu Lao’s voice came from behind, sandpaper on metal. She did not turn; only as the doors closed she heard his cane thudding dully on the floor, each “thud‑thud” tightening her chest.
-
-The elevator stopped at ground level; doors opened onto a blast of hot wind laden with dust, mixed with the acrid bite of exhaust from the elevated highway. Zhou Gui exited the lobby; infrared sensors on the automatic doors chirped, a green sweep crossing her Wrist Terminal — the screen still blazed “48 h,” rating still pinned at 4.58, as if time had been nailed to a single sheet.
-
-A self‑service kiosk in the lobby pulsed a dim blue interface, scrolling “Device Reclamation Confirmation,” “Data Upload in Progress,” “Credit Settlement.” She inserted the charger into the USB‑C port; a soft “click” echoed, coolness creeping up her hand along the cable. The kiosk flashed green: “Charger identified; reclamation phase two entered; proceed to designated collection point within ten minutes.”
-
-Ten minutes. She glanced at her wrist; vibration now every three seconds, sweat beads sliding beneath the strap. The lobby PA intoned a smooth synthetic female: “Respected user, your Care Package has been unbound; retrieval vehicle will arrive at 15:00 sharp; please bring all accessories to Gate 1.” The voice carried no warmth, as if piped straight from server to eardrum, bypassing the brain to settle on skin.
-
-Zhou Gui clenched the charger cable, knuckles white. She walked toward Gate 1; each tile underfoot emitted a faint “squeak‑squeak,” a low‑grade heartbeat. The automatic rolling shutter was half‑open, revealing a gray sky and a white box‑van parked outside, “智护回收” in red on its side; the roof antenna swayed, emitting a soft “rustle‑rustle” of metal on wind.
-
-The van’s side door slid; a young man in gray overalls jumped down, handheld scanner in hand. The red beam swept her Wrist Terminal; green code scrolled, then “Reclamation Confirmed.” He said nothing, merely handed her a black plastic crate, its lid barcoded, edges worn to expose white polymer fibers.
-
-“Put the charger in, sign.” His voice was flat, tinged with impatient nasal tone. Zhou Gui placed the charger inside; fingertips touched the cold metal base, sweat instantly absorbed. She scrawled her name on the electronic pen; a pale blue trace flared then vanished.
-
-“Done.” He reclaimed the crate, hit the door‑close button; the van shuddered, engine a low thunder rolling away. Zhou Gui stood still, wind lifting stray strands to her damp forehead. The Wrist Terminal’s vibration finally ceased; the screen displayed only a static “4.58,” the red countdown zeroed, a green “Reclamation Complete” icon flashing once then fading.
-
-She turned; footsteps echoed across the empty plaza, each step treading the ritual into dust. A distant rooster crowed again, high and fractured, piercing the highway roar, slipping into her ear like a fine needle lodged in the pale morning light.
-
-Zhou Gui paused at the bus stop, pulled out the old phone, scrolled to the top contact, pressed call.
-
-The screen lit, a line of gray text rotating at the bottom: **Calling**.
-
-She held the phone to her ear, the other hand in her pocket, fingertip pressing the rim of the Chipped Enamel Bowl — its cool base climbing through the nail gaps, reminding her the bowl no longer belonged to any meal.
-
-She did not redial. The Wrist Terminal resumed its steady beep‑beep inside the cuff — fifteen hundred hours, retrieval truck at Gate 1; before that, she still had four hours of Caregiver work orders to fulfill.
-
-Far off, the retrieval van had already started; exhaust curled into white ribbons in the cold air, dispersing on the wind. She quickened her pace; the Wrist Terminal’s countdown jumped from 4:58 to 4:57, urging her toward the next mandatory “Care.”
+In the distance the reclamation truck had already started, exhaust condensing into white ribbons in the cold air, drifting away. She quickened her pace; the wrist terminal’s countdown jumped from 4:58 to 4:57, urging her toward the next mandatory “care” shift.

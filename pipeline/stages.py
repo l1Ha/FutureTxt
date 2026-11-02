@@ -258,11 +258,13 @@ def _enforce_length(api, n, title, per, text):
 
 
 def machine_precheck(files, per):
-    """连续性机器预检：跨章重复整句、雷同结尾、字数、卫生残留（确定性结果）。"""
+    """连续性机器预检：跨章重复整句、雷同结尾、相似章、收尾异常、字数、卫生残留（确定性结果）。"""
     sent_map, endings, wc_short, hygiene = {}, {}, [], []
+    chapter_texts: List[Tuple[int, str]] = []
     for p in files:
         n = chapter_no(p)
         text = read(p)
+        chapter_texts.append((n, text))
         wc = word_count(text)
         if wc < per * 0.85:
             wc_short.append("第%d章 %d字（%d%%）" % (n, wc, round(wc * 100 / max(per, 1))))
@@ -281,6 +283,13 @@ def machine_precheck(files, per):
     dups = [(s, sorted(set(ns))) for s, ns in sent_map.items() if len(set(ns)) > 1]
     dups.sort(key=lambda t: -len(t[0]))
     end_dups = [(s, sorted(set(ns))) for s, ns in endings.items() if len(set(ns)) > 1]
+    # 跨章高度相似（复制章）与收尾异常：与 lint 使用同一套判据
+    similar = style.find_similar_chapters(chapter_texts)
+    bad_ends = []
+    for n, text in chapter_texts:
+        em = style.find_end_markers(text)
+        if em["count"] >= 2 or em["trail_chars"] > style.TRAIL_AFTER_END:
+            bad_ends.append((n, em))
     lines = []
     if wc_short:
         lines.append("- **字数不足 85%%**（%d 章）：%s" % (len(wc_short), "；".join(wc_short)))
@@ -291,11 +300,20 @@ def machine_precheck(files, per):
     if end_dups:
         lines.append("- **雷同结尾句**：%s" % "；".join(
             "「%s…」← 第%s章" % (s[:30], "、".join(str(x) for x in ns)) for s, ns in end_dups[:5]))
+    if similar:
+        lines.append("- **跨章高度相似**（疑似复制章/换名重写）：共 %d 对，示例：" % len(similar))
+        for pair in similar[:6]:
+            lines.append("  - 第%d章 vs 第%d章：重叠 %.0f%%（较小章 %d 个滑窗中 %d 个重复）"
+                         % (pair["a"], pair["b"], pair["cover"] * 100, pair["smaller"], pair["shared"]))
+    if bad_ends:
+        lines.append("- **收尾异常**（多重完结标记或完结后仍在续写）：" + "；".join(
+            "第%d章（标记 %d 个，其后 %d 字）" % (n, em["count"], em["trail_chars"]) for n, em in bad_ends))
     if hygiene:
         lines.append("- **卫生残留**（应由 clean() 处理）：" + "；".join(hygiene))
     if not lines:
-        lines.append("- 未发现字数、重复、卫生类问题")
-    return "\n".join(lines), len(dups) + len(end_dups) + len(wc_short) + len(hygiene)
+        lines.append("- 未发现字数、重复、相似章、收尾、卫生类问题")
+    return "\n".join(lines), (len(dups) + len(end_dups) + len(wc_short) + len(hygiene)
+                              + len(similar) + len(bad_ends))
 
 
 class Project:
