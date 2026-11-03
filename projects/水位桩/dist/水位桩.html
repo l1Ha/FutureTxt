@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>水位桩 - FutureTxt 在线阅读</title>
+<style>
+:root {
+    --bg-primary: #f8fafc;
+    --bg-card: #ffffff;
+    --text-primary: #1e293b;
+    --text-secondary: #64748b;
+    --border-color: #e2e8f0;
+    --accent: #2563eb;
+    --accent-hover: #1d4ed8;
+    --sidebar-bg: #f1f5f9;
+}
+[data-theme="dark"] {
+    --bg-primary: #0f172a;
+    --bg-card: #1e293b;
+    --text-primary: #f8fafc;
+    --text-secondary: #94a3b8;
+    --border-color: #334155;
+    --accent: #38bdf8;
+    --accent-hover: #0ea5e9;
+    --sidebar-bg: #111827;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+    font-family: -apple-system, "PingFang SC", "Microsoft YaHei", "Noto Sans SC", sans-serif;
+    background-color: var(--bg-primary);
+    color: var(--text-primary);
+    line-height: 1.85;
+    transition: background-color 0.2s, color 0.2s;
+    display: flex;
+    height: 100vh;
+    overflow: hidden;
+}
+#sidebar {
+    width: 320px;
+    background: var(--sidebar-bg);
+    border-right: 1px solid var(--border-color);
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    flex-shrink: 0;
+}
+.sidebar-header {
+    padding: 20px;
+    border-bottom: 1px solid var(--border-color);
+}
+.sidebar-header h2 {
+    font-size: 1.15em;
+    font-weight: 700;
+    margin-bottom: 6px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+.sidebar-meta {
+    font-size: 0.85em;
+    color: var(--text-secondary);
+}
+.chapter-list {
+    overflow-y: auto;
+    flex: 1;
+    list-style: none;
+}
+.chapter-item {
+    padding: 12px 20px;
+    border-bottom: 1px solid var(--border-color);
+    cursor: pointer;
+    font-size: 0.95em;
+    transition: background 0.15s;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.chapter-item:hover {
+    background: rgba(0,0,0,0.04);
+}
+.chapter-item.active {
+    background: var(--accent);
+    color: #ffffff;
+    font-weight: 600;
+}
+.chapter-item .ch-words {
+    font-size: 0.8em;
+    opacity: 0.75;
+}
+#main {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+.topbar {
+    padding: 12px 24px;
+    border-bottom: 1px solid var(--border-color);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: var(--bg-card);
+}
+.controls button {
+    background: transparent;
+    border: 1px solid var(--border-color);
+    color: var(--text-primary);
+    padding: 6px 14px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 0.88em;
+    margin-left: 8px;
+    transition: 0.15s;
+}
+.controls button:hover {
+    border-color: var(--accent);
+    color: var(--accent);
+}
+#content-container {
+    flex: 1;
+    overflow-y: auto;
+    padding: 40px 10%;
+    display: flex;
+    justify-content: center;
+}
+.content-wrapper {
+    max-width: 780px;
+    width: 100%;
+}
+.article-header {
+    text-align: center;
+    margin-bottom: 36px;
+    padding-bottom: 20px;
+    border-bottom: 1px solid var(--border-color);
+}
+.article-header h1 {
+    font-size: 1.85em;
+    font-weight: 700;
+    margin-bottom: 10px;
+}
+.article-meta {
+    font-size: 0.9em;
+    color: var(--text-secondary);
+}
+.article-body p {
+    text-indent: 2em;
+    margin-bottom: 1.4em;
+    font-size: 1.1em;
+    text-align: justify;
+}
+.intro-box {
+    background: var(--bg-card);
+    border: 1px solid var(--border-color);
+    border-left: 5px solid var(--accent);
+    padding: 24px;
+    border-radius: 8px;
+    margin-bottom: 40px;
+}
+.nav-buttons {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 50px;
+    padding-top: 20px;
+    border-top: 1px solid var(--border-color);
+}
+.nav-btn {
+    padding: 10px 20px;
+    border-radius: 6px;
+    border: 1px solid var(--border-color);
+    background: var(--bg-card);
+    color: var(--text-primary);
+    cursor: pointer;
+    font-size: 0.95em;
+}
+.nav-btn:disabled {
+    opacity: 0.3;
+    cursor: not-allowed;
+}
+@media (max-width: 768px) {
+    body { flex-direction: column; }
+    #sidebar { width: 100%; height: 200px; }
+    #content-container { padding: 20px 5%; }
+}
+</style>
+</head>
+<body>
+<div id="sidebar">
+    <div class="sidebar-header">
+        <h2 title="水位桩">水位桩</h2>
+        <div class="sidebar-meta">作者：FutureTxt AI Writer · 1 章 / 5134 字</div>
+    </div>
+    <ul class="chapter-list" id="chapterList"></ul>
+</div>
+<div id="main">
+    <div class="topbar">
+        <span id="currentChLabel">扉页与作品简介</span>
+        <div class="controls">
+            <button onclick="changeFontSize(-1)">A-</button>
+            <button onclick="changeFontSize(1)">A+</button>
+            <button onclick="toggleTheme()" id="themeBtn">🌓 切换暗色</button>
+        </div>
+    </div>
+    <div id="content-container">
+        <div class="content-wrapper" id="articleWrapper"></div>
+    </div>
+</div>
+
+<script>
+const book = {"title": "水位桩", "author": "FutureTxt AI Writer", "description": "2126年，淮滨县全域划入淮河「弹性调度区」。下游城市通过水权期货购买上游蓄洪容量，蓄洪单元内农户按「亩·次」领取补偿。谷堆乡周广田老家收到预签约通知：A项迁建上楼（县城安置房＋一次性补偿＋承包地流转），B项留庄守水（保留承包地＋按亩·次蓄洪补偿＋守桩津贴，预付款可质押）。56岁的船厂焊缝复验师周广田，手腕落着电弧烙印与振动白指，儿子周亮在纺织园区修喷水织机，等着县城婚房首付；妻子算透了账，迁建稳。圩堤上立着父亲留下的那根水位桩，刻痕到1991年、2003年、2016年。周广田没等调度令，先用自己的笔迹在B项签了字，把全家日子押在「水可能会来」上。三个月后，蓄洪调度令下达，他站在自家圩堤闸前，扳手握在掌心，水位桩等着第N道刻痕。", "total_words": 5134, "chapters": [{"index": 1, "title": "水位桩", "words": 5134, "paragraphs": ["周广田按指印那天，谷堆乡的签约率是百分之十九。", "通知单摊在厨房桌上，一张白的，一张黄的。李桂兰把计算器按得笃笃响，三下一组。她算 A 项：县城滨湖新区安置房八十九平，补差八万；一次性补偿十二万，扣掉补差，到手四万；二十亩承包地流转，一亩一年八百，签十五年；医保接续。儿子首付缺口三十万，还差二十六万——她说跟娘家亲戚一家一家借，抬得起头，也还得起。", "「稳。」她说。", "周广田没看 A 项。他看 B 项。留庄：地不流转，蓄洪补偿按亩·次算，一次一千二；守桩津贴一年三万六，往后十年一次质押，县农商行贷二十二万；平台再预付一年津贴和头一回的补偿，六万；二十八万，加上你娘家那两万，正好。不欠人情。", "「你算算水不来的账。」李桂兰把计算器推过来，屏幕上还停着二十六万那个数，「水不来，你十年津贴还贷，白守；水来了，地淹了，麦子没了，你自己开闸。你五十六了。」", "「水会来。」周广田说。", "李桂兰的手指停在计算器上。窗外十公里，纺织园区的织机在夜里开着，那种低音不响，却能顺着地皮传进骨头里。她听了三十年，早分得清哪一声是布，哪一声是布下面的人。", "手机震了一下，是儿子周亮。语音背景里全是机台声：「爸，弱筋麦收购价又涨了八分，我这月加班排到月底。房子那边销售催定金，就等你们。」", "「等着。」周广田说。", "村干部赵建军来的时候，天刚擦黑。他在门框上敲了三下，红笔别在胸兜里，笔帽磨得发亮。「周哥，乡里签约率过六成了，就剩你们几家。」他把 B 项那张黄单翻过来，指着一行小字，「你看清楚，蓄洪令下来，闸要你自己开。你开的不是乡里的闸，是自家田的闸。」", "「我知道。」", "「你知道还签？」", "「签。」周广田把指印按在 B 项栏里。朱墨吃进指纹的沟，他按得很实，像给一条焊缝盖章。", "赵建军看着那个指印，半天没说话。走的时候他把红笔帽拧上，说：「周哥，你这手，当年要是不缺那一截，能当船厂总检。」", "「缺了才好。」周广田说，「缺一截，才记得住手有多重。」", "第二天上午，手机进来两条短信。", "【质押额度已批复：贰拾贰万元。】", "【蓄洪补偿预付款已划转：陆万元。】", "李桂兰从枕头底下抽出一张滨湖新区的选房单，折了四折，又塞了回去。她没再提 A 项，只把小本子上记 A 的那一页撕下来，压在灶台底下。", "夜里，周亮又打来一次电话，这回是视频。屏幕里他站在宿舍楼道，背后挂着两排工服，袖口都磨白了。旁边站着一个姑娘，是对象小雅，在服装厂做核料，脸上还带着车间的热气。", "「叔，」小雅说，「我妈就一个意思，房子定了就办事，彩礼按县里的规矩，不抬价。」", "周广田点头。", "「爸，」周亮把话接过去，「我这条线加班能拿一万二，一年下来也能攒八万。你们那边……」", "「不用你攒。」周广田说，「你顾好你的机台。」", "挂了视频，李桂兰把小本子摊开，一页一页念：彩礼、三金、酒席、装修、将来孩子的名字都不提。她念得很平，像在念别人的账。念到最后一页，她把本子合上：「差的钱，我娘家那边能凑两万。剩下的，看你那一笔。」", "周广田看着窗外。夜班的织机声还在，像一层布，把整个村盖住。村里现在剩七户人，五户是老人；去年秋里，小卖部关了，买盐要去乡上。", "三天后，他回到船厂。", "淮滨中心港的船台在淮河边上，六号船台这条船是六千五百吨的散货船，船体分三段合拢，中间那道合拢缝是整条船受力最狠的地方。周广田是复验。厂里新上的自动焊接已经干完了，检测机器人给出的结论是合格，置信度九十八点六。", "周广田戴上手套，中指和食指夹着探头，沿着焊缝走。走到第三米，手停了。", "「未熔合。」他说，「里面，三毫米。」", "年轻的复验员把平板递过来：「周师傅，探伤图谱过了。AI 判读也过了。」", "「图谱上看不出来。」周广田从工装胸袋里抽出刻刀，刃口贴着焊缝的余高划过去，「手摸得出来。这里比旁边软，软得不均匀。焊缝不怕硬，怕虚。」", "他划了两遍，把刻刀收回口袋。年轻复验员半信半疑地调来手动探伤，屏幕上，第三米的位置果然亮起一条红线。", "「返工。」周广田在单子上签字。", "老李在休息间递烟，火没点着，自己先笑了：「你呀。六十米一条缝，你非要找那三毫米。找着了，厂子赔钱，你落什么了？」", "「落个睡得着。」", "老李把烟点上，吸了一口：「听说你签了留庄？」", "「签了。」", "「水要真来，你那二十亩弱筋麦就没了。你媳妇种的芡实塘也在圩里。」", "周广田没接话。他掏出手机，把儿子那条语音又听了一遍。机台声，八分钱，定金。他把手机屏幕扣在膝盖上。", "「老李，」他说，「你家九一年淹过没有？」", "「淹过。」", "「零三年呢？」", "「也淹过。」", "「一六年？」", "老李不说了，烟灰掉在工装上。", "「你闻过三次水。」周广田说，「身体记得。」", "老李把烟屁股摁进铁皮烟灰缸：「我家九一年那场水，进了堂屋，到大衣柜第二格。我娘把户口本顶在头上，从庄台游出来。」", "「零三年，水到我腰。」周广田说，「那年我三十三，背着我娘上的庄台。我爹在桩上刻痕，手电咬在嘴里，刻完吐了一口血。」", "「你爹是看水人？」", "「他管桩。」周广田说，「那时候没有自动桩，水文站一个星期来一趟，剩下的日子，桩边的事都归他。」", "下班的时候，他从六号船台底下穿过去。合拢缝返工的地方亮着一排黄灯，焊工正蹲在脚手架上补。这条船下水以后要往东走，过蚌埠，过洪泽湖，进长江，头一水装的就是弱筋麦——全县八十万亩弱筋麦，一半靠船走；港上的班轮一趟上海，三天到。他验过的每条焊缝，最后都得泡在水里，替别人扛着麦子跑一千公里。", "第二天傍晚，他骑车回了一趟圩里。", "风从淮河上过来，有河泥的腥味。二十亩地，十六亩弱筋小麦已经抽穗，穗子矮矮的，风一过，像一片压着不动的云。西边四亩是芡实塘，水面上浮着圆叶，李桂兰白天刚下过肥。", "他在塘边蹲了一会儿。青蛙比往年上得早，密密麻麻蹲在塘埂上，看见人也不跳。田埂上的蚂蚁在搬家，一条黑线从埂下爬上来，翻过埂顶，往庄台上走。", "圩堤上立着那根水位桩。铁管，一米八高，红漆刻度已经褪成粉白。桩身上三道刻痕：一九九一，二零零三，二零一六。他父亲刻的，只刻年份，不刻名字——手艺人把名字看得重，觉得年份是河的，名字才是自己的，河没请他留名。", "他伸手摸那三道痕。九一那道最深，边上有一小段没涂漆，锈得发黑；零三那道最浅，摸得出刻刀换过方向；一六那道最新，指甲掐进去还能卡住。", "母亲坟在田埂东头，一小堆土，一棵柏树。坟前的石碑是水泥浇的，字是父亲用錾子打的。他站着看了一会儿，蹲下去，把坟边的草拔了两把。", "塘那边是李桂兰的账。四亩芡实，一亩毛收入四千，除去水、肥、药和雇工，落两千五；今年粮贩子开着三轮车到地头，价压两毛，她没卖，说再等等。他站在塘边算：这一塘四亩，一年给家里落一万。他签的 B 项，一次水，给两万四。", "水不算账，水只认地势。", "庄台上还有两户人亮着灯，都是老人。周亮小时候在庄台上跑，摔断过胳膊，父亲背着他去乡卫生院。那年水刚退，路上的泥深到小腿肚。", "圩里还剩七户。签 A 的那几家上月就搬空了，门窗拆走，房顶的瓦被收废品的扒了半坡。老李家的院门上还贴着去年的春联，红纸褪成了白的，风一吹，哗啦哗啦地响。周广田路过，推了一下他家的灶屋门，没锁。屋里只剩一口铁锅，锅底结着黑垢，灶膛里还塞着半捆没烧完的芝麻秆。", "手机响了，是李桂兰：「今天滨湖新区选房，我去看了。九楼朝南那套还在。售楼的说，B 项的钱到账也能买，就是得等放款。」", "「看好了就订。」", "「周广田，」她停了一下，「你到底是算准了水会来，还是就想守着这根桩？」", "他没回答。风把麦穗吹得沙沙响，像底下埋着一句话，不肯上来。", "六月初，周亮歇班，回了一趟家。", "他在圩堤上站了很久，看着那二十亩地。麦子黄了边，风一过，一层一层地倒着跑。他穿的是园区发的工装，裤脚上还沾着机台的油。", "「爸，」他说，「水真会来？」", "「会。」", "「那你签这个字，我这房子，是水给买的。」", "「是地给买的。」周广田说，「地种了三十年，把你们养大。这一回，地出最后一笔。」", "周亮没接话。他下到塘边帮李桂兰补拦网，尼龙绳在手里挽了一个又一个结。天擦黑，他骑电动车回园区，走到圩堤口又停了一下，回头看了一眼麦地，车灯在埂上晃了两下，走远了。", "汛期从六月十五开始。日历是平台发的，上面用蓝线标着「蓄洪窗口期」，横跨整个七月，压在弱筋麦的灌浆期上。周广田把那张日历贴在灶台边，和电费单、种子单钉在一起，钉子是儿子小时候玩剩下的图钉。", "调度令下来那天是七月十七，凌晨两点。", "手机在枕头边炸了：「周庄圩堤单元，HB-GD-044，四点三十分前到场，执行调度。」后面跟着指令码。", "他穿衣服的时候，李桂兰坐起来开了灯。她没问去干什么，只说：「电压锅里有粥。」", "「你睡。」他说。", "「周广田。」她叫了他一声，又没下文，把被角往上拉了拉，盖住肩膀。", "手机里跳出周亮两条消息。头一条是凌晨一点发的：「爸，销售说这周定金必须交。」后一条撤回了一部分，只剩半行：「要是实在不行，我再熬两年。」", "他看了两秒，把手机装进兜里。", "他骑车往圩里去。十五分钟的路，电动车灯照出一小块橘黄的圆，风从麦地上面跑，麦子已经灌浆，低头了。四点二十分，他站在自家闸门前。", "闸是铸铁的，手轮上锈皮一片一片，像鱼鳞。他没有马上动手。按规程，要核三样：指令码、桩号、闸号。神差一样，补偿作废。", "他把手机屏幕凑到闸墩上铸的钢字号前，一位一位对。对上了。手电扫过水位桩桩身的钢印，对上了。最后是水位读数：桩顶基准标高往下，水线停在离二〇一六那道刻痕四十公分的地方。", "动手之前，他先下到第一垄地边，用刻刀剪了六穗麦子。穗子灌了浆，沉，压手。他把麦穗塞进上衣内袋，贴着心口。", "四点三十一分，他握住手轮。", "第一圈很涩。闸槽里淤了泥，齿条咬着锈，阻力比规程上写的大。他换了个姿势，两脚分开，左手按住闸墩，右手掌根压着轮辐，把力气从脚底往上送——这是他验了三十年焊缝的姿势，扭矩不看手，看腰。", "手轮的辐条转到第三圈，左手无名指的残端开始发酸。振动白指。接触冷水十分钟就犯，犯了就握不住东西，可他不能停。", "「咔。」", "齿条脱开死点，闸门往上抬了一寸。黑水从门缝下面挤进来，带着陈年的淤泥味，先是一线，然后一片，顺着闸后的引渠往田里去。", "他把闸门开到半人高，水声大起来，像一列火车从地下开过去。", "腰上的对讲机响了。值班室的老陈：「广田，闸位报一下。」", "「全开，半人高。」", "「水文站传数，上游枣林坝六点泄洪，峰值两个小时到。闸门留两扇缝，别关死。」", "「留缝。」他说，「人我不撤。」", "对讲机里静了两秒，老陈咳嗽了一声：「转移令还没下，堤脚的渗漏点你盯一眼，拍照传我。你家地在外圩，你心里有数。」", "「有数。」", "他站在闸上，看着水进自己的地。水先到的是西边四亩芡实塘，塘里的圆叶被压下去，一片一片，浮起来，又翻过去。然后往东，顺着田埂走，第一垄麦子齐刷刷倒下去，穗子在水面上打了个旋，不见了。", "水到田埂东头的时候，慢了一下——那是母亲坟前那一小块高地。水绕着坟堆转了一圈，从下面渗过去，把石碑的底座泡进了黄泥里。", "十六亩弱筋麦，四亩芡实，二十亩地，一次两万四。他算过这笔账，从签 B 项那天就在算。水没来的时候，这笔账在纸上；水来了，账就变成了泥。", "周广田站着没动。四点五十二分，手机响了一声，很轻。", "【蓄洪补偿（首期）已到账：贰万肆仟元。】", "隔了两秒，又来一条：", "【守桩津贴（第二期）：已按质押约定划转还款，本期余额 0 元。】", "他把手机塞回口袋，下到桩边。水已经漫到靴帮，凉得钻骨头。", "他从胸袋里掏出那把刻刀。", "刀柄的防滑槽被他的拇指磨出了亮，刃口是他自己磨的，圆弧头，专用来在金属上走线。左手残端抵住桩身，右手握刀，刀尖贴上那道最新的刻痕——二〇一六，往上，一掌宽的地方。", "先刻横，再刻竖。铁管壁不比钢板，薄，刀吃深了会透，吃浅了留不住。他刻得很慢，一笔一停，像在一条焊缝上走线。", "二。一。二。六。", "然后是名字。周，广，田。", "刻完最后一个横，他直起腰，往后退了半步，靠着闸墩看了一会儿。桩上现在有四道痕。前三道只有年份，第四道后面跟着一个名字。", "他从口袋里摸出那罐红漆，把漆抹进新刻痕里，又用拇指把外沿蹭干净。水还在涨，已经舔到了二〇一六那道刻痕的下沿，离他刚刻的这道，还差两拃。", "天快亮了。远处淮河上有船鸣笛，长一声，短一声——那是中心港的船，天亮前赶潮水，装的是弱筋麦，一船一船往外运，走得比水快。", "手机又响。周亮发来的：「爸，房子定了。销售说腊月办婚礼，你和妈早点来。」", "周广田看着屏幕，回了一个字：「好。」", "天蒙蒙亮的时候，李桂兰骑着电动车来了。她把车支在圩堤上，从车筐里拿出保温桶，拧开盖，白气冒出来。", "「粥凉了。」她说。", "她看见了那根桩，看见了桩上那道新刻的红字，又看见水里的麦地。她什么也没说，把保温桶放在闸墩上。", "周广田从内袋里掏出那六穗麦子，放在桶边：「给亮子婚礼上摆的。」", "李桂兰拿起来看了看，穗子还湿着。她把它揣进自己兜里，说：「摆啥，麦子是他爹种的。」", "周广田没再说话。他坐回桩边，端起保温桶喝粥。", "桩上那道新刻痕，红漆还没干透。水离它，还差两拃。"]}]};
+const L = {"cover_label": "扉页与作品简介", "unit": "字", "by": "作者：", "meta_sep": " | 全书约 ", "intro_title": "作品概念与梗概", "prev": "← 上一章", "next": "下一章 →", "start": "开始阅读第一章 →", "ch_prefix": "第 ", "ch_mid": " 章 | ", "theme_dark": "☀️ 亮色模式", "theme_light": "🌓 暗色模式"};
+let currentIndex = -1; // -1 = title page / synopsis
+let fontSize = 17;
+
+function renderSidebar() {
+    const list = document.getElementById("chapterList");
+    list.innerHTML = `<li class="chapter-item ${currentIndex === -1 ? 'active' : ''}" onclick="goToChapter(-1)">
+        <span>📖 ${L.cover_label}</span>
+    </li>`;
+    book.chapters.forEach((ch, idx) => {
+        const li = document.createElement("li");
+        li.className = "chapter-item" + (currentIndex === idx ? " active" : "");
+        li.innerHTML = `<span>${ch.title}</span><span class="ch-words">${ch.words}${L.unit}</span>`;
+        li.onclick = () => goToChapter(idx);
+        list.appendChild(li);
+    });
+}
+
+function renderContent() {
+    const wrapper = document.getElementById("articleWrapper");
+    const label = document.getElementById("currentChLabel");
+    if (currentIndex === -1) {
+        label.innerText = L.cover_label;
+        wrapper.innerHTML = `
+            <div class="article-header">
+                <h1>${book.title}</h1>
+                <div class="article-meta">${L.by}${book.author}${L.meta_sep}${book.total_words.toLocaleString()}${L.unit}</div>
+            </div>
+            <div class="intro-box">
+                <h3 style="margin-bottom:12px;color:var(--accent);">${L.intro_title}</h3>
+                <div style="white-space: pre-wrap; line-height:1.75;">${book.description}</div>
+            </div>
+            <div class="nav-buttons">
+                <button class="nav-btn" disabled>${L.prev}</button>
+                <button class="nav-btn" onclick="goToChapter(0)">${L.start}</button>
+            </div>
+        `;
+    } else {
+        const ch = book.chapters[currentIndex];
+        label.innerText = ch.title;
+        const pTags = ch.paragraphs.map(p => `<p style="font-size: ${fontSize}px;">${p}</p>`).join("");
+        wrapper.innerHTML = `
+            <div class="article-header">
+                <h1>${ch.title}</h1>
+                <div class="article-meta">${L.ch_prefix}${ch.index}${L.ch_mid}${ch.words}${L.unit}</div>
+            </div>
+            <div class="article-body">
+                ${pTags}
+            </div>
+            <div class="nav-buttons">
+                <button class="nav-btn" onclick="goToChapter(currentIndex - 1)">${L.prev}</button>
+                <button class="nav-btn" onclick="goToChapter(currentIndex + 1)" ${currentIndex >= book.chapters.length - 1 ? 'disabled' : ''}>${L.next}</button>
+            </div>
+        `;
+    }
+    document.getElementById("content-container").scrollTop = 0;
+}
+
+function goToChapter(idx) {
+    if (idx < -1 || idx >= book.chapters.length) return;
+    currentIndex = idx;
+    renderSidebar();
+    renderContent();
+}
+
+function toggleTheme() {
+    const current = document.documentElement.getAttribute("data-theme");
+    const next = current === "dark" ? "light" : "dark";
+    document.documentElement.setAttribute("data-theme", next);
+    document.getElementById("themeBtn").innerText = next === "dark" ? L.theme_dark : L.theme_light;
+}
+
+function changeFontSize(delta) {
+    fontSize = Math.max(14, Math.min(26, fontSize + delta));
+    const paras = document.querySelectorAll(".article-body p");
+    paras.forEach(p => p.style.fontSize = fontSize + "px");
+}
+
+renderSidebar();
+renderContent();
+</script>
+</body>
+</html>

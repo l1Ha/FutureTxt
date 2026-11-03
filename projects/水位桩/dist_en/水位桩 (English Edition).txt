@@ -1,0 +1,256 @@
+水位桩 (English Edition)
+By FutureTxt AI Writer
+Scope: 1 chapters / ~15150 chars
+Generated: 2026-11-04
+================================================
+[ SYNOPSIS ]
+In 2126, Huaiyin County has been zoned into the Huai River’s "Flexible Dispatch Area," where downstream megacities trade water-rights futures to buy upstream flood capacity, compensating farmers by the *mu-per-event*. For Zhou Guangtian, a fifty-six-year-old weld inspector whose wrists bear the white-finger tremor of decades in the shipyard, the calculus is brutal. Option A offers a city apartment, a lump sum, and land transfer—the security his wife has calculated down to the last yuan for their son’s down payment. Option B means staying behind the dike: keeping the land, claiming flood payouts, and drawing a guardian’s allowance with an advance he can pledge. The deciding factor isn't a spreadsheet; it’s the water-gauge pile on the embankment, notched by his father for the floods of ’91, ’03, and ’16. Before a single dispatch order drops, Zhou signs Option B in his own hand, wagering his family’s future on the river’s return. Three months later, the sirens sound. He stands at his sluice gate, wrench gripped tight, waiting to carve the next notch into history.
+================================================
+
+
+
+==================== 水位桩 (English Edition) ====================
+
+The day Zhou Guangtian pressed his fingerprint, the signing rate in Gudu Township stood at nineteen percent.
+
+Two notices lay on the kitchen table, one white, one yellow. Li Guiluan tapped her calculator in rhythmic threes. She calculated Option A: eighty-nine square meters in the Binhu New District relocation housing in the county seat, an eighty-thousand-yuan top-up; a one-time compensation of one hundred twenty thousand, minus the top-up, left forty thousand in hand; twenty mu of contracted land transferred at eight hundred per mu per year, signed for fifteen years; medical insurance continuation. Their son's down payment gap was three hundred thousand, still short two hundred sixty thousand — she said she'd borrow from her natal relatives, household by household, could hold her head high, could pay it back.
+
+"Stable," she said.
+
+Zhou Guangtian didn't look at Option A. He looked at Option B. Stay and Guard Water: land not transferred, flood compensation calculated by Mu-Day, twelve hundred per event; Pile-Guarding subsidy thirty-six thousand a year, pledged once a year for the next ten years, county rural commercial bank loan of two hundred twenty thousand; platform pre-pays one year's subsidy plus the first compensation, sixty thousand; two hundred eighty thousand total, plus the twenty thousand from her natal family, exactly enough. Owe no favors.
+
+"You calculate the account where water doesn't come." Li Guiluan pushed the calculator over, the screen still frozen on that two hundred sixty thousand figure. "Water doesn't come, you spend ten years' subsidy repaying the loan, guarding for nothing; water comes, land drowned, wheat gone, you open the sluice yourself. You're fifty-six."
+
+"Water will come," Zhou Guangtian said.
+
+Li Guiluan's fingers stopped on the calculator. Ten kilometers outside the window, the looms in the textile industrial park ran through the night, a low hum that didn't sound loud but traveled through the earth into bone. She'd listened for thirty years, could long distinguish which sound was cloth, which was the people beneath the cloth.
+
+Her phone vibrated once. Their son, Zhou Liang. Voice message background all machine noise: "Dad, weak-gluten wheat purchase price up another eight fen, my overtime scheduled through month-end. Sales on the housing side pushing for deposit, just waiting on you two."
+
+"Wait," Zhou Guangtian said.
+
+Village cadre Zhao Jianjun arrived at dusk. He knocked three times on the doorframe, red pen clipped in his chest pocket, cap worn shiny. "Old Zhou, township signing rate passed sixty percent, just you few households left." He flipped over the yellow Option B form, pointed at a line of fine print. "Read carefully. Flood Dispatch Order comes down, you open the gate yourself. Not the township's gate — your own field's gate."
+
+"I know."
+
+"You know and still sign?"
+
+"Sign." Zhou Guangtian pressed his fingerprint into the Option B column. Vermilion ink ate into the fingerprint ridges. He pressed hard, like stamping a weld seam.
+
+Zhao Jianjun stared at the fingerprint, said nothing for a long while. Leaving, he screwed the red pen cap on: "Old Zhou, that hand of yours — if you hadn't lost that piece back then, you could've been chief inspector at the shipyard."
+
+"Missing it's better," Zhou Guangtian said. "Missing a piece, you remember how heavy a hand is."
+
+Next morning, two texts arrived.
+
+【Pledge quota approved: 220,000 yuan.】
+
+【Flood compensation advance transferred: 60,000 yuan.】
+
+Li Guiluan pulled a Binhu New District unit selection form from under her pillow, folded four times, stuffed it back. She didn't mention Option A again, just tore out the page in her notebook where she'd recorded A, pressed it under the stove.
+
+Night, Zhou Liang called again, video this time. Screen showed him in a dormitory corridor, two rows of work uniforms hanging behind him, cuffs worn white. Beside him stood a girl, his girlfriend Xiaoya, doing material inspection at a garment factory, face still carrying the workshop heat.
+
+"Uncle," Xiaoya said, "my mom has one condition: house settled, then marriage. Bride price by county custom, no markup."
+
+Zhou Guangtian nodded.
+
+"Dad," Zhou Liang took over, "this line with overtime pulls twelve thousand a month, year saves eighty thousand. You guys over there..."
+
+"No need for you to save," Zhou Guangtian said. "You mind your loom."
+
+Hung up. Li Guiluan spread her notebook, page by page: bride price, three gold items, banquet, renovation, future child's name not even mentioned. She read flat, like reading someone else's accounts. Final page, she closed the book: "Shortfall, my natal side can scrape two ten-thousand. The rest, depends on your sum."
+
+Zhou Guangtian watched the window. Night shift looms still humming, like a bolt of cloth covering the whole village. Seven households left in the village now, five elderly; last autumn the convenience store closed, buy salt you go to the township.
+
+Three days later, he returned to the shipyard.
+
+Huaiyin Central Port's slipways sat on the Huai River bank. Slipway Six held a 6,500-ton bulk carrier, hull closed in three sections, the middle closure seam the most stressed point on the whole ship. Zhou Guangtian was re-inspection. The factory's new automatic welding had finished, inspection robots gave qualified verdict, confidence 98.6%.
+
+Zhou Guangtian donned gloves, probe pinched between middle and index finger, walked the weld seam. At meter three, hand stopped.
+
+"Lack of fusion," he said. "Inside, three millimeters."
+
+Young re-inspector handed over tablet: "Master Zhou, flaw map passed. AI reading passed too."
+
+"Can't see on the map." Zhou Guangtian pulled his engraving knife from his workwear chest pocket, blade against the weld reinforcement, drew it across. "Hand feels it. Here's softer than the sides, unevenly soft. Weld doesn't fear hard, fears void."
+
+Two passes, knife returned to pocket. Young re-inspector half-doubtful called up manual UT, screen lit a red line at meter three.
+
+"Rework." Zhou Guangtian signed the form.
+
+Old Li passed a cigarette in the break room, flame wouldn't catch, laughed first: "You. Sixty meters a seam, you had to find those three millimeters. Found it, factory loses money, what do you gain?"
+
+"Gain a good night's sleep."
+
+Old Li lit up, dragged: "Heard you signed Stay and Guard Water?"
+
+"Signed."
+
+"Water really comes, your twenty mu of weak-gluten wheat gone. Your wife's gorgon fruit pond inside the polder too."
+
+Zhou Guangtian didn't answer. He took out his phone, listened to his son's voice message again. Machine noise, eight fen, deposit. Screen facedown on his knee.
+
+"Old Li," he said, "your house flooded in ninety-one?"
+
+"Flooded."
+
+"Two thousand three?"
+
+"Also flooded."
+
+"Twenty sixteen?"
+
+Old Li fell silent, ash dropping on his workwear.
+
+"You've smelled three floods," Zhou Guangtian said. "Body remembers."
+
+Old Li stubbed the butt in the tin ashtray: "Ninety-one flood at my house, reached the main hall, second shelf of the wardrobe. My mother balanced the hukou book on her head, swam out from the village platform."
+
+"Two thousand three, water to my waist," Zhou Guangtian said. "I was thirty-three, carried my mother up to the platform. My father on the pile carving marks, flashlight clenched in teeth, finished carving and coughed up a mouthful of blood."
+
+"Your father was a water watcher?"
+
+"He tended the pile." Zhou Guangtian said. "No auto-piles back then. Hydrology station came once a week. Rest of the days, everything pile-side belonged to him."
+
+Off shift, he passed under Slipway Six. The rework spot on the closure seam glowed under a row of yellow lamps, welders crouched on scaffolding patching. This ship after launch would head east, past Bengbu, past Hongze Lake, into the Yangtze, first cargo weak-gluten wheat — eight hundred thousand mu county-wide, half moved by ship; port liner to Shanghai, three days. Every weld seam he'd verified would soak in water, carrying someone else's wheat a thousand kilometers.
+
+Next evening, he cycled back to the polder.
+
+Wind off the Huai River carried river mud stink. Twenty mu, sixteen mu weak-gluten wheat already headed, heads short, wind passed like a layer of cloud pressed motionless. West four mu gorgon fruit pond, round leaves floating, Li Guiluan had fertilized days ago.
+
+He squatted by the pond edge. Frogs up earlier than usual, dense on the pond bank, didn't jump at sight of people. Ants on the field bank moving house, a black line climbing from bank bottom, over the top, toward the village platform.
+
+On the polder dike stood that water level pile. Iron pipe, 1.8 meters high, red paint scale faded to powder-white. Three carved marks on the pile body: 1991, 2003, 2016. His father's carving, only years, no names — craftsmen held names heavy, felt years belonged to the river, names to themselves, the river never asked him to leave a name.
+
+He touched the three marks. Ninety-one deepest, edge a small unpainted section, rusted black; two thousand three shallowest, could feel knife changed direction; twenty sixteen newest, fingernail still catches.
+
+Mother's grave at the field bank east end, small earth mound, one cypress. Stone marker cement-cast, characters chiseled by father with a cold chisel. He stood watching, then squatted, pulled two handfuls of grass from the grave edge.
+
+Pond side was Li Guiluan's account. Four mu gorgon fruit, one mu gross four thousand, minus water, fertilizer, pesticide, hired labor, net two thousand five; this year grain buyers drove three-wheelers to field edge, pressed price two mao, she didn't sell, said wait. He calculated at pond edge: this pond four mu, one year gives household ten thousand. His Option B, one flood, gives twenty-four thousand.
+
+Water doesn't calculate accounts, water only recognizes terrain.
+
+Village platform still two households with lights on, both elderly. Zhou Liang ran on the platform as a child, broke an arm, father carried him to township clinic. That year water just receded, road mud to calf-deep.
+
+Seven households left in the polder. The Option A families moved out last month, doors and windows stripped, roof tiles half-slope taken by scrap collectors. Old Li's courtyard gate still had last year's spring couplets, red paper faded white, wind blew them clattering. Zhou Guangtian passed, pushed Old Li's kitchen door, unlocked. Inside only an iron wok remained, bottom crusted black, stove stuffed with half a bundle of unburnt sesame stalks.
+
+Phone rang, Li Guiluan: "Today Binhu New District unit selection, I went to look. Ninth floor south-facing unit still there. Sales said B Option money arrived can buy too, just wait for disbursement."
+
+"Good, then book it."
+
+"Zhou Guangtian," she paused, "did you calculate water's coming for sure, or just want to guard this pile?"
+
+He didn't answer. Wind blew wheat heads rustling, like a sentence buried underneath, refusing to surface.
+
+Early June, Zhou Liang off shift, came home.
+
+He stood on the polder dike a long time, watching those twenty mu. Wheat yellowing at edges, wind passed, layer after layer tipping and running. He wore the industrial park workwear, trouser cuffs still stained with machine oil.
+
+"Dad," he said, "water really coming?"
+
+"Will."
+
+"Then this house I'm buying, water's buying it."
+
+"Land's buying it," Zhou Guangtian said. "Land farmed thirty years, raised you all. This time, land pays the last installment."
+
+Zhou Liang didn't reply. He went down to the pond to help Li Guiluan mend the fence net, nylon rope knotting in his hands. Dusk, he rode his e-bike back to the park, stopped at the polder dike entrance again, looked back at the wheat field, headlights swept the bank twice, gone.
+
+Flood season began June 15. Calendar issued by the platform, blue line marking "Flood Storage Window," spanning all July, pressed onto weak-gluten wheat's grain-filling period. Zhou Guangtian stuck that calendar beside the stove, nailed with electricity bill, seed bill, nails leftover from his son's childhood thumbtacks.
+
+Dispatch Order came down July 17, 2 AM.
+
+Phone exploded on the pillow: "Zhouzhuang Polder Unit, HB-GD-044, on site before 4:30, execute dispatch." Followed by instruction code.
+
+He dressed, Li Guiluan sat up, turned on the light. Didn't ask where, only said: "Congee in the electric pressure cooker."
+
+"You sleep."
+
+"Zhou Guangtian." She called him once, no follow-through, pulled the quilt corner up, covered her shoulder.
+
+Phone showed two messages from Zhou Liang. First sent 1 AM: "Dad, sales says deposit must pay this week." Second partially recalled, only half line left: "If really impossible, I'll grind two more years."
+
+He stared two seconds, pocketed the phone.
+
+Cycled toward the polder. Fifteen minutes, e-bike lamp cutting a small orange circle, wind running over wheat tops, wheat already grain-filled, heads bowed. 4:20 AM, he stood before his family's sluice gate.
+
+Gate cast iron, handwheel rust flaked like fish scales. He didn't move immediately. Protocol: verify three things — instruction code, pile number, gate number. God-like, compensation voided.
+
+He held phone screen to the steel characters cast on the gate pier, digit by digit. Matched. Flashlight swept the water level pile's steel imprint, matched. Last, water level reading: from pile top benchmark down, waterline stopped forty centimeters below the 2016 carved mark.
+
+Before moving, he first went down to the first ridge edge, used engraving knife to snip six wheat heads. Heads grain-filled, heavy, weighed the hand. He stuffed them into his inner jacket pocket, against his heart.
+
+4:31 AM, he gripped the handwheel.
+
+First turn stiff. Gate groove silted, rack biting rust, resistance greater than protocol wrote. He shifted stance, feet apart, left hand braced on gate pier, right palm heel pressing spoke, driving force from soles upward — the posture of thirty years verifying weld seams, torque not by hand, by waist.
+
+Handwheel spoke turned third revolution, left ring finger残端 began to ache. Vibration white finger. Cold water contact ten minutes triggers, triggered can't grip, but he couldn't stop.
+
+"Click."
+
+Rack released dead point, gate rose an inch. Black water squeezed up from under the gate, carrying years of silt stench, first a line, then a sheet, along the diversion canal behind the gate into the fields.
+
+He opened gate to half-man height, water sound grew, like a train passing underground.
+
+Waist radio crackled. Duty room Old Chen: "Guangtian, report gate position."
+
+"Fully open, half-man height."
+
+"Hydrology station transmitting: upstream Zaolin Dam releasing flood at 6 AM, peak two hours out. Leave two gate gaps, don't seal shut."
+
+"Leave gaps," he said. "I'm not withdrawing."
+
+Radio static two seconds, Old Chen coughed: "Evacuation order not down yet, watch the seepage points at dike toe, photo transmit to me. Your land outside the polder, you know the stakes."
+
+"Know the stakes."
+
+He stood on the gate, watching water enter his own land. Water reached west four mu gorgon fruit pond first, round leaves pressed down, piece by piece, floated up, flipped over. Then east, along field ridges, first ridge wheat fell in unison, heads spun once on water surface, vanished.
+
+Water reached field ridge east end, slowed — that small high ground before mother's grave. Water circled the grave mound, seeped underneath, soaked the stone marker's base into yellow mud.
+
+Sixteen mu weak-gluten wheat, four mu gorgon fruit, twenty mu land, one event twenty-four thousand. He'd calculated this account, calculating since the day he signed Option B. Water doesn't come, account on paper; water comes, account becomes mud.
+
+Zhou Guangtian stood unmoving. 4:52 AM, phone chimed, very soft.
+
+【Flood storage compensation (first installment) received: 24,000 yuan.】
+
+Two seconds later, another:
+
+【Pile-Guarding subsidy (second installment): repaid per pledge agreement, current balance 0 yuan.】
+
+He pocketed the phone, went down to the pile. Water already lapping boot tops, cold drilling into bone.
+
+He took the engraving knife from his chest pocket.
+
+Knife handle's anti-slip grooves polished bright by his thumb, blade self-ground, rounded tip, specialized for walking lines on metal. Left residual finger braced against pile body, right hand gripped knife, tip against the newest carved mark — 2016, upward, one palm width.
+
+Horizontal first, then vertical. Iron pipe wall not steel plate, thin, knife too deep pierces, too shallow won't hold. He carved slowly, stroke by pause, like walking a weld seam.
+
+Two. Zero. One. Six.
+
+Then the name. Zhou. Guang. Tian.
+
+Finished the last horizontal of the last character, he straightened, stepped back half a pace, leaned on the gate pier watching. Pile now had four marks. First three only years, fourth followed by a name.
+
+He fished out the red paint can from his pocket, daubed paint into the new carving, thumbed the outer edges clean. Water still rising, already licking the lower edge of the 2016 mark, two spans from his fresh one.
+
+Dawn nearing. Distant Huai River, ship horn, one long, two short — center port ships, chasing tide before dawn, loaded with weak-gluten wheat, ship after ship running out, faster than water.
+
+Phone again. Zhou Liang: "Dad, house booked. Sales says twelfth month wedding, you and Mom come early."
+
+Zhou Guangtian watched the screen, replied one character: "Good."
+
+Dim dawn, Li Guiluan arrived on e-bike. She propped it on the polder dike, took a thermos from the basket, twisted the lid, white steam rose.
+
+"Congee's cold," she said.
+
+She saw the pile, saw the new red characters on the pile, saw the wheat fields in water. She said nothing, set the thermos on the gate pier.
+
+Zhou Guangtian took the six wheat heads from his inner pocket, set them beside the thermos: "For Liangzi's wedding display."
+
+Li Guiluan picked them up, looked, heads still wet. She tucked them into her own pocket: "Display what, wheat's his father's crop."
+
+Zhou Guangtian didn't speak further. He sat back by the pile, lifted the thermos, drank congee.
+
+The new carving on the pile, red paint not yet dry. Water, two spans away.
