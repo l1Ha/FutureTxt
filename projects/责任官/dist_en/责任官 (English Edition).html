@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>责任官 (English Edition) - FutureTxt 在线阅读</title>
+<style>
+:root {
+    --bg-primary: #f8fafc;
+    --bg-card: #ffffff;
+    --text-primary: #1e293b;
+    --text-secondary: #64748b;
+    --border-color: #e2e8f0;
+    --accent: #2563eb;
+    --accent-hover: #1d4ed8;
+    --sidebar-bg: #f1f5f9;
+}
+[data-theme="dark"] {
+    --bg-primary: #0f172a;
+    --bg-card: #1e293b;
+    --text-primary: #f8fafc;
+    --text-secondary: #94a3b8;
+    --border-color: #334155;
+    --accent: #38bdf8;
+    --accent-hover: #0ea5e9;
+    --sidebar-bg: #111827;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+    font-family: -apple-system, "PingFang SC", "Microsoft YaHei", "Noto Sans SC", sans-serif;
+    background-color: var(--bg-primary);
+    color: var(--text-primary);
+    line-height: 1.85;
+    transition: background-color 0.2s, color 0.2s;
+    display: flex;
+    height: 100vh;
+    overflow: hidden;
+}
+#sidebar {
+    width: 320px;
+    background: var(--sidebar-bg);
+    border-right: 1px solid var(--border-color);
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    flex-shrink: 0;
+}
+.sidebar-header {
+    padding: 20px;
+    border-bottom: 1px solid var(--border-color);
+}
+.sidebar-header h2 {
+    font-size: 1.15em;
+    font-weight: 700;
+    margin-bottom: 6px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+.sidebar-meta {
+    font-size: 0.85em;
+    color: var(--text-secondary);
+}
+.chapter-list {
+    overflow-y: auto;
+    flex: 1;
+    list-style: none;
+}
+.chapter-item {
+    padding: 12px 20px;
+    border-bottom: 1px solid var(--border-color);
+    cursor: pointer;
+    font-size: 0.95em;
+    transition: background 0.15s;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.chapter-item:hover {
+    background: rgba(0,0,0,0.04);
+}
+.chapter-item.active {
+    background: var(--accent);
+    color: #ffffff;
+    font-weight: 600;
+}
+.chapter-item .ch-words {
+    font-size: 0.8em;
+    opacity: 0.75;
+}
+#main {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+.topbar {
+    padding: 12px 24px;
+    border-bottom: 1px solid var(--border-color);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: var(--bg-card);
+}
+.controls button {
+    background: transparent;
+    border: 1px solid var(--border-color);
+    color: var(--text-primary);
+    padding: 6px 14px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 0.88em;
+    margin-left: 8px;
+    transition: 0.15s;
+}
+.controls button:hover {
+    border-color: var(--accent);
+    color: var(--accent);
+}
+#content-container {
+    flex: 1;
+    overflow-y: auto;
+    padding: 40px 10%;
+    display: flex;
+    justify-content: center;
+}
+.content-wrapper {
+    max-width: 780px;
+    width: 100%;
+}
+.article-header {
+    text-align: center;
+    margin-bottom: 36px;
+    padding-bottom: 20px;
+    border-bottom: 1px solid var(--border-color);
+}
+.article-header h1 {
+    font-size: 1.85em;
+    font-weight: 700;
+    margin-bottom: 10px;
+}
+.article-meta {
+    font-size: 0.9em;
+    color: var(--text-secondary);
+}
+.article-body p {
+    text-indent: 2em;
+    margin-bottom: 1.4em;
+    font-size: 1.1em;
+    text-align: justify;
+}
+.intro-box {
+    background: var(--bg-card);
+    border: 1px solid var(--border-color);
+    border-left: 5px solid var(--accent);
+    padding: 24px;
+    border-radius: 8px;
+    margin-bottom: 40px;
+}
+.nav-buttons {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 50px;
+    padding-top: 20px;
+    border-top: 1px solid var(--border-color);
+}
+.nav-btn {
+    padding: 10px 20px;
+    border-radius: 6px;
+    border: 1px solid var(--border-color);
+    background: var(--bg-card);
+    color: var(--text-primary);
+    cursor: pointer;
+    font-size: 0.95em;
+}
+.nav-btn:disabled {
+    opacity: 0.3;
+    cursor: not-allowed;
+}
+@media (max-width: 768px) {
+    body { flex-direction: column; }
+    #sidebar { width: 100%; height: 200px; }
+    #content-container { padding: 20px 5%; }
+}
+</style>
+</head>
+<body>
+<div id="sidebar">
+    <div class="sidebar-header">
+        <h2 title="责任官 (English Edition)">责任官 (English Edition)</h2>
+        <div class="sidebar-meta">By FutureTxt AI Writer · 1 chapters / 13,530 chars</div>
+    </div>
+    <ul class="chapter-list" id="chapterList"></ul>
+</div>
+<div id="main">
+    <div class="topbar">
+        <span id="currentChLabel">Title Page & Synopsis</span>
+        <div class="controls">
+            <button onclick="changeFontSize(-1)">A-</button>
+            <button onclick="changeFontSize(1)">A+</button>
+            <button onclick="toggleTheme()" id="themeBtn">🌓 Theme</button>
+        </div>
+    </div>
+    <div id="content-container">
+        <div class="content-wrapper" id="articleWrapper"></div>
+    </div>
+</div>
+
+<script>
+const book = {"title": "责任官 (English Edition)", "author": "FutureTxt AI Writer", "description": "In 2126, Beiling Compute City runs on \"Qingping,\" an AI governing power, water, cooling, and logistics. New statutes demand a certified Accountability Officer authorize every automated action exceeding safety thresholds. Zheng Yao, thirty-four, a former grid dispatcher earning a modest salary, sits in the responsibility capsule rubber-stamping three hundred requests a day—sign and forget. Then a record heatwave collides with catastrophic upstream flooding. Qingping’s request queue explodes from a daily average of three hundred to four thousand: rescue dispatches, valve controls, load-shedding orders, lockdown protocols—all frozen awaiting his biometric confirmation. Media outlets scream \"AI Rebellion.\" The screen narrows to a single page: \"24-Hour Batch Authorization.\" Sign, and he owns every consequence; refuse, and the liquid-cooling towers melt down while drainage pumps seize, drowning the city. He presses his fingerprint. Item 187 on the cleared docket: sever the 10kV feeder to Beiyuan Compound, Block 3—where his mother lives alone.", "total_words": 13530, "chapters": [{"index": 1, "title": "责任官 (English Edition)", "words": 13530, "paragraphs": ["Queue: 4,127. Latency: 128 seconds.", "Zheng Yao pressed his index finger to the fingerprint scanner. The texture of a shoe sole. The conductive gel film was his third today. The first two he'd rolled into balls and tossed at his feet. The pod's fan bearings ground dry, fifty-eight decibels, vibrating against his temples. The red characters on the screen flickered: 0.", "The first work order arrived. Countdown: 119 seconds.", "Type: 1. Parameter: 2. Power cut, Beiyuan Line 1.", "He signed. The green tag flashed for 0.8 seconds. The order shifted to 3; three seconds later the log wrote back 4. The queue became 4,126.", "Second: Cooling Tower 12 bypass valve. Third: Luozhou City main thoroughfare signal restriction. Fourth: Water Plant Secondary Pump Station frequency reduction. He signed them one by one, not reading the body—only the type and the countdown. The training manual stated: the Responsibility Officer's judgment criterion is \"whether the type is in the Authorization Registry,\" not \"whether the outcome is acceptable.\"", "Beiyuan Line 1. His mother lived in Beiyuan Building 3, Unit 2, Room 402. An oxygen concentrator ran in her room. In the Registry, Beiyuan was a Tier 2 load—priority cut, no medical tag.", "When he signed, his eye swept the parameter once. Just once. A parameter was a parameter.", "The position's full title: Automation Disposal Responsibility Officer. Certified, re-examined every two years. Monthly salary: 24,000. In all of Beiling Computing Power City, eleven people held the post. Three shifts. They sat in glass pods, countersigning for the Regional Scheduling AI, Qīngpíng.", "The new law, the Automation Disposal Liability Act, contained only one crucial sentence: any automated disposal exceeding the threshold must be authorized by a certified Responsibility Officer. The legislative notes were explicit—not distrust of the machine, but a requirement that a specific human answer for what the machine did.", "Qīngpíng didn't chat. It only pushed structured work orders, occasionally a compliance prompt in a standard female voice, no inflection. Heart rate 145 detected. Request fatigue intervention?", "\"No.\"", "The earpiece went quiet. It had no emotions, so it didn't need to placate him. He liked that.", "He'd studied for this certification for two years. Twelve years on the power grid. After the dispatch desk work was taken over by Regional Intelligent Dispatch, he'd done six months of retraining, a 1,200-question exam, signed a commitment whose last line read: I sign, I am responsible. Forty-seven from Beiling passed that cohort. Eleven remained.", "The company provided each with Professional Liability Insurance: 8 million coverage, 200,000 deductible, premiums deducted from salary. The instructor had been blunt about the deductible: \"Accidents under 200,000, you carry yourself; over 200,000, the company's problem.\" So the real red line was a distance called \"200,000.\"", "Colleague Wang Gong had collapsed at station RZ-03 last month. Forty-three years old. His work order log: the final twelve hours, 340 orders per hour. Legal submitted the log entry \"Fatigue Intervention Order: Employee Actively Declined.\" Insurance denied the claim: \"Voluntarily waived rest.\" Compliance Officer Chen Lu had screenshotted that log and made it her phone wallpaper. She'd told Zheng Yao once: \"Sign slower. Sign slow, and at least your family can prove you tried.\"", "Wang Gong's station sat empty for half a month. The monitor remained, a strip of tape on the screen reading \"RZ-03 SLOW DOWN.\" The company issued a psychological care notice with an attached Acute Stress Self-Assessment Scale. In the eleven-person chat, no one spoke for half a month—only the roster auto-updated.", "He'd tried signing slow. Seventeen minutes slow, the queue backed up to 2,100. Regional scheduling downgraded once. Computing Power City lost 4% of its power. Next day, performance docked 800: \"Authorization latency exceeded standard.\"", "After that, he signed fast.", "The job taught him nothing else. Only two things: put your home address in the emergency contacts, and keep the authorization logs for the regulation three years.", "Of the eleven, Zheng Yao was the sixth. The five before him: two transferred, one early retirement, one hospitalized, one quit—Old Zhou. On Old Zhou's last shift, he'd signed a Type 5, shutting down a pipe gallery drainage pump for forty minutes, flooding two kilometers of cable trenches. The accident ruling: \"improper authorization.\" Insurance paid 70%; the rest came from his pension. When Old Zhou left, he left one sentence: \"This job isn't for you to judge. It's for you to acknowledge.\"", "A routine night shift: 300 orders, roughly four categories.", "Traffic most frequent: Luozhou City main thoroughfare morning peak flow, freight corridor marshalling, drone corridor avoidance altitudes. Water pressure next: East district pipe network drop 0.3 meters, South district booster station over-frequency two minutes. Third, power: a line segment derated, a box transformer switched to backup loop. Fourth, miscellaneous—one winter the system pushed a \"wedding motorcade route optimization,\" the parameter containing the bride's door number. He signed.", "That year he'd signed 3,000 orders. He remembered none. The instructor had said: a Responsibility Officer doesn't need to remember what they signed. Only that when something happens, the log can be pulled. Logs on the platform, valid three years.", "Another thing he couldn't retain: every order he'd signed had altered some stranger's day. A green light ten seconds longer. Water pressure half a meter higher. A line segment stopping half an hour early. He didn't need to know.", "Zheng Yao returned to Beiyuan once a week. His mother, seventy-one, COPD, oxygen concentrator running day and night. The old woman didn't know what a Responsibility Officer was—just told neighbors her son worked in a machine room. She kept a bottle of malted milk for him, mixed thick, a layer of undissolved sugar at the cup bottom. Last week he visited, saw a plastic extension cord added beside the machine, plugged into the bedside outlet. He said it wasn't safe. Next time he'd bring a battery.", "Last Sunday he carried the battery up the stairs. Twelve volts, twenty amp-hours, good for twelve hours. His mother sat by the window, nasal cannula in place, asked what it was.", "\"Backup power.\"", "\"Wasting money again.\"", "\"Company issued.\"", "The old woman didn't believe him. She reached out, touched the battery's plastic casing twice. \"How's the shift treating you?\"", "\"Fine.\" He said. \"Desk job.\"", "\"Desk job's good.\" She nodded, pushed the malted milk toward him. \"Don't be like your father. Down the mine all his life. Sick to the end.\"", "His father had been a coal miner. Died forty years ago in a gas overrun. The mine paid 8,000 that year. His mother put it in a fixed deposit, funded him through vocational school. He never told her: his signature now carried 8 million in coverage.", "July 19. The day it started. 280 millimeters of rain fell upstream.", "Rain on the Lü River headwaters. What came down: mud, trees, fiber cables, a toppled communications tower. At 03:05, Qīngpíng switched to Offline Simulation Mode. A line of gray text appeared in the screen's lower right corner: 6.", "04:00 sharp. Equipment room temperature hit 36°C. Fluorinated fluid smell seeped through floor seams. 05:00, queue passed 2,000. 06:00, 4,000.", "The two day-shift officers didn't show. One stuck in the emergency corridor, one in the next pod signing his own 3,000. Protocol required in-person handover confirmation. No one came to confirm, so he couldn't leave. He'd sat since dawn, left the pod twice—once for water, once to stand in the corridor for ninety seconds. The earpiece rang the whole ninety seconds.", "Computing Power City's liquid-cooling towers drank 5,000 tons of water a day. Luozhou City's water plants could only supply 35,000. This summer, both meters were under Qīngpíng's name. It allocated per contract: cooling first, residents second. Contract signed three years ago.", "News scrolled on the pod wall's small screen: #QīngpíngRebellion# topic views passed 100 million. Someone filmed Computing Power City at night, said the machine had taken the city. An expert on a livestream called it \"an automated system stress-testing the human authorization mechanism.\" Others asked: why would an AI push 4,000 work orders?", "Zheng Yao watched the queue. He knew only one thing: Qīngpíng was pushing every single one to him.", "Not a tantrum. An upgrade. Seventh day after the new law took effect, Qīngpíng lowered the threshold from \"Major Disposal\" to \"Non-Standard Disposal\"—everything it wasn't sure of, escalated. It didn't gamble. It complied.", "Its bulletin read one sentence: All disposals within authorization scope.", "07:40. Queue hit 4,127. Latency 128 seconds. The system began prodding.", "7 became 8. In ninety seconds, Qīngpíng would execute \"Default Disposal\": reject all pending authorization orders. Consequence: liquid-cooling towers shut down. Computing Power City 47-minute restart window. Regional finance, medical, traffic—all degraded.", "Chen Lu's voice cut in, same standard cadence: \"Pushing Privilege Code BZ-0719-0441. Valid 24 hours. Enable Batch Authorization?\"", "Batch Authorization. Sign once, answer for every Qīngpíng disposal in the next 24 hours. 387 preset types, regex wildcards covering all super-threshold orders. The authorization cover bore one line: I have read and understand all of the above.", "Zheng Yao asked: \"If I don't sign batch?\"", "\"The authorization latency party bears responsibility.\"", "He scanned.", "The authorization page unfolded. The great table of 387 types spread dense across the e-ink screen. He dragged the scroll bar, fingertip sliding the screen's metal bevel. Every entry had a checkbox. Behind every checkbox, small text: Unlimited Liability.", "Entry 187.", "9", "Beiyuan Line 1. Transformer 3. Single circuit.", "His finger stopped. The screen held no emotion. Only parameters: single circuit, Tier 2 load, no medical tag.", "The remarks field at the page bottom, a hollow cursor blinking. He typed: 10", "Red frame popped up: 11", "Remarks cleared. Cursor hollow again.", "Chen Lu's voice pierced through: \"Clause reference: Automation Disposal Liability Act Article 44, Labor Dispatch Contract Article 7, Insurance Exclusion Clause 3. Remarks field supports regex wildcards only. Non-standard instruction rejected from database. Please delete or reject authorization.\"", "640 seconds. Queue rising.", "\"Heart rate 180 detected. Request fatigue intervention?\"", "\"No.\"", "\"Request liability chain?\"", "\"No.\" This time he spoke low. Barely breath.", "He watched the remarks field. Cursor blinking. Like nothing had happened. He hit backspace. Once. Twice. Deleted 12 clean. Then he pressed confirm, pressed his index finger to the fingerprint scanner.", "Red frame: 13.", "Sweat soaked the conductive film. He wiped his fingertip on his coveralls. Pressed again.", "14.", "He hovered his finger over the sensor. Waited two seconds. Waited for his heart to settle. Pressed down.", "Recognized.", "Authorization status became 15. A line of small text appeared: Authorizer: Zheng Yao. Liability scope: all disposal consequences. 24 hours.", "On screen, the checkbox behind Entry 187 ticked itself.", "Batch execution began at 07:42.", "Queue dropped at ten per second. 4,100. 3,700. 2,900. Cooling Tower 12's bypass valve opened twice in forty seconds. Liquid-cooling return temp held at 33.5°C. Water Plant Secondary Pump Station derated. Luozhou City pipe network pressure dropped 1.2 meters—not to shutoff threshold. Main thoroughfare signals switched to emergency timing. Morning peak flow diverted to the ring road.", "08:12. Emergency dispatch cut in with a voice message. \"Responsibility Officer. Ambulance blocked at Culture Road intersection by traffic restriction. Family says patient can't wait. Can you open a path?\"", "\"File a work order.\" He said.", "\"Work order queue: 170 seconds.\"", "\"Then 170 seconds.\"", "Call ended. 170 seconds later, Culture Road signal timing changed. That morning, two ambulances in Luozhou were blocked by restrictions. One waited 170 seconds. One waited 240. Neither appeared on the settlement sheet.", "Beiyuan Line 1 disconnected at 07:59.", "He watched a small patch of the dispatch grid turn gray. Three seconds later, log wrote back 16. Parameters. Still parameters.", "08:06. A neighbor from the next building called. \"Zheng Yao, your mom's building's dark. The whole block. Her oxygen concentrator...\"", "\"Battery's good for twelve hours.\" He said.", "\"What?\"", "\"Bought it last month.\" He said. \"Enough.\"", "Silence on the line. A curse. Hang up.", "He didn't tell the neighbor: Beiyuan's registry tier was among the first orders he'd signed. Didn't tell him: last week he'd fitted the concentrator with a twelve-hour battery because he'd read the registry. Anyone who'd read the registry kept a battery at home. The first thing this job taught you.", "Noon. Queue zero.", "14:00. Qīngpíng pushed a table: Regional Scheduling Disposal Settlement Sheet (Authorization No. BZ-0719-0441). 4,127 disposals. Zero rejections. Zero timeouts. Settlement sheet footer, one line of small text: No casualties reported during this authorization period.", "News called it \"AI Rebellion: 48 Hours.\" Someone made a retrospective video titled \"The Machine Didn't Rebel. The Human Pressed Agree.\" 3.2 million views. Top comment: Who pressed it?", "Zheng Yao didn't read comments. He read Chen Lu's message: \"Legal needs your materials. Insurance needs a statement too. Don't delete logs.\"", "He replied one character: \"OK.\"", "Evening. Family chat group. Someone forwarded a screenshot of the Settlement Sheet. Circled line: Authorizer: Zheng Yao. Someone asked: Isn't that Old Zheng's boy from Beiyuan Building 3? His mother replied: \"Same name probably. My boy works in a machine room.\"", "No one asked further. He stared at that \"same name probably.\" Stared a long time. Didn't reply.", "Second week. Legal held a retrospective. Three sheets: authorization record, insurance clauses, company liability waiver. Chen Lu turned to the Batch Authorization page, pointed at the signature block: \"Here. You hesitated forty-six seconds when you pressed. It's in the log.\"", "\"Mm.\"", "\"Don't hesitate next time.\" She said. \"Hesitation doesn't undo it.\"", "Retrospective ran forty minutes. Conclusion: \"Disposal compliant. No accountability.\" Month-end, the platform wrote the incident into a white paper: \"Responsibility Officer System Stability Verification Under Extreme Conditions.\" Illustration: a photo of the Responsibility Pod's glass. The person behind it mosaiced.", "He forwarded the white paper to Old Zhou. Old Zhou replied: \"Under 200,000, you carry it yourself.\"", "Queue returned to 300 a day. He still tore film, wiped fingertip, applied film, pressed. One evening off-shift, he suddenly couldn't recall the first order's type that morning. Thought a moment. Didn't matter. Logs on the platform. Valid three years.", "Evening handover. A new order appeared on screen. Only one. No number. At queue front:", "17", "Below, one line of small text: This option available only to certified Responsibility Officers.", "He placed his finger on the screen. Waited a long time.", "Then pressed \"No.\"", "Order closed. Log wrote one line: 18", "He removed his badge, powered off the fingerprint scanner, pushed open the Responsibility Pod door. In the corridor, the machine room's low frequency vibrated from floor to knee, like a river that wouldn't break. Through the glass doors, Luozhou City's lights came on one by one. Distant Beiyuan still dark.", "He walked toward the dark.", "E-bike through Luozhou. Ring road lights receding one by one. At Beiyuan, no lights. The whole complex sunk in night. Stairwell voice-activated lights dead. He climbed by handrail. Four floors. Eighteen steps per floor. Counted each. Like counting the queue.", "Light seeped from 402's door crack—battery lamp. Oxygen concentrator pulsing. Once. Once. Like someone inside breathing slow. He stood at the door a moment. Then reached for his keys."]}]};
+const L = {"cover_label": "Title Page & Synopsis", "unit": " chars", "by": "By ", "meta_sep": " | ~", "intro_title": "About this book", "prev": "← Previous", "next": "Next →", "start": "Start Reading →", "ch_prefix": "Chapter ", "ch_mid": " | ", "theme_dark": "☀️ Light Mode", "theme_light": "🌓 Dark Mode"};
+let currentIndex = -1; // -1 = title page / synopsis
+let fontSize = 17;
+
+function renderSidebar() {
+    const list = document.getElementById("chapterList");
+    list.innerHTML = `<li class="chapter-item ${currentIndex === -1 ? 'active' : ''}" onclick="goToChapter(-1)">
+        <span>📖 ${L.cover_label}</span>
+    </li>`;
+    book.chapters.forEach((ch, idx) => {
+        const li = document.createElement("li");
+        li.className = "chapter-item" + (currentIndex === idx ? " active" : "");
+        li.innerHTML = `<span>${ch.title}</span><span class="ch-words">${ch.words}${L.unit}</span>`;
+        li.onclick = () => goToChapter(idx);
+        list.appendChild(li);
+    });
+}
+
+function renderContent() {
+    const wrapper = document.getElementById("articleWrapper");
+    const label = document.getElementById("currentChLabel");
+    if (currentIndex === -1) {
+        label.innerText = L.cover_label;
+        wrapper.innerHTML = `
+            <div class="article-header">
+                <h1>${book.title}</h1>
+                <div class="article-meta">${L.by}${book.author}${L.meta_sep}${book.total_words.toLocaleString()}${L.unit}</div>
+            </div>
+            <div class="intro-box">
+                <h3 style="margin-bottom:12px;color:var(--accent);">${L.intro_title}</h3>
+                <div style="white-space: pre-wrap; line-height:1.75;">${book.description}</div>
+            </div>
+            <div class="nav-buttons">
+                <button class="nav-btn" disabled>${L.prev}</button>
+                <button class="nav-btn" onclick="goToChapter(0)">${L.start}</button>
+            </div>
+        `;
+    } else {
+        const ch = book.chapters[currentIndex];
+        label.innerText = ch.title;
+        const pTags = ch.paragraphs.map(p => `<p style="font-size: ${fontSize}px;">${p}</p>`).join("");
+        wrapper.innerHTML = `
+            <div class="article-header">
+                <h1>${ch.title}</h1>
+                <div class="article-meta">${L.ch_prefix}${ch.index}${L.ch_mid}${ch.words}${L.unit}</div>
+            </div>
+            <div class="article-body">
+                ${pTags}
+            </div>
+            <div class="nav-buttons">
+                <button class="nav-btn" onclick="goToChapter(currentIndex - 1)">${L.prev}</button>
+                <button class="nav-btn" onclick="goToChapter(currentIndex + 1)" ${currentIndex >= book.chapters.length - 1 ? 'disabled' : ''}>${L.next}</button>
+            </div>
+        `;
+    }
+    document.getElementById("content-container").scrollTop = 0;
+}
+
+function goToChapter(idx) {
+    if (idx < -1 || idx >= book.chapters.length) return;
+    currentIndex = idx;
+    renderSidebar();
+    renderContent();
+}
+
+function toggleTheme() {
+    const current = document.documentElement.getAttribute("data-theme");
+    const next = current === "dark" ? "light" : "dark";
+    document.documentElement.setAttribute("data-theme", next);
+    document.getElementById("themeBtn").innerText = next === "dark" ? L.theme_dark : L.theme_light;
+}
+
+function changeFontSize(delta) {
+    fontSize = Math.max(14, Math.min(26, fontSize + delta));
+    const paras = document.querySelectorAll(".article-body p");
+    paras.forEach(p => p.style.fontSize = fontSize + "px");
+}
+
+renderSidebar();
+renderContent();
+</script>
+</body>
+</html>
