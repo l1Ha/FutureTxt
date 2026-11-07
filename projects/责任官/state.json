@@ -11,9 +11,9 @@
   },
   "summaries": {},
   "token_usage": {
-    "prompt_tokens": 103059,
-    "completion_tokens": 32729,
-    "total_tokens": 135788,
+    "prompt_tokens": 128005,
+    "completion_tokens": 40932,
+    "total_tokens": 168937,
     "by_stage": {
       "concept": {
         "prompt_tokens": 13886,
@@ -41,9 +41,9 @@
         "total_tokens": 8310
       },
       "review": {
-        "prompt_tokens": 25106,
-        "completion_tokens": 7417,
-        "total_tokens": 32523
+        "prompt_tokens": 50052,
+        "completion_tokens": 15620,
+        "total_tokens": 65672
       }
     }
   },

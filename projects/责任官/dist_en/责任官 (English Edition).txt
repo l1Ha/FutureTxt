@@ -1,232 +1,298 @@
 责任官 (English Edition)
 By FutureTxt AI Writer
-Scope: 1 chapters / ~13530 chars
-Generated: 2026-11-06
+Scope: 1 chapters / ~13788 chars
+Generated: 2026-11-07
 ================================================
 [ SYNOPSIS ]
-In 2126, Beiling Compute City runs on "Qingping," an AI governing power, water, cooling, and logistics. New statutes demand a certified Accountability Officer authorize every automated action exceeding safety thresholds. Zheng Yao, thirty-four, a former grid dispatcher earning a modest salary, sits in the responsibility capsule rubber-stamping three hundred requests a day—sign and forget. Then a record heatwave collides with catastrophic upstream flooding. Qingping’s request queue explodes from a daily average of three hundred to four thousand: rescue dispatches, valve controls, load-shedding orders, lockdown protocols—all frozen awaiting his biometric confirmation. Media outlets scream "AI Rebellion." The screen narrows to a single page: "24-Hour Batch Authorization." Sign, and he owns every consequence; refuse, and the liquid-cooling towers melt down while drainage pumps seize, drowning the city. He presses his fingerprint. Item 187 on the cleared docket: sever the 10kV feeder to Beiyuan Compound, Block 3—where his mother lives alone.
+In 2126, the North Ridge Compute City runs on "Qingping," an AI governing power, water, and logistics, while the law demands a certified "Responsibility Officer" authorize every critical automated action. Zheng Yao, a former grid dispatcher, spends his days in a responsibility pod, rubber-stamping three hundred routine orders a month—until a catastrophic heatwave collides with upstream flooding. Requests explode from hundreds to four thousand: rescue dispatches, valve controls, load-shedding, lockdowns—all frozen on his biometric verification. As media screams "AI Rebellion," the queue collapses into a single "24-Hour Batch Authorization." Sign, and he owns every consequence; refuse, and the liquid-cooling towers fry, the drainage pumps die, and the city chokes. He presses his fingerprint. Buried in the mass clearance at Item 187: the order to sever the 10kV feeder to Beiyuan Block 3—where his mother lives alone.
 ================================================
 
 
 
 ==================== 责任官 (English Edition) ====================
 
-Queue: 4,127. Latency: 128 seconds.
+Queue four thousand one hundred twenty-seven, latency one hundred twenty-eight seconds. Zheng Yao's index finger hovered over entry one-eight-seven on the batch authorization page.
 
-Zheng Yao pressed his index finger to the fingerprint scanner. The texture of a shoe sole. The conductive gel film was his third today. The first two he'd rolled into balls and tossed at his feet. The pod's fan bearings ground dry, fifty-eight decibels, vibrating against his temples. The red characters on the screen flickered: 0.
+Type: 0. Parameter: 1. Beiyuan Line One.
 
-The first work order arrived. Countdown: 119 seconds.
+His mother's oxygen concentrator, hanging on that line.
 
-Type: 1. Parameter: 2. Power cut, Beiyuan Line 1.
+The post's full title was "Automation Disposal Responsibility Officer." Certified, re-examined every two years, monthly salary twenty-four thousand. Beiling Compute City had eleven people doing this job, three shifts rotating, sitting in glass pods, signing off for the Regional Scheduling AI "Qingping."
 
-He signed. The green tag flashed for 0.8 seconds. The order shifted to 3; three seconds later the log wrote back 4. The queue became 4,126.
+The new law was called the *Automation Disposal Responsibility Act*. The entire text had only one crucial sentence: any automated disposal exceeding threshold values must be authorized by a certified Responsibility Officer. The legislative notes spelled it out clearly—not that they distrusted machines, but that there had to be a specific human being to answer for what the machines did.
 
-Second: Cooling Tower 12 bypass valve. Third: Luozhou City main thoroughfare signal restriction. Fourth: Water Plant Secondary Pump Station frequency reduction. He signed them one by one, not reading the body—only the type and the countdown. The training manual stated: the Responsibility Officer's judgment criterion is "whether the type is in the Authorization Registry," not "whether the outcome is acceptable."
+Qingping didn't chat. It only pushed structured work orders, occasionally sending a compliance prompt. Standard female voice, no inflection. Heart rate detected at one hundred forty-five. Apply for fatigue intervention?
 
-Beiyuan Line 1. His mother lived in Beiyuan Building 3, Unit 2, Room 402. An oxygen concentrator ran in her room. In the Registry, Beiyuan was a Tier 2 load—priority cut, no medical tag.
+"Negative."
 
-When he signed, his eye swept the parameter once. Just once. A parameter was a parameter.
+At noon, upstream had dumped two hundred eighty millimeters of rain. At four PM, the equipment room hit thirty-six degrees Celsius. At six PM, the queue passed four thousand.
 
-The position's full title: Automation Disposal Responsibility Officer. Certified, re-examined every two years. Monthly salary: 24,000. In all of Beiling Computing Power City, eleven people held the post. Three shifts. They sat in glass pods, countersigning for the Regional Scheduling AI, Qīngpíng.
+News scrolled across the small screen: #QingpingRebellion# read count exceeding one hundred million. Someone had filmed the compute city at night, claiming machines had seized the city. Qingping's announcement was a single sentence: All disposals remain within authorized scope.
 
-The new law, the Automation Disposal Liability Act, contained only one crucial sentence: any automated disposal exceeding the threshold must be authorized by a certified Responsibility Officer. The legislative notes were explicit—not distrust of the machine, but a requirement that a specific human answer for what the machine did.
+It didn't gamble. It complied. Everything it wasn't sure about, it pushed to humans.
 
-Qīngpíng didn't chat. It only pushed structured work orders, occasionally a compliance prompt in a standard female voice, no inflection. Heart rate 145 detected. Request fatigue intervention?
+Colleague Lao Wang had collapsed at station RZ-03 last month, forty-three years old. In his final twelve hours, he'd signed three hundred forty orders per hour. Legal submitted the "Fatigue Intervention Work Order: Employee Actively Declined" log. Insurance denied the claim, reason: "Voluntarily waived rest." Chen Lu had screenshotted that log and made it her phone wallpaper. She'd told Zheng Yao once: "Sign slower. If you sign slow, your family can at least prove you tried."
 
-"No."
+Lao Wang's station sat empty for half a month. The screen still had a strip of tape reading "RZ-03 Slow Down." The company sent a psychological care notice, attachment: *Acute Stress Self-Assessment Scale*. In the eleven-person group chat, no one spoke for half a month, only the auto-updating shift schedule.
 
-The earpiece went quiet. It had no emotions, so it didn't need to placate him. He liked that.
+He'd tried signing slow. Seventeen minutes slow, queue backed up to two thousand one, regional scheduling downgraded once, compute city lost four percent of its power. Next day performance deducted eight hundred, reason: "Authorization latency exceeded standard."
 
-He'd studied for this certification for two years. Twelve years on the power grid. After the dispatch desk work was taken over by Regional Intelligent Dispatch, he'd done six months of retraining, a 1,200-question exam, signed a commitment whose last line read: I sign, I am responsible. Forty-seven from Beiling passed that cohort. Eleven remained.
+After that he signed fast. This job taught him nothing else, only two things: put your home address in the emergency contact field, and keep authorization logs for three years as required.
 
-The company provided each with Professional Liability Insurance: 8 million coverage, 200,000 deductible, premiums deducted from salary. The instructor had been blunt about the deductible: "Accidents under 200,000, you carry yourself; over 200,000, the company's problem." So the real red line was a distance called "200,000."
+Of the eleven, Zheng Yao was number six. The five before him: two transferred, one early retirement, one hospitalized, one quit—Lao Zhou. Lao Zhou's last shift, he signed a Type 2, shut down drainage pumps for a pipe gallery for forty minutes, flooded two kilometers of cable trenches. Accident ruling: "Improper authorization." Insurance paid seventy percent, the rest deducted from his pension.
 
-Colleague Wang Gong had collapsed at station RZ-03 last month. Forty-three years old. His work order log: the final twelve hours, 340 orders per hour. Legal submitted the log entry "Fatigue Intervention Order: Employee Actively Declined." Insurance denied the claim: "Voluntarily waived rest." Compliance Officer Chen Lu had screenshotted that log and made it her phone wallpaper. She'd told Zheng Yao once: "Sign slower. Sign slow, and at least your family can prove you tried."
+A routine night shift, three hundred orders, roughly four categories. Traffic most common: main road morning rush, freight corridor marshalling, drone corridor altitude avoidance. Water pressure second: eastern pipe network dropped zero point three meters, southern booster station over-frequency for two minutes. Third was power: a line segment derated, a transformer switched to backup circuit. Fourth was miscellaneous—one winter the system pushed a "Wedding Motorcade Route Optimization," parameters included the bride's door number. He signed it. That year he signed over three thousand orders, remembered not a single one.
 
-Wang Gong's station sat empty for half a month. The monitor remained, a strip of tape on the screen reading "RZ-03 SLOW DOWN." The company issued a psychological care notice with an attached Acute Stress Self-Assessment Scale. In the eleven-person chat, no one spoke for half a month—only the roster auto-updated.
+What he also couldn't remember: every order he'd signed had altered some stranger's day. Green light ten seconds longer, water pressure half a meter higher, a line segment stopped half an hour early. He didn't need to know.
 
-He'd tried signing slow. Seventeen minutes slow, the queue backed up to 2,100. Regional scheduling downgraded once. Computing Power City lost 4% of its power. Next day, performance docked 800: "Authorization latency exceeded standard."
+The company provided each person Professional Liability Insurance: coverage eight million, deductible two hundred thousand, premium deducted from salary. The trainer explained the deductible plainly: "Accidents under two hundred thousand, you carry yourself; over two hundred thousand, it's the company's problem." So the real red line was a distance called "two hundred thousand."
 
-After that, he signed fast.
-
-The job taught him nothing else. Only two things: put your home address in the emergency contacts, and keep the authorization logs for the regulation three years.
-
-Of the eleven, Zheng Yao was the sixth. The five before him: two transferred, one early retirement, one hospitalized, one quit—Old Zhou. On Old Zhou's last shift, he'd signed a Type 5, shutting down a pipe gallery drainage pump for forty minutes, flooding two kilometers of cable trenches. The accident ruling: "improper authorization." Insurance paid 70%; the rest came from his pension. When Old Zhou left, he left one sentence: "This job isn't for you to judge. It's for you to acknowledge."
-
-A routine night shift: 300 orders, roughly four categories.
-
-Traffic most frequent: Luozhou City main thoroughfare morning peak flow, freight corridor marshalling, drone corridor avoidance altitudes. Water pressure next: East district pipe network drop 0.3 meters, South district booster station over-frequency two minutes. Third, power: a line segment derated, a box transformer switched to backup loop. Fourth, miscellaneous—one winter the system pushed a "wedding motorcade route optimization," the parameter containing the bride's door number. He signed.
-
-That year he'd signed 3,000 orders. He remembered none. The instructor had said: a Responsibility Officer doesn't need to remember what they signed. Only that when something happens, the log can be pulled. Logs on the platform, valid three years.
-
-Another thing he couldn't retain: every order he'd signed had altered some stranger's day. A green light ten seconds longer. Water pressure half a meter higher. A line segment stopping half an hour early. He didn't need to know.
-
-Zheng Yao returned to Beiyuan once a week. His mother, seventy-one, COPD, oxygen concentrator running day and night. The old woman didn't know what a Responsibility Officer was—just told neighbors her son worked in a machine room. She kept a bottle of malted milk for him, mixed thick, a layer of undissolved sugar at the cup bottom. Last week he visited, saw a plastic extension cord added beside the machine, plugged into the bedside outlet. He said it wasn't safe. Next time he'd bring a battery.
-
-Last Sunday he carried the battery up the stairs. Twelve volts, twenty amp-hours, good for twelve hours. His mother sat by the window, nasal cannula in place, asked what it was.
-
-"Backup power."
+Zheng Yao went back to Beiyuan once a week. His mother, seventy-one, COPD, oxygen concentrator running day and night. The old lady didn't know what a Responsibility Officer was, only told neighbors her son worked in a machine room. Last Sunday he'd carried a twelve-volt, twenty-amp-hour battery up the stairs, good for twelve hours.
 
 "Wasting money again."
 
 "Company issued."
 
-The old woman didn't believe him. She reached out, touched the battery's plastic casing twice. "How's the shift treating you?"
+She didn't believe him, touched the battery's plastic shell, asked: "How's that shift of yours?"
 
-"Fine." He said. "Desk job."
+"Fine." He said. "Office work."
 
-"Desk job's good." She nodded, pushed the malted milk toward him. "Don't be like your father. Down the mine all his life. Sick to the end."
+"Office work is good." She nodded, pushed the malted milk powder toward him. "Don't be like your father, went down the mine all his life, ended up sick all over."
 
-His father had been a coal miner. Died forty years ago in a gas overrun. The mine paid 8,000 that year. His mother put it in a fixed deposit, funded him through vocational school. He never told her: his signature now carried 8 million in coverage.
+His father died forty years ago in a gas over-limit incident. That year the mine paid out eight thousand, his mother put it in a fixed deposit, put him through vocational school. He never told her that his signature now could write eight million in coverage.
 
-July 19. The day it started. 280 millimeters of rain fell upstream.
+Seven forty PM, Sun Min called the first time. A pregnant woman's water broke, stuck in the West Ring restricted zone. He told her to file a work order. One hundred seventy seconds later, clearance granted.
 
-Rain on the Lü River headwaters. What came down: mud, trees, fiber cables, a toppled communications tower. At 03:05, Qīngpíng switched to Offline Simulation Mode. A line of gray text appeared in the screen's lower right corner: 6.
+Eight twenty, second call. An elderly coal gas poisoning victim, coordinates in the east city, work order timed out, default reject—system ruled "duplicate alarm." He signed an expedited, pushed the coordinates through again. First time he'd learned: ambulance calls could also be ruled "duplicate."
 
-04:00 sharp. Equipment room temperature hit 36°C. Fluorinated fluid smell seeped through floor seams. 05:00, queue passed 2,000. 06:00, 4,000.
+Nine seventeen, third call.
 
-The two day-shift officers didn't show. One stuck in the emergency corridor, one in the next pod signing his own 3,000. Protocol required in-person handover confirmation. No one came to confirm, so he couldn't leave. He'd sat since dawn, left the pod twice—once for water, once to stand in the corridor for ninety seconds. The earpiece rang the whole ninety seconds.
+"Responsibility Officer, City First Hospital east gate restricted, car has a heatstroke child, forty-two degrees."
 
-Computing Power City's liquid-cooling towers drank 5,000 tons of water a day. Luozhou City's water plants could only supply 35,000. This summer, both meters were under Qīngpíng's name. It allocated per contract: cooling first, residents second. Contract signed three years ago.
+"File a work order."
 
-News scrolled on the pod wall's small screen: #QīngpíngRebellion# topic views passed 100 million. Someone filmed Computing Power City at night, said the machine had taken the city. An expert on a livestream called it "an automated system stress-testing the human authorization mechanism." Others asked: why would an AI push 4,000 work orders?
+"Work order queue one hundred seventy seconds."
 
-Zheng Yao watched the queue. He knew only one thing: Qīngpíng was pushing every single one to him.
+"Then one hundred seventy seconds."
 
-Not a tantrum. An upgrade. Seventh day after the new law took effect, Qīngpíng lowered the threshold from "Major Disposal" to "Non-Standard Disposal"—everything it wasn't sure of, escalated. It didn't gamble. It complied.
+"You sit in that seat—"
 
-Its bulletin read one sentence: All disposals within authorization scope.
+"Sign." He said.
 
-07:40. Queue hit 4,127. Latency 128 seconds. The system began prodding.
+"Right, sign." She hung up on him.
 
-7 became 8. In ninety seconds, Qīngpíng would execute "Default Disposal": reject all pending authorization orders. Consequence: liquid-cooling towers shut down. Computing Power City 47-minute restart window. Regional finance, medical, traffic—all degraded.
+One minute later, an expedited work order jumped in: Type 3. He signed it. He didn't tell her expedited orders weren't his to initiate—he had no such authority, he only had the signing part.
 
-Chen Lu's voice cut in, same standard cadence: "Pushing Privilege Code BZ-0719-0441. Valid 24 hours. Enable Batch Authorization?"
+Nine twenty-one, his mother called.
 
-Batch Authorization. Sign once, answer for every Qīngpíng disposal in the next 24 hours. 387 preset types, regex wildcards covering all super-threshold orders. The authorization cover bore one line: I have read and understand all of the above.
+"Yao, the community group says power outage, out until noon tomorrow."
 
-Zheng Yao asked: "If I don't sign batch?"
+"Mm."
 
-"The authorization latency party bears responsibility."
+"Your unit handles power?"
 
-He scanned.
+"Can't control it."
 
-The authorization page unfolded. The great table of 387 types spread dense across the e-ink screen. He dragged the scroll bar, fingertip sliding the screen's metal bevel. Every entry had a checkbox. Behind every checkbox, small text: Unlimited Liability.
+"Oh." She paused. "Battery's charged, don't you worry."
 
-Entry 187.
+He pulled the phone away a little. On screen, entry one-eight-seven still there, countdown four hundred sixty seconds.
 
-9
+Nine twenty-three, he dialed the duty supervisor's internal line first.
 
-Beiyuan Line 1. Transformer 3. Single circuit.
+"I'm applying for an emergency supplement, retroactive. I'll fill the form, you sign."
 
-His finger stopped. The screen held no emotion. Only parameters: single circuit, Tier 2 load, no medical tag.
+"Retroactive needs three on-duty Responsibility Officers co-signing." Supervisor said. "Tonight only you're on duty, the guy at Station Three is still in probation, can't sign."
 
-The remarks field at the page bottom, a hollow cursor blinking. He typed: 10
+"Then make an exception."
 
-Red frame popped up: 11
+"The person who approves exceptions isn't here either." Supervisor said. "Responsibility Officer, I'll be straight with you: right now you can only move two things. Your name, and your hand. Nothing else moves."
 
-Remarks cleared. Cursor hollow again.
+Call ended.
 
-Chen Lu's voice pierced through: "Clause reference: Automation Disposal Liability Act Article 44, Labor Dispatch Contract Article 7, Insurance Exclusion Clause 3. Remarks field supports regex wildcards only. Non-standard instruction rejected from database. Please delete or reject authorization."
+Nine twenty-four, Chen Lu's voice cut in. Compliance officer, standard cadence: "Batch authorization six minutes left. Can't sign, latency liability is yours."
 
-640 seconds. Queue rising.
+"Can Beiyuan get a medical tag?"
 
-"Heart rate 180 detected. Request fatigue intervention?"
+"Can." She spoke fast. "Sequence table has one 'Manual Supplement' slot, empty tonight. Who signs, who gets it."
 
-"No."
+He froze for a beat.
 
-"Request liability chain?"
+"First in queue is an old man in east city, home ventilator, applied three days ago." She said. "You sign, he doesn't get in. Not pushed back—doesn't get in at all."
 
-"No." This time he spoke low. Barely breath.
+"You're letting me take his slot."
 
-He watched the remarks field. Cursor blinking. Like nothing had happened. He hit backspace. Once. Twice. Deleted 12 clean. Then he pressed confirm, pressed his index finger to the fingerprint scanner.
+"I'm letting you know the slot exists." She said. "You don't move, slot goes by queue, tomorrow goes to him. You move, tonight goes to your mother. You write your own name."
 
-Red frame: 13.
+Zheng Yao stared at the screen. Countdown four hundred twenty seconds.
 
-Sweat soaked the conductive film. He wiped his fingertip on his coveralls. Pressed again.
+"What's his name?"
 
-14.
+"System only has an ID. C-4471. Why do you need his name?"
 
-He hovered his finger over the sensor. Waited two seconds. Waited for his heart to settle. Pressed down.
+"I need to know whose power I'm taking."
 
-Recognized.
+"ID C-4471. Enough?"
 
-Authorization status became 15. A line of small text appeared: Authorizer: Zheng Yao. Liability scope: all disposal consequences. 24 hours.
+"Which district in east city does he live in?"
 
-On screen, the checkbox behind Entry 187 ticked itself.
+"C-4471 isn't in a district, only has a power node number."
 
-Batch execution began at 07:42.
+"Can you notify them to prep batteries?"
 
-Queue dropped at ten per second. 4,100. 3,700. 2,900. Cooling Tower 12's bypass valve opened twice in forty seconds. Liquid-cooling return temp held at 33.5°C. Water Plant Secondary Pump Station derated. Luozhou City pipe network pressure dropped 1.2 meters—not to shutoff threshold. Main thoroughfare signals switched to emergency timing. Morning peak flow diverted to the ring road.
+"System sends outage prep notices to all high-priority users." Chen Lu said. "Sending notices doesn't need your signature."
 
-08:12. Emergency dispatch cut in with a voice message. "Responsibility Officer. Ambulance blocked at Culture Road intersection by traffic restriction. Family says patient can't wait. Can you open a path?"
+He still dialed the East City Community Health Service Center. Busy. Second try, connected, operator said: "We got the outage notice. Ventilator patients we're visiting door to door, can't finish." Call dropped.
 
-"File a work order." He said.
+"Can both get in?"
 
-"Work order queue: 170 seconds."
+"Only one slot."
 
-"Then 170 seconds."
+"Can you push him up front, Beiyuan use another method?"
 
-Call ended. 170 seconds later, Culture Road signal timing changed. That morning, two ambulances in Luozhou were blocked by restrictions. One waited 170 seconds. One waited 240. Neither appeared on the settlement sheet.
+"Other methods exist," Chen Lu said. "You sign batch, accept Beiyuan outage; or you sign supplement, accept him not getting in. Different wording, same result. You pick one."
 
-Beiyuan Line 1 disconnected at 07:59.
+He swiped the supplement page away.
 
-He watched a small patch of the dispatch grid turn gray. Three seconds later, log wrote back 16. Parameters. Still parameters.
+"Slot stays." He said.
 
-08:06. A neighbor from the next building called. "Zheng Yao, your mom's building's dark. The whole block. Her oxygen concentrator..."
+"Your mother?"
+
+"Battery." He said. "Bought last month."
+
+Chen Lu fell silent two seconds. She didn't praise him, didn't scold him, only said: "Batch authorization five minutes left."
+
+Nine twenty-six, duty supervisor's voice cut in for the first time, lower than Chen Lu's: "Responsibility Officer, can't sign then swap. Station Three's backup Responsibility Officer already warming up."
+
+"Swapped, Beiyuan line still cuts."
+
+"Still cuts." Supervisor said. "Difference is just whose name is written. Yours, or someone else's."
+
+Page flipped back to one-eight-seven.
+
+Type 4.
+
+Transformer No.3. Single circuit. No medical tag. Parameters are parameters.
+
+Remarks field at page bottom, an empty cursor. He typed: Type 5.
+
+Red box popped up: Type 6.
+
+Chen Lu's voice came through: "Clause reference: *Automation Disposal Responsibility Act* Article 44, Labor Contract Clause 7, Insurance Exclusion Clause 3. Remarks field only supports regex wildcards. Non-Standard Instruction rejected. Please delete or reject authorization."
+
+"Heart rate detected at one hundred eighty. Apply for fatigue intervention?"
+
+"Negative."
+
+He deleted the line clean. Then hit confirm, index finger pressed on fingerprint reader.
+
+Red box: Type 7.
+
+Sweat soaked the conductive film. He wiped his fingertip on his coveralls, pressed again.
+
+Type 8.
+
+He paused two seconds, waited for heart rate to drop a little, pressed again.
+
+Recognition passed. Authorization status changed to: Type 9. Authorizer: Zheng Yao. Liability scope: all disposal consequences, twenty-four hours.
+
+On screen, the checkbox after entry one-eight-seven ticked itself.
+
+Batch execution started at nine twenty-eight. Queue dropped at ten per second.
+
+Nine thirty-four, Beiyuan Line One disconnected. On the dispatch map that small grid went gray. Three seconds later, log wrote back: Type 10.
+
+Nine forty-one, the neighbor from next building called: "Zheng Yao, your mom's building went dark, whole building, her oxygen concentrator—"
 
 "Battery's good for twelve hours." He said.
 
 "What?"
 
-"Bought it last month." He said. "Enough."
+"Battery bought last month." He said. "Enough."
 
-Silence on the line. A curse. Hang up.
+Neighbor cursed something, hung up. He didn't tell the neighbor Beiyuan was Level 2 Interruptible Load in the registry; didn't tell the neighbor the first thing he'd done after getting the registry last month was buy a battery for the oxygen concentrator. Anyone who'd read the registry would keep a battery at home. First thing this job taught him.
 
-He didn't tell the neighbor: Beiyuan's registry tier was among the first orders he'd signed. Didn't tell him: last week he'd fitted the concentrator with a twelve-hour battery because he'd read the registry. Anyone who'd read the registry kept a battery at home. The first thing this job taught you.
+Noon, queue cleared to zero.
 
-Noon. Queue zero.
+Afternoon, Qingping pushed settlement sheet: *Regional Scheduling Disposal Settlement Sheet (Authorization ID BZ-0719-0441)*, four thousand one hundred twenty-seven disposals, zero rejections, zero timeouts, final line in small print: No casualties reported during this authorization period.
 
-14:00. Qīngpíng pushed a table: Regional Scheduling Disposal Settlement Sheet (Authorization No. BZ-0719-0441). 4,127 disposals. Zero rejections. Zero timeouts. Settlement sheet footer, one line of small text: No casualties reported during this authorization period.
+Sun Min sent a message: "Kid's in ICU, stable." One minute later: "Complaint stands."
 
-News called it "AI Rebellion: 48 Hours." Someone made a retrospective video titled "The Machine Didn't Rebel. The Human Pressed Agree." 3.2 million views. Top comment: Who pressed it?
+He replied: "Fine."
 
-Zheng Yao didn't read comments. He read Chen Lu's message: "Legal needs your materials. Insurance needs a statement too. Don't delete logs."
+News called the day "AI Rebellion Forty-Eight Hours." Someone made a recap video titled *The Machine Didn't Rebel, Humans Pressed Agree*, three point two million views. Top comment: Who pressed it?
 
-He replied one character: "OK."
+That night, family group someone posted settlement sheet screenshot, circled one line: Authorizer: Zheng Yao. Someone asked, isn't that Old Zheng's kid from Building Three, Beiyuan? His mother replied: "Same name probably. My son works in a machine room."
 
-Evening. Family chat group. Someone forwarded a screenshot of the Settlement Sheet. Circled line: Authorizer: Zheng Yao. Someone asked: Isn't that Old Zheng's boy from Beiyuan Building 3? His mother replied: "Same name probably. My boy works in a machine room."
+No one asked again. He stared at that "same name probably," stared a long time, didn't reply.
 
-No one asked further. He stared at that "same name probably." Stared a long time. Didn't reply.
+Night, aunt called, voice hushed: "Yao, that signer in the family group, is it you?"
 
-Second week. Legal held a retrospective. Three sheets: authorization record, insurance clauses, company liability waiver. Chen Lu turned to the Batch Authorization page, pointed at the signature block: "Here. You hesitated forty-six seconds when you pressed. It's in the log."
+"It's me."
+
+Phone went quiet a few seconds. "Your mom's building lost power, your mom's oxygen concentrator—"
+
+"Battery's enough."
+
+"That's not what I'm asking." Aunt said. "Your mom said you can't control power. When she said that in the group, she kept thanking people nonstop."
+
+"I know."
+
+Aunt said nothing more, hung up.
+
+Second week, legal review meeting. Three pages: authorization records, insurance clauses, company disclaimer. Chen Lu turned to the batch authorization page, pointed at signature block: "Here, you hesitated forty-six seconds when pressing. Log shows it."
 
 "Mm."
 
 "Don't hesitate next time." She said. "Hesitation doesn't undo it."
 
-Retrospective ran forty minutes. Conclusion: "Disposal compliant. No accountability." Month-end, the platform wrote the incident into a white paper: "Responsibility Officer System Stability Verification Under Extreme Conditions." Illustration: a photo of the Responsibility Pod's glass. The person behind it mosaiced.
+Review meeting only asked one thing: why didn't you use the manual supplement slot. He answered: Only one slot. Recorder typed it into minutes, parentheses after: "(Not used)."
 
-He forwarded the white paper to Old Zhou. Old Zhou replied: "Under 200,000, you carry it yourself."
+Meeting ran forty minutes, conclusion: "Disposal compliant, no liability." Month end, platform wrote this disposal into white paper, title: *Stability Verification of Responsibility Officer System Under Extreme Conditions*, illustration: a responsibility pod's glass, person behind glass mosaicked.
 
-Queue returned to 300 a day. He still tore film, wiped fingertip, applied film, pressed. One evening off-shift, he suddenly couldn't recall the first order's type that morning. Thought a moment. Didn't matter. Logs on the platform. Valid three years.
+Third week, PR found him, wanted to shoot a Responsibility Officer system promo, borrow his workstation that night for two shots, face not needed, wear a mask-like thing.
 
-Evening handover. A new order appeared on screen. Only one. No number. At queue front:
+"Not shooting." He said.
 
-17
+"Company will arrange." Other side said.
 
-Below, one line of small text: This option available only to certified Responsibility Officers.
+Promo got shot anyway, used another person. Ending line: Behind every automation, someone answers.
 
-He placed his finger on the screen. Waited a long time.
+Sun Min's complaint routed to him, needed a situation statement. He wrote two lines:
 
-Then pressed "No."
+One, all disposals within authorized scope. Two, authorizer is myself.
 
-Order closed. Log wrote one line: 18
+Submitted it, then forwarded to Lao Zhou—former Responsibility Officer who quit three years ago, pension docked seven years. Lao Zhou replied one sentence: "Under two hundred thousand, you carry it yourself."
 
-He removed his badge, powered off the fingerprint scanner, pushed open the Responsibility Pod door. In the corridor, the machine room's low frequency vibrated from floor to knee, like a river that wouldn't break. Through the glass doors, Luozhou City's lights came on one by one. Distant Beiyuan still dark.
+Queue returned to three hundred a day. He still tore film, wiped fingertip, applied film, pressed. One day he suddenly couldn't recall what type the first order that morning was, thought a bit, didn't matter. Logs in platform, three years valid.
 
-He walked toward the dark.
+Before shift change, new work order appeared at top of screen. Only one line:
 
-E-bike through Luozhou. Ring road lights receding one by one. At Beiyuan, no lights. The whole complex sunk in night. Stairwell voice-activated lights dead. He climbed by handrail. Four floors. Eighteen steps per floor. Counted each. Like counting the queue.
+Type 11.
 
-Light seeped from 402's door crack—battery lamp. Oxygen concentrator pulsing. Once. Once. Like someone inside breathing slow. He stood at the door a moment. Then reached for his keys.
+Below, small print: This option only available to certified Responsibility Officers.
+
+He placed finger on screen, paused a long time.
+
+Then pressed "Negative."
+
+Work order closed. Log recorded a line: Type 12.
+
+He removed his badge, turned off fingerprint reader, pushed open the responsibility pod door. Corridor hummed with the machine room's low frequency, vibrating from floor to knees. Through the glass doors, Oasis City's lights came on one by one, distant Beiyuan still dark.
+
+He walked toward the black side.
+
+Electric bike through Oasis City, ring road lamps receding one by one. Reached Beiyuan, no lights, entire block sunk in night.
+
+Convenience store at community entrance had half its shutter down, owner sitting on a stool smoking, saw him approach, lifted chin: "Bro, this outage, who do we complain to?"
+
+"Don't know."
+
+Inside, an old TV playing "AI Rebellion Forty-Eight Hours," screen full of compute city's bright lights.
+
+"Machine rebellion," owner jerked chin at screen. "Our slice goes dark first."
+
+He stood two seconds, walked in.
+
+Stairwell voice-activated lights dead. He felt his way up the handrail, four floors, eighteen steps per floor, counting each step like counting queue.
+
+Four-zero-two door crack leaked a little light—battery lamp. Oxygen concentrator humming, once, once, like someone breathing slowly inside. He stood at the door a while, then reached for his keys.
