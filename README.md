@@ -211,6 +211,7 @@ python pipeline/run.py audit 赛博侦探
 python pipeline/run.py lint 赛博侦探            # 全书体检（不调用模型、零 API 成本）
 python pipeline/run.py lint 赛博侦探 --chapter 3
 python pipeline/run.py lint 赛博侦探 --write    # 报告写入 reviews/文风体检.md
+python pipeline/run.py lint 赛博侦探 --fix      # 确定性填充词瘦身（原稿存 .bak，前后对比）
 python pipeline/run.py lint --all --write       # 体检全部项目并输出总览
 ```
 确定性检测**陈词滥调、AI 腔句式、超长句、重复整句/段首、跨章高度相似（复制章）、
@@ -342,7 +343,7 @@ python -m unittest discover tests
 *三族锚点剥离（W/C、日常细节、标题标签 + 病句 fixup + export_all 端到端）、*
 *双语导出链路（英文章节选取 / dist_en / 英文界面文案）、一键发行打包（ASCII 附件命名 / 版本递增 /
 说明生成 / dry-run）、文风体检器（套话/AI 腔/重复/相似章/收尾异常/统计）、字数闸门的完结保护与续写复述拦截、
-连续性机器预检（相似章与收尾异常已并入）、续写复述/重启拦截、CLI 参数契约回归等 **73 项**全功能单元测试。*
+连续性机器预检（相似章与收尾异常已并入）、续写复述/重启拦截、填充词瘦身、CLI 参数契约回归等 **74 项**全功能单元测试。*
 
 > CI：`.github/workflows/tests.yml` 在每次 push / PR 时用 Python 3.11 跑全量 `unittest`；
 > `.github/workflows/deploy.yml` 另行编译知识库并部署 Web 端到 GitHub Pages。

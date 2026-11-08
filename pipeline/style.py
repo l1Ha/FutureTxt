@@ -388,6 +388,69 @@ def top_ngrams(text: str, min_count: int = 5, limit: int = 8) -> List[Dict[str, 
     return items[:limit]
 
 
+# ---------------------------------------------------------------- 填充词瘦身
+
+# 只处理「删掉不改变意思、不改坏语法」的高置信度填充词。
+# 规则都要求搭配固定（多带「地」或固定搭配），宁可少删，不可删错。
+FILLER_RULES: Sequence[Tuple[str, str]] = (
+    (r"微微(?=[\u4e00-\u9fff])", "微微"),
+    (r"缓缓地", "缓缓地"),
+    (r"轻轻地", "轻轻地"),
+    (r"深深地", "深深地"),
+    (r"悄悄地", "悄悄地"),
+    (r"静静地", "静静地"),
+    (r"默默地", "默默地"),
+)
+
+# 句式型填充：仅在不破坏句子成立时删除限定词
+FILLER_TEMPLATES: Sequence[Tuple[str, str]] = (
+    (r"一种(?=[^，。！？\n]{1,14}的(?:感觉|情绪|东西|力量|存在|味道))", "一种…的…"),
+    (r"某种(?=[^，。！？\n]{2,12}的)", "某种…的…"),
+)
+
+# 不带「地」的副词填充：只在后接高置信度动词时删除（避免删掉有实义的姿态）
+BARE_ADVERBS: Sequence[str] = ("轻轻", "缓缓", "慢慢", "悄悄", "静静", "默默", "渐渐")
+BARE_VERBS: Sequence[str] = (
+    "放下", "放回", "收回", "抬起", "抬头", "低头", "点头", "摇头", "转身",
+    "睁开", "闭上", "站起", "坐起", "坐下", "蹲下", "弯腰", "伸手",
+    "推开", "拉开", "合上", "打开", "走近", "离开", "退开", "挪开", "移开",
+    "滑过", "划过", "掠过", "拂过", "擦过", "走过", "流过", "漫过",
+    "响起", "震动", "颤抖", "颤动", "抖动", "晃了晃", "晃",
+    "落下", "升起", "浮起", "沉下", "散开", "消散", "移动",
+    "笑", "说道", "说", "问", "答", "看着", "望着", "盯着", "听着", "想起",
+)
+
+
+def thin_fillers(text: str) -> Tuple[str, Dict[str, int]]:
+    """删减高置信度填充词（微微/缓缓地/轻轻地/深深地/悄悄地/静静地/默默地、
+    「一种…的…」「某种…的…」）。返回 (新文本, 各规则命中数)。
+
+    只删不改写：不做同义替换（同义替换只会把一种套话换成另一种）。
+    """
+    out = text or ""
+    counts: Dict[str, int] = {}
+    for pattern, label in FILLER_RULES:
+        rx = re.compile(pattern)
+        n = len(rx.findall(out))
+        if n:
+            counts[label] = counts.get(label, 0) + n
+            out = rx.sub("", out)
+    for pattern, label in FILLER_TEMPLATES:
+        rx = re.compile(pattern)
+        n = len(rx.findall(out))
+        if n:
+            counts[label] = counts.get(label, 0) + n
+            out = rx.sub("", out)
+    verb_alt = "|".join(BARE_VERBS)
+    for adv in BARE_ADVERBS:
+        rx = re.compile(r"%s(?=(?:%s))" % (adv, verb_alt))
+        n = len(rx.findall(out))
+        if n:
+            counts[adv] = counts.get(adv, 0) + n
+            out = rx.sub("", out)
+    return out, counts
+
+
 # ---------------------------------------------------------------- 汇总
 
 def analyze_text(text: str) -> Dict[str, Any]:

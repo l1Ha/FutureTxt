@@ -54,6 +54,20 @@ class TestStyleDetectors(unittest.TestCase):
         self.assertTrue(openings)
         self.assertGreaterEqual(openings[0]["count"], 3)
 
+    def test_thin_fillers(self):
+        text = "她微微点头，缓缓地笑了。一种说不出的感觉涌上来，某种无形的召唤在耳边响。"
+        out, counts = style.thin_fillers(text)
+        self.assertNotIn("微微", out)
+        self.assertNotIn("缓缓地", out)
+        self.assertNotIn("一种说不出的感觉", out)
+        self.assertIn("说不出的感觉", out)
+        self.assertNotIn("某种无形的召唤", out)
+        self.assertIn("无形的召唤", out)
+        self.assertGreaterEqual(sum(counts.values()), 4)
+        # 「某种东西」这类需要保留模糊限定的搭配不动
+        keep = "某种东西在动。"
+        self.assertEqual(style.thin_fillers(keep)[0], keep)
+
     def test_similar_chapters_detection(self):
         same = "他沿着河岸一直走，风从背后吹来，水面上浮着一层薄雾。" * 40
         other = "她坐在窗边，把一张旧车票翻来覆去地看，车票边角已经卷了。" * 40

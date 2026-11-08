@@ -182,6 +182,16 @@ def cmd_run(args: argparse.Namespace) -> None:
     print(bold(green("✔ 全部阶段完成！")))
 
 
+def _newest_mtime(directory: str, exts) -> float:
+    """目录下指定后缀文件的最新修改时间；无文件返回 0。"""
+    if not os.path.isdir(directory):
+        return 0.0
+    times = [os.path.getmtime(os.path.join(directory, f))
+             for f in os.listdir(directory)
+             if f.lower().endswith(tuple(exts))]
+    return max(times) if times else 0.0
+
+
 def cmd_status(args: argparse.Namespace) -> None:
     proj = Project(ROOT, args.name)
     if not proj.exists():
@@ -202,6 +212,22 @@ def cmd_status(args: argparse.Namespace) -> None:
     if files:
         total = sum(stages.word_count(stages.read(p)) for p in files)
         print(f"正文进展：已产出 {bold(str(len(files)))} 章，全书累计 {bold(f'{total:,}')} 字")
+        last_ch = max(os.path.getmtime(p) for p in files)
+        checks = [
+            ("成书", _newest_mtime(proj.path("manuscript"), (".md",))),
+            ("中文 dist", _newest_mtime(proj.path("dist"), (".epub", ".html", ".txt"))),
+            ("英文 chapters_en", _newest_mtime(proj.path("chapters_en"), (".md",))),
+            ("英文 dist_en", _newest_mtime(proj.path("dist_en"), (".epub", ".html", ".txt"))),
+        ]
+        stale = [name for name, mt in checks if mt and mt < last_ch]
+        missing = [name for name, mt in checks if not mt]
+        if stale:
+            print("产物新鲜度：" + red("以下产物早于最新正文，建议重跑 assemble / translate / export：")
+                  + "、".join(stale))
+        if missing:
+            print("  尚未生成：" + "、".join(missing))
+        if not stale and not missing:
+            print("产物新鲜度：" + green("成书、中英 dist 均不早于正文 ✓"))
     else:
         print("正文进展：尚未生成")
 
@@ -231,6 +257,35 @@ def cmd_audit(args: argparse.Namespace) -> None:
         raise SystemExit(red(f"项目不存在：{args.name}"))
     res = audit.audit_project(proj)
     print(audit.format_audit_report(res))
+
+
+def _apply_fillers(proj: Project) -> None:
+    """确定性填充词瘦身：逐章删除高置信度填充词，原稿存 .bak，前后对比体检分。"""
+    before = style.analyze_project(proj)
+    changed = 0
+    total = {}
+    for path in proj.list_chapters():
+        with open(path, encoding="utf-8") as f:
+            text = f.read()
+        new, counts = style.thin_fillers(text)
+        if new == text:
+            continue
+        with open(path + ".bak", "w", encoding="utf-8", newline="\n") as f:
+            f.write(text)
+        with open(path, "w", encoding="utf-8", newline="\n") as f:
+            f.write(new)
+        changed += 1
+        for k, v in counts.items():
+            total[k] = total.get(k, 0) + v
+    after = style.analyze_project(proj)
+    print(cyan("【填充词瘦身】修改 %d 章；删除：%s" % (
+        changed, "、".join("%s×%d" % (k, v) for k, v in sorted(total.items(), key=lambda x: -x[1])) or "无")))
+    print("  体检分：%d → %d｜虚词：%s → %s" % (
+        before["score"], after["score"],
+        "、".join("%s×%d" % (t["word"], t["count"]) for t in before["tic_words"][:5]),
+        "、".join("%s×%d" % (t["word"], t["count"]) for t in after["tic_words"][:5])))
+    if after["score"] < before["score"] or len(after["dup_sentences"]) > len(before["dup_sentences"]):
+        print(red("  ⚠ 瘦身后指标变差：请检查 .bak 并考虑回滚"))
 
 
 def _lint_one(proj: Project, chapter: Optional[int], write: bool) -> Dict[str, Any]:
@@ -278,6 +333,8 @@ def cmd_lint(args: argparse.Namespace) -> None:
     proj = Project(ROOT, args.name)
     if not proj.exists():
         raise SystemExit(red(f"项目不存在：{args.name}"))
+    if getattr(args, "fix", False):
+        _apply_fillers(proj)
     _lint_one(proj, args.chapter, args.write)
 
 
@@ -426,6 +483,7 @@ def build_parser() -> argparse.ArgumentParser:
     ln.add_argument("--all", action="store_true", help="体检全部含章节的项目，输出总览")
     ln.add_argument("--chapter", type=int, help="仅体检指定章节（默认全书）")
     ln.add_argument("--write", action="store_true", help="把报告写入各项目 reviews/文风体检.md")
+    ln.add_argument("--fix", action="store_true", help="确定性填充词瘦身（删除微微/缓缓地/轻轻地等，原稿存 .bak）")
     ln.set_defaults(func=cmd_lint)
 
     # export
