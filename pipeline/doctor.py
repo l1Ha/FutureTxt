@@ -2,7 +2,7 @@
 
 用于在创作前全面体检：
 1. Python 版本与系统环境；
-2. 41 篇科幻方法论知识库完整性；
+2. 42 篇科幻方法论知识库完整性；
 3. LLM API 连通性、网络时延与模型可用性；
 4. 项目工作区与读写权限。
 """
@@ -51,7 +51,7 @@ def check_knowledge_base(root: str) -> Dict[str, Any]:
                 except OSError:
                     pass
 
-    # 预期 11 个大类，41 篇核心指南
+    # 预期 11 个大类，42 篇核心指南
     ok = total_files >= 30
     return {
         "ok": ok,

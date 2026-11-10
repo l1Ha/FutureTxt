@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>免单 - FutureTxt 在线阅读</title>
+<style>
+:root {
+    --bg-primary: #f8fafc;
+    --bg-card: #ffffff;
+    --text-primary: #1e293b;
+    --text-secondary: #64748b;
+    --border-color: #e2e8f0;
+    --accent: #2563eb;
+    --accent-hover: #1d4ed8;
+    --sidebar-bg: #f1f5f9;
+}
+[data-theme="dark"] {
+    --bg-primary: #0f172a;
+    --bg-card: #1e293b;
+    --text-primary: #f8fafc;
+    --text-secondary: #94a3b8;
+    --border-color: #334155;
+    --accent: #38bdf8;
+    --accent-hover: #0ea5e9;
+    --sidebar-bg: #111827;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+    font-family: -apple-system, "PingFang SC", "Microsoft YaHei", "Noto Sans SC", sans-serif;
+    background-color: var(--bg-primary);
+    color: var(--text-primary);
+    line-height: 1.85;
+    transition: background-color 0.2s, color 0.2s;
+    display: flex;
+    height: 100vh;
+    overflow: hidden;
+}
+#sidebar {
+    width: 320px;
+    background: var(--sidebar-bg);
+    border-right: 1px solid var(--border-color);
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    flex-shrink: 0;
+}
+.sidebar-header {
+    padding: 20px;
+    border-bottom: 1px solid var(--border-color);
+}
+.sidebar-header h2 {
+    font-size: 1.15em;
+    font-weight: 700;
+    margin-bottom: 6px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+.sidebar-meta {
+    font-size: 0.85em;
+    color: var(--text-secondary);
+}
+.chapter-list {
+    overflow-y: auto;
+    flex: 1;
+    list-style: none;
+}
+.chapter-item {
+    padding: 12px 20px;
+    border-bottom: 1px solid var(--border-color);
+    cursor: pointer;
+    font-size: 0.95em;
+    transition: background 0.15s;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.chapter-item:hover {
+    background: rgba(0,0,0,0.04);
+}
+.chapter-item.active {
+    background: var(--accent);
+    color: #ffffff;
+    font-weight: 600;
+}
+.chapter-item .ch-words {
+    font-size: 0.8em;
+    opacity: 0.75;
+}
+#main {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+.topbar {
+    padding: 12px 24px;
+    border-bottom: 1px solid var(--border-color);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: var(--bg-card);
+}
+.controls button {
+    background: transparent;
+    border: 1px solid var(--border-color);
+    color: var(--text-primary);
+    padding: 6px 14px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 0.88em;
+    margin-left: 8px;
+    transition: 0.15s;
+}
+.controls button:hover {
+    border-color: var(--accent);
+    color: var(--accent);
+}
+#content-container {
+    flex: 1;
+    overflow-y: auto;
+    padding: 40px 10%;
+    display: flex;
+    justify-content: center;
+}
+.content-wrapper {
+    max-width: 780px;
+    width: 100%;
+}
+.article-header {
+    text-align: center;
+    margin-bottom: 36px;
+    padding-bottom: 20px;
+    border-bottom: 1px solid var(--border-color);
+}
+.article-header h1 {
+    font-size: 1.85em;
+    font-weight: 700;
+    margin-bottom: 10px;
+}
+.article-meta {
+    font-size: 0.9em;
+    color: var(--text-secondary);
+}
+.article-body p {
+    text-indent: 2em;
+    margin-bottom: 1.4em;
+    font-size: 1.1em;
+    text-align: justify;
+}
+.intro-box {
+    background: var(--bg-card);
+    border: 1px solid var(--border-color);
+    border-left: 5px solid var(--accent);
+    padding: 24px;
+    border-radius: 8px;
+    margin-bottom: 40px;
+}
+.nav-buttons {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 50px;
+    padding-top: 20px;
+    border-top: 1px solid var(--border-color);
+}
+.nav-btn {
+    padding: 10px 20px;
+    border-radius: 6px;
+    border: 1px solid var(--border-color);
+    background: var(--bg-card);
+    color: var(--text-primary);
+    cursor: pointer;
+    font-size: 0.95em;
+}
+.nav-btn:disabled {
+    opacity: 0.3;
+    cursor: not-allowed;
+}
+@media (max-width: 768px) {
+    body { flex-direction: column; }
+    #sidebar { width: 100%; height: 200px; }
+    #content-container { padding: 20px 5%; }
+}
+</style>
+</head>
+<body>
+<div id="sidebar">
+    <div class="sidebar-header">
+        <h2 title="免单">免单</h2>
+        <div class="sidebar-meta">作者：FutureTxt AI Writer · 1 章 / 5199 字</div>
+    </div>
+    <ul class="chapter-list" id="chapterList"></ul>
+</div>
+<div id="main">
+    <div class="topbar">
+        <span id="currentChLabel">扉页与作品简介</span>
+        <div class="controls">
+            <button onclick="changeFontSize(-1)">A-</button>
+            <button onclick="changeFontSize(1)">A+</button>
+            <button onclick="toggleTheme()" id="themeBtn">🌓 切换暗色</button>
+        </div>
+    </div>
+    <div id="content-container">
+        <div class="content-wrapper" id="articleWrapper"></div>
+    </div>
+</div>
+
+<script>
+const book = {"title": "免单", "author": "FutureTxt AI Writer", "description": "2126年，城市推行「善流指数」：商户免费供餐产生「善分」，可兑换流量位、房租减免、税收抵扣。老范在「九河街」经营「老范面馆」三十一年，靠一锅不换水的老汤维系熟客。三个月前，街口开出「零元面馆」——无门槛、来者不拒、中央厨房统一底料、全量数据上传平台。中午队伍排到街角，周边面馆营业额普降两三成，老范家跌幅最大。监管部门约谈：慈善不违法，但须「精准投放」，免费名额限定「名录内人群」。腾出的「善意节点」由平台回收，重新招标给街上下一家签约商户——条件是：接手免费额度、采用中央厨房认证底料、授权全量经营数据、招牌可保留。老范的三十年老汤不在认证目录。女儿在零元店帮工、平台区域经理摆着标准合同、监管员强调合规、代排员在队尾叫价、老熟客推着碗沿说「范哥你签吧」。老范要签的，是把那条队从隔壁挪到自己门口的纸。", "total_words": 5199, "chapters": [{"index": 1, "title": "免单", "words": 5199, "paragraphs": ["队排到老范门口那天，他的午饭只卖了七碗。", "七碗里三碗是熟客，两碗是过路的，一碗是老赵，还有一碗是女儿早上给他留的，他忘了吃。", "街是老城南的这条街，宽不过两车道。三个月前，隔壁空了三年的门面开了家面馆，招牌两个字：「开饭」。规矩只有一条：进门有座，端碗就吃，不要钱。不查年龄，不查收入，谁都可以。第一天队排到拐角，第二天排过拐角，第三天，护栏就拉到了老范的卷帘门前面。", "排队的人有跑单的骑手，有拎菜篮的老人，也有穿工装的年轻人。护栏一米宽，人贴人站，站着刷手机。中午十一点半，队尾看不见了。", "老范的店门口，正好是队伍的腰。", "「范老板，」代排的老歪把马扎往他门边一搁，「借个墙根。」", "「借了三个月了。」", "「位置也是钱。」老歪晃了晃手里的号码牌，「前面还有十四个，谁要谁给十五。」", "老范看着那排护栏。他家的招牌挂了三十一年，红漆掉了三层，最近的一块补漆是去年他闺女刷的。隔着护栏，有人探头看他的黑板菜单：牛肉面十二，素面八块，加蛋两块。", "看完，又缩回队里去了。", "开饭的汤是标准汤，闻着香，香得平。隔着一堵墙，老范能听见那边下面条的声音：三滚水，一勺底料，出碗，一分钟六碗。他这边一分钟两碗，第二碗还得等他把老汤撇一撇。", "他媳妇病退在家躺着，药一个月一千一，上个月涨到一千三。药费原来是他出，今年春天起，小雨出。", "也有人不排队。", "一个跑单的小伙子，每天一点半来，进门就喊「素面加蛋」，吃完扫码走人。他算过：免费那队要排四十分钟，他午休五十分钟。四十分钟买十块钱，他买不起。", "「范老板，」小伙子说，「你这面别停。哪天你停了，我就没得吃了。」", "「停不了。」老范说。", "说完他自己愣了一下。", "他算了三个月账。", "一碗面成本四块二，卖十二，中午卖八十碗，一天房租三百八，煤气水电另算。以前中午一拨、晚上一拨，勉强撑着一张桌子。开饭来了以后，中午从八十碗掉到三十碗，上个月掉到十九碗，这个月，今天，七碗。", "隔壁秦记的老板娘下午过来借醋。她说她家掉了三成。斜对门永和的老板说掉了两成五，还说「再挺一个月看看」。街尾那家螺蛳粉不受影响，人家吃辣的，不吃他的清汤。", "「凭什么。」秦记老板娘说，「他做慈善，我们交房租。」", "没有人答得上来。", "当天晚上，几家店在螺蛳粉店后头的小间碰了一下。秦记主张联名，把材料整理成一沓，签字按手印；永和说等区里的调查结论，别把自己架上去；螺蛳粉的老板不签，说他家不受影响，签了反而惹事。", "对门新开了一家「面掌柜」，连锁的，玻璃门锃亮，正在装修。它家的店长也来了，站在门口听，听了一会儿说：「各位，进善流其实不难，我店总部在谈。免费的名额是稀缺的，谁进去谁活。」", "秦记老板娘当场就骂了。骂完，谁也没说话。", "街道的人来过一次，姓吴，夹着公文包，站在老范的灶台边说了二十分钟。他说，慈善行为本身不违法，不能因为排队就让人家关门；他说，区里在核查，多部门都在看；他说，范老板你反映的情况我们记下了，有证据可以提交。", "「什么算证据？」", "「营业流水的对比。」老吴说，「最好再有个因果上的说明。」", "老范把三个月的流水打出来，压在收银台玻璃底下。第一页是去年十月，第二页是今年十月，两页纸放在一起，像两个人。", "第二次老吴来，是带着名录来的。", "名录上写得清楚：免费供餐只对高龄、低保、户外劳动者开放，名单由平台算法按片区生成，按季度更新。老吴说，这叫「精准」，要让善意用到真正需要的人身上。", "「真正需要的人，」老范说，「是指吃不起我十二块一碗面的人？」", "「是指名单上的人。」老吴纠正他，「范老板，说句实在的，你要想争一个说法，路有两条：找市场监管投诉不正当竞争，或者直接起诉。律师我帮你问过，两派意见都有：一半说你赢不了，一半说你耗不起。」", "「那我怎么办。」", "「等区里的结论。」老吴把茶杯往桌上一放，「结论出来之前，没有人会让你停。」", "小雨下班回家，是晚上九点半。", "她在开饭值班，穿平台的工装，右胸一个「善流」的标志，标志旁边印着一行小字：每一碗，都算数。她进门的时候，老范正把老汤锅里浮的油撇出来，铝锅沿结着一圈黑垢，那是他父亲那口锅传下来的，锅底没换过，汤也没断过。", "「爸，」小雨说，「周经理让我跟你说个事。」", "「说。」", "「街上要设一个善意节点。就是……平台在这条街选一家店，挂牌，接免费的单子。补贴走善分，善分能抵房租，能抵税，能买流量位。周经理说，她第一个想到你。」", "老范没抬头，勺子在汤面上停了停。", "「你自己怎么想的。」", "「我想让你签。」小雨说，「爸，你看这条街，以后都得进这个盘。你早进，位置好，额度高。晚了，人家连锁店进来，你连队都排不上。」", "「你还记得咱家中午能卖八十碗吗？」", "「记得。」小雨把包放在凳子上，「我记得我七岁那年，你在店里发烧，对门李婶一天给咱家送了两顿饭。爸，那时候咱也吃过免费的。」", "「那是李婶。不是平台。」", "「平台也是人做的。」", "「人做的，」老范说，「账是机器算的。」", "小雨盯着他看了一会儿，眼睛红了：「妈的药上个月一千三，是我转的。你知道我在开饭一个月挣多少？比在咱家多一倍。我不是来跟你吵架的。」", "「那你是来干什么的。」", "「来让你活下去。」她说。", "里屋的门帘动了一下。老范的媳妇扶着门框站在那儿，没出来，也没说话，看了他们两眼，又退回去了。", "小雨把平板放在收银台上：「合同你先看。明天周经理来。」走的时候她在门口停了一下：「爸，这街上不是只有咱一家难。可这街上，只有咱家是你三十一年。」", "门带上，风铃响了一声。老范看着那口锅。汤面上浮着一圈油花，灯光底下慢慢转。", "第二天中午，周可来了。", "三十出头，穿深灰色外套，进门先看了一圈，把包放在桌上，双手叠着压在合同上。", "「范叔，」她叫他叔，「我先把丑话说前头：您不签，我们也尊重。但这条街的节点只有一个名额，公示期七天。七天以后，不是您家，就是对门的连锁店。」", "「签了有什么。」", "「补贴按碗算。每天两百碗，一碗补三块八，走善分，月结。善分可以抵物业费、抵平台账期的手续费，也可以换流量位。」她把平板推过来，「您中午的位置会回到前年。」", "「回到前年，」老范说，「是回到八十碗，还是回到队伍？」", "周可笑了一下，笑得挺客气：「回到队里。范叔，节点就是排队的地方。」", "老范把合同翻到第三页。免费额度、数据授权、品牌露出、结算周期，一条一条。数据授权写得很细：到店者的画像、动线、停留时长，用于善流评估；评估结果归平台。翻到第五页，是善分汇率：一百善分兑八十三元，月结，不可提现，只能抵物业费和平台账期手续费。翻到第六页，是退出条款：单方退出，已抵扣部分按原值追偿，另计违约金。", "「两百碗，我一个人做不出来。」他说。", "「给您配两个人。」周可说，「平台的。工资我们出，用我们的人。」", "「那我呢。」", "「您只管锅。」她顿了顿，补了一句，「和招牌。」", "老范把合同翻到第七页，停住了。", "**「供餐底料须使用平台认证中央厨房产品，以完成溯源与责任分割。未列入认证目录的自制食材，不得用于供餐。」**", "「老汤呢。」", "「不在目录里。」周可说。", "「这是我爹的汤。」", "「是。」她说，「这个我理解。但范叔，一碗免费的汤出事，谁签字？我们签不了，您也签不了。名录里的东西，出事有人担；名录外的，没有。这不是我定的。」", "「我不倒。」", "「你也可以不倒。」周可说，「留着家用，不供餐。锅换一口，灶不换，汤不动，就摆着。我们只要供餐的那口锅是干净底料。」", "「我问三样。」老范说。", "「您问。」", "「善分能不能直接交房租。」", "「不能直接交。」周可说，「可以抵物业费。你们这条街的物业，是我们平台的商管公司在管。」", "「招牌能不能不动。」", "「招牌不动。」她指了指导牌样张，「但这个要挂，价格屏要装，数据口要开。」", "「老汤，」老范看着她，「能不能只给我自己的散客用。」", "「不能。」周可说，「一口灶，一口锅，责任分不开。」", "三个门，一个一个关上。老范把手指头在桌面上敲了两下，没再问第四样。", "她把笔放在合同边上，笔帽朝老范这边。", "「七天。」她说，「您考虑。」", "五天里，老范做了很多事，又好像什么都没做。", "他去找了一次代排的老歪，塞了两百块，请他中午把队往街尾带十米，别堵他门。老歪收了钱，第二天照旧。", "「你站哪儿，到底谁安排的。」老范问。", "老歪看了看左右，压低声音：「范老板，你以为我挑的？平台按动线画点，我在哪儿站，是算法派单。你门口人多，我就来你这儿。」", "「那我给你钱让你挪，你怎么不挪？」", "「挪了扣分。」老歪说，「分扣完，号就没了。我这号押了三千块。」", "开饭那边开始挂牌「精准供餐」，规定免费只对七十岁以上和户外劳动者，队短了一半；老范的中午回了三十碗。第五天，开饭的护栏又长了回去，因为区里说，名单要逐步扩面。", "对门的店长也来找过他一次。", "「范叔，」店长说，「听说你不愿意进节点。我出个价，你那锅汤的方子，卖给我们。一次性，二十万，签保密。」", "「你们中央厨房要得着老汤？」", "「要不要得着不重要。」店长说，「重要的是这条街上没有第二锅。」", "老范看了他一会儿：「你出去。」", "第五天下午，他在队伍里看见了老赵。", "老赵七十了，蒸了三代馒头，退休金两千八。以前天天来吃他的牛肉面，加蛋，不要辣。今天老赵站在护栏里，戴着帽子，看见他就把头低下去。", "老范走过去。两个人都没说话。", "「范老板，」老赵先开口，声音小，「我不是贪那口面。」", "「我知道。」", "「你家的汤，我记得。」", "「记得就成。」老范说，「排着吧，别晒着。」", "他回店里，把中午剩的七碗面下了锅，捞出来，一碗一碗过了凉水，倒进了垃圾桶。", "倒完，他过去了一趟开饭。", "不是吃饭。他就想进去看一眼。门里干净，白墙，一口大锅，四个工位，墙上挂着一块屏，数字在跳：今日已供 1,204 碗。下面一行小字：每一碗，都算数。门口高处有个摄像头，正对着进门的人脸。", "小雨给他端了一碗。", "「我不吃。」", "「爸，你尝尝。」", "他把碗推回去，从口袋里摸出十二块钱，压在碗底下。旁边一个穿工装的年轻人看了看他，没说话。小雨把十二块钱拿起来，塞回他手里：「本店不收钱。」", "「规矩是死的。」", "「规矩是平台的。」她说，「你要是把钱放下，我这个班就得写情况说明。」", "老范把十二块钱收了。他站在锅边看了一会儿，看那口标准化的大锅一分钟出六碗，看队伍从头到尾没断过，看每个人进门时的脸。他们进门前都看一眼那块屏，像在确认什么。", "出门的时候，周可正好进来，看见他，点了点头：「范叔，来看店？」", "「来看队。」", "第六天上午，秦记关了门。", "门是拉下的，卷帘门上贴了一张 A4 纸：暂停营业。老范给老板娘打电话，响了很久才接，那边有抽油烟机的声音。", "「不干了。」她说，「房租还剩两个月，转让都转不出去。对面面掌柜招人，我去后厨，一个月五千八，交社保。」", "「干得好好的。」", "「范老板，」她说，「这条街以后不认手艺了，认席位。」", "电话挂了。秦记的卷帘门后面，她那口用了十二年的炒锅挂在钩上，锅底也是黑的。", "第六天晚上，小雨回来，看见老范在洗锅。", "铝锅刷得发亮，锅底的垢也刮了。灶台上摆着一只玻璃罐，罐里装满了汤，封着口，贴着胶带。新锅是新锅，白铁皮，亮得能照人。", "「爸？」", "「明天周经理来，」老范说，「签了。」", "小雨愣着。", "「她想让我写个条件。」老范说，「我没写。合同上没这个地方，写了也没用。」", "他把玻璃罐端起来，放到货架最高一层，靠墙，罐口朝里。放好，退了两步，看了一会儿。", "「这罐留着你喝。」他说。", "小雨没接话，转身去后厨，把新到的底料箱拆开。料包撕开，一股统一的香，干净、标准、闻不出谁的手。", "里屋的灯还亮着。他媳妇在缝围裙，围裙是他明天要换的新的，平台发的，深绿色。", "「签了？」", "「签了。」", "她没问条件，也没问多少钱。她停下来，把那罐汤的位置看了一眼，说：「放高点，别让人碰。」", "「嗯。」", "针线穿过布，一下，一下。她缝完最后一道边，把围裙叠好，压在枕头底下。", "签之前的那个晚上，他把账又算了一遍。", "不进节点：这两个月，一天卖七碗到十九碗，一天亏两百出头。屋里还有四万块，是给媳妇留的药钱，撑八个月。", "进节点：一天两百碗，一碗补三块八，七百六；加上愿意等的散客，一天三十碗，三百六。一天进项一千一，交完两个人的工资和料钱，剩三百。", "账很清楚。清楚得像别人算的。", "他把算草纸叠起来，压在收银台的玻璃底下，跟那两张流水放在一起。关灯的时候，他朝货架最高那层看了一眼。罐子在那儿，罐口朝里，像个背过身去的人。", "挂牌那天，老范的门头多了一块绿底的牌子：「善流 · 老范面馆 · 善意节点 044」。招牌还是他自己的招牌，红漆还是那三层。", "中午十一点，队第一次在他门口聚齐。护栏、马扎、号码牌，全套搬过来，堵了他半条门脸。老歪把马扎往墙根一搁，冲他拱了拱手：「范老板，合作愉快。」", "十二点，第一锅标准底料汤开了。价格屏在门楣上亮起，滚动着一行绿字：**0.00**。", "第一个进门的，是老赵。老赵在门口愣了一下，看了看门楣上的绿牌，又看了看他。", "老范抓了一把面下锅，多卧了一个蛋：「辣不辣？」", "「不要辣。」", "面捞起来，浇汤，撒葱花。围裙还是他系了三十年的那条，带子在背后打的还是同一个结。他舀起一勺汤，习惯性地尝了一口。", "味道很正。", "他把勺子放回锅沿，冲着门口，喊了一声：", "「面好了。」"]}]};
+const L = {"cover_label": "扉页与作品简介", "unit": "字", "by": "作者：", "meta_sep": " | 全书约 ", "intro_title": "作品概念与梗概", "prev": "← 上一章", "next": "下一章 →", "start": "开始阅读第一章 →", "ch_prefix": "第 ", "ch_mid": " 章 | ", "theme_dark": "☀️ 亮色模式", "theme_light": "🌓 暗色模式"};
+let currentIndex = -1; // -1 = title page / synopsis
+let fontSize = 17;
+
+function renderSidebar() {
+    const list = document.getElementById("chapterList");
+    list.innerHTML = `<li class="chapter-item ${currentIndex === -1 ? 'active' : ''}" onclick="goToChapter(-1)">
+        <span>📖 ${L.cover_label}</span>
+    </li>`;
+    book.chapters.forEach((ch, idx) => {
+        const li = document.createElement("li");
+        li.className = "chapter-item" + (currentIndex === idx ? " active" : "");
+        li.innerHTML = `<span>${ch.title}</span><span class="ch-words">${ch.words}${L.unit}</span>`;
+        li.onclick = () => goToChapter(idx);
+        list.appendChild(li);
+    });
+}
+
+function renderContent() {
+    const wrapper = document.getElementById("articleWrapper");
+    const label = document.getElementById("currentChLabel");
+    if (currentIndex === -1) {
+        label.innerText = L.cover_label;
+        wrapper.innerHTML = `
+            <div class="article-header">
+                <h1>${book.title}</h1>
+                <div class="article-meta">${L.by}${book.author}${L.meta_sep}${book.total_words.toLocaleString()}${L.unit}</div>
+            </div>
+            <div class="intro-box">
+                <h3 style="margin-bottom:12px;color:var(--accent);">${L.intro_title}</h3>
+                <div style="white-space: pre-wrap; line-height:1.75;">${book.description}</div>
+            </div>
+            <div class="nav-buttons">
+                <button class="nav-btn" disabled>${L.prev}</button>
+                <button class="nav-btn" onclick="goToChapter(0)">${L.start}</button>
+            </div>
+        `;
+    } else {
+        const ch = book.chapters[currentIndex];
+        label.innerText = ch.title;
+        const pTags = ch.paragraphs.map(p => `<p style="font-size: ${fontSize}px;">${p}</p>`).join("");
+        wrapper.innerHTML = `
+            <div class="article-header">
+                <h1>${ch.title}</h1>
+                <div class="article-meta">${L.ch_prefix}${ch.index}${L.ch_mid}${ch.words}${L.unit}</div>
+            </div>
+            <div class="article-body">
+                ${pTags}
+            </div>
+            <div class="nav-buttons">
+                <button class="nav-btn" onclick="goToChapter(currentIndex - 1)">${L.prev}</button>
+                <button class="nav-btn" onclick="goToChapter(currentIndex + 1)" ${currentIndex >= book.chapters.length - 1 ? 'disabled' : ''}>${L.next}</button>
+            </div>
+        `;
+    }
+    document.getElementById("content-container").scrollTop = 0;
+}
+
+function goToChapter(idx) {
+    if (idx < -1 || idx >= book.chapters.length) return;
+    currentIndex = idx;
+    renderSidebar();
+    renderContent();
+}
+
+function toggleTheme() {
+    const current = document.documentElement.getAttribute("data-theme");
+    const next = current === "dark" ? "light" : "dark";
+    document.documentElement.setAttribute("data-theme", next);
+    document.getElementById("themeBtn").innerText = next === "dark" ? L.theme_dark : L.theme_light;
+}
+
+function changeFontSize(delta) {
+    fontSize = Math.max(14, Math.min(26, fontSize + delta));
+    const paras = document.querySelectorAll(".article-body p");
+    paras.forEach(p => p.style.fontSize = fontSize + "px");
+}
+
+renderSidebar();
+renderContent();
+</script>
+</body>
+</html>
