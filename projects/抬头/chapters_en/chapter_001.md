@@ -1,0 +1,327 @@
+# Chapter 1: Head-up
+
+Zhou Jingxiu's class: Head-up Rate, thirty-eight.
+
+The data came down from the Academic Affairs Office, a single sheet of A4 paper printed with a row of horizontal bars. Attendance Rate ninety-two, Front-row Rate forty-one, Interaction Rate zero point eight, Head-up Rate thirty-eight. The bars were red, because they fell below fifty. Twenty-six teachers in the department; his red bar ranked twenty-fifth, second to last.
+
+The number thirty-eight came from three cameras. Installed over summer break, no document issued, no meeting called. Before the semester started, the department's younger teachers counted cameras — found two classrooms equipped: Room 301 and Room 402. Zhou Jingxiu's Song Ci Seminar had always met in 301.
+
+First class, he glanced up. One in the corner, two on the rear wall, dark lenses angled down. He said nothing, set his lecture notes on the podium, turned to write on the blackboard.
+
+He had taught Song Ci for thirty-one years. Blackboard writing was an old habit; chalk felt right only when worn down to a stub. He taught Su Shi: recited once, then lectured. He taught Li Qingzhou: spoke of a business trip to Jinan twenty years prior, standing all afternoon by Baotu Spring. Students bowed their heads, pen tips scratching. When he reached "Ten Years Life Death Both Vast," he paused. The classroom fell silent.
+
+Class dismissed. The bell rang, students rose. He gathered his notes, heard two students in the back row talking.
+
+"Head-up Rate, how much?"
+
+"Who knows. I've just been taking notes the whole time."
+
+---
+
+The Disciplinary Talk came the second week.
+
+Deputy Director Luo Jianping, early forties, three monitors on his desk, the center one running the Backend Dashboard. He poured Zhou Jingxiu a cup of water, swiveled the dashboard around, pulled up Room 301's session.
+
+"Professor Zhou, it's not me looking to make trouble." He said, "Look. This semester, the midterm teaching inspection reviews the Four Rates. Any of the three rates below fifty, Academic Affairs has a talk — that's the process."
+
+"I saw."
+
+"Your class — Head-up thirty-eight. It's not that students aren't listening to you; it's that no one looks up." Luo Jianping said, "We have corrective suggestions: first, compress seating forward, fill the front three rows; second, build a PPT, larger text, more images; third, design three questions per class, cold-call students. Give it a try?"
+
+Zhou Jingxiu held the cup, didn't drink.
+
+"My course — students need to take notes."
+
+"Taking notes can happen while looking up." Luo Jianping said, "Professor Zhou, let me speak plainly. The system cost the university money; the data has to be seen by someone. Your number sitting there — the Dean doesn't look good either."
+
+"Can we just not look?"
+
+Luo Jianping smiled: "If I could not look, I'd be the first to stop."
+
+Zhou Jingxiu stood. At the door, Luo added: "Professor Zhou, next semester's Teaching Excellence Evaluation — prepare your packet. Eight thousand yuan. If the data looks too bad, the review committee — I won't be able to help."
+
+---
+
+Eight thousand mattered.
+
+Zhou Jingxiu's wife, Chen Yuqin, had rheumatoid arthritis; two years ago she started biologics — one injection every two weeks, twenty-two hundred per shot. Medical Insurance covered part; the rest came out of pocket. Their daughter Zhou Jie in Shenzhen sent two thousand monthly; Zhou Jingxiu refused, she sent it anyway.
+
+Evening, home. Chen Yuqin on the sofa, hands wrapped in warm towels, asked: "Why so late today?"
+
+"A meeting."
+
+"You look pale."
+
+He sat at the dining table, pulled out that A4 sheet, folded it back up. Chen Yuqin saw, didn't ask. She knitted, two stitches, pause. After a moment: "My injection — doctor says liver function every three months. Eight hundred per check."
+
+"Mm."
+
+"Don't worry." She said, "This illness — slow road."
+
+Zhou Jingxiu folded the paper smaller, slipped it into his lecture folder.
+
+Month's end, he went to the community hospital for Chen Yuqin's medication. Biologics in the cold cabinet; the pharmacist flipped the prescription twice, quoted: one vial twenty-two hundred, one per month, this month pay thirteen hundred up front, the rest through insurance.
+
+He swiped his card. Balance: eighty-four hundred.
+
+On the bus home, Zhou Jie called. She'd viewed an apartment in Shenzhen — two-bedroom, sixth floor, no elevator; mortgage on her. She said: "Dad, come over. Mom's illness — big hospitals there are better."
+
+"Your mother won't move."
+
+"Mom listens to you."
+
+"I still have classes here."
+
+Silence on the line. Zhou Jie said: "Dad, that class of yours — how long you planning to teach?"
+
+"Until I can't." He said.
+
+---
+
+Lin Yiming sought him out, Friday afternoon.
+
+She taught New Media Writing in the School of Literature, thirty-one, Four Rates top ten university-wide, Head-up Rate ninety-three. Her classes had video, polls, buzzers — forty-five minutes, five laughs per session. At department meetings, her class served as the model.
+
+She carried two oranges into his office, set them on his desk, sat.
+
+"Professor Zhou, Deputy Director Luo called you in?"
+
+"He did."
+
+"Don't hold it against him." Lin Yiming peeled an orange, handed him half, "It's just his job."
+
+"What do you think that number actually measures?"
+
+Lin Yiming's hand paused. She set the orange down.
+
+"Nothing." She said, "But students really do slack off. Last year, one class — seven asleep. Added interaction, at least some heads came up."
+
+"Head-up means they're absorbing it?"
+
+"Not necessarily." Lin Yiming said, "I know it doesn't."
+
+She sat a moment, then: "Professor, I took your class. Sophomore year, Song Ci. You taught Li Qingzhou — told us about your daughter's fever as a child, pacing the hospital corridor reciting *Sheng Sheng Man* —"
+
+Zhou Jingxiu watched her.
+
+"I cried." Lin Yiming said, "Middle row, head down, crying. If that classroom had the system back then, my Head-up Rate would've been zero."
+
+The office fell quiet. Plane tree leaves drifted past the window, sticking to the glass.
+
+"Your class now —" Zhou Jingxiu asked, "anyone cry?"
+
+Lin Yiming shook her head: "Don't know. The data doesn't have that field."
+
+"Yiming," Zhou Jingxiu said, "your class — exhausting?"
+
+"Exhausting." She said, "Teaching now feels like hosting a show. When to play video, when to call on someone, when to crack a joke — all scripted. Students laugh, and I still don't know what they took away."
+
+She stood, set the unpeeled orange beside his hand.
+
+"Professor," she said, "don't change. You change once, they'll say: even Professor Zhou changed."
+
+---
+
+October. He memorized the camera positions, and the students.
+
+Jiang Xiaoman sat last row, window side. One meter seventy-five; sat in front she'd block others — since freshman year she'd claimed the back. In class she wrote with her head down, notebook page after page, characters small, dense. Once he walked down, stood beside her a minute. She was recording the passage he'd just lectured: Su Shi dreaming of his late wife in Mizhou. Finished, she drew a small circle in the margin.
+
+That night past nine, Zhou Jingxiu went to the campus gate for medicine, ducked into a convenience store. Behind the register stood Jiang Xiaoman. ID Badge pinned, one earbud in, head down scanning a code. On the counter her phone screen glowed — an audio waveform, progress bar at seventeen minutes.
+
+A recording. One listen to that voice, he knew it was his own lecture.
+
+Jiang Xiaoman looked up, saw him, flushed. She yanked the earbud, fumbled to pause the phone.
+
+"Professor..."
+
+"Working?"
+
+"Mm, night shift, till eleven."
+
+Zhou Jingxiu nodded, set the medicine on the counter. Jiang Xiaoman scanned, hands still trembling. "Professor, this —" she whispered, "I recorded it. Can't catch everything in class, listen while stocking shelves at night. If recording's not allowed, I'll delete."
+
+The store hummed. Freezer droned. Zhou Jingxiu watched her, two seconds.
+
+"Record it." He said.
+
+Jiang Xiaoman's eyes brightened. She handed him change; coins warm in his palm.
+
+---
+
+Mid-November, the midterm teaching inspection notice arrived.
+
+Two clauses. First: instructors' Daily Grades based on Smart Classroom system export. Second: student classroom performance counted toward Daily Grade, weighted thirty percent.
+
+Zhou Jingxiu opened the exported spreadsheet. One hundred seven people, one per row. Head-up Rate, Front-row Rate, Interaction Count, Phone Use Count, final column: system-assigned Classroom Performance Score.
+
+He scanned row by row. Row sixty-three stopped him.
+
+Jiang Xiaoman: Head-up Rate nineteen, Front-row Rate zero, Interaction zero, Classroom Performance Score twelve.
+
+Twelve points. He sat a moment, pulled out his grade book. Jiang Xiaoman's assignments — four submitted, none missing; notebook spot-check, A; midterm paper *From "Ten Years Life Death Both Vast" — Narrative in Ci*, eighty-seven, fourth in class.
+
+He called the class monitor, asked about the Merit Scholarship. Monitor said: two slots, decided by fractions of a point; Jiang Xiaoman currently third, short by zero point three.
+
+"Her family situation?"
+
+"Single parent, mom does cleaning back home." Monitor said, "She works the night shift at the convenience store. Professor, she doesn't skip — not a single class."
+
+That night, he reread Jiang Xiaoman's paper.
+
+Paper on *Jiang Cheng Zi*. She wrote: The dream figure speaks not, only moonlight beyond the window. Wrote Su Shi in Mizhou dreaming of his wife, waking at Short Pine Ridge. She wrote a line: "Across ten years, the face forgotten, a single movement remembered."
+
+Zhou Jingxiu wrote in the remarks: Close reading. Paused, added: This sentence is yours, not copied.
+
+He filed the paper atop the stack. In the living room, Chen Yuqin coughed a spell, stopped. He rose to pour water.
+
+---
+
+That week, he attempted correction once.
+
+Before class, he told students: move forward. They shuffled two rows reluctantly. He opened the PPT — he couldn't make one; Lin Yiming had templated it, four characters per slide, font size forty. He lectured two passages, mimicking Lin Yiming, stopped and asked: "In these three lines — which describes the dream, which the waking?"
+
+Answers from below. Heads lifted.
+
+On the side monitor, the Head-up Rate climbed: forty-two, fifty-one, sixty. He lectured on, voice off-key. He paused, glanced at his notes — thirty-one years teaching, first time he needed them.
+
+Back row, a boy raised his hand — the usual talker.
+
+"Professor, inspection today?"
+
+"No."
+
+"Then why different from usual?"
+
+A ripple of laughter. Zhou Jingxiu braced on the podium. "Continue."
+
+Class ended. Head-up Rate seventy-two. The number looked good. He killed the PPT, stood before the blackboard a moment, took the eraser, wiped the PPT line, rewrote it in chalk.
+
+Chalk dust drifted, settled on his cuff.
+
+Those days, a screenshot circulated in the class group — student-side system interface: This Session Head-up Duration, twenty-seven minutes.
+
+Replies: I got twenty-nine, and I was on my phone.
+Reply: I stayed head-up the whole time — stiff neck.
+Someone posted a hack: Every three minutes, lift head two seconds; camera logs it.
+Question: Professor, does copying boardwork count as violation?
+Monitor: Stop asking, Professor's in the group too.
+
+Group went silent three minutes. Zhou Jingxiu typed two characters: Received.
+
+He set the phone face-down, rose, washed his hands.
+
+---
+
+Weekend, he went to Academic Affairs.
+
+Luo Jianping at the dashboard on a call, signed, hung up, turned: "Professor Zhou."
+
+"That Classroom Performance Score — can it be excluded?"
+
+"It's system-generated." Luo Jianping said, "University-wide now. If you're uncertain, audit it, file a report, follow process."
+
+"I audited." Zhou Jingxiu set the sheet on the desk, "This student — Head-up nineteen because she's always writing notes. Back row because she's tall. She recorded my lectures, listens while stocking shelves at night. Short by zero point three. You ask me to sign — I'd be cutting her myself."
+
+Luo Jianping picked up the sheet, studied it a minute.
+
+"Professor Zhou," he said, "I understand. But if I adjust for one, how do I calculate the rest? Do you know why the system was purchased? Two hundred thousand. The university spent two hundred thousand — not for a display piece. You say the system's inaccurate, you need evidence for all one hundred seven."
+
+"I can provide it."
+
+Luo Jianping froze. He set the sheet down, tone softer: "Old Zhou, straight talk. Saw the news last week? That other university — announced they're dropping Head-up Rate. Our midterm inspection — starting tomorrow, that metric's gone too. Cameras stay, tracking Interaction, Attendance. Your column — system updates next week."
+
+"And these twelve points?"
+
+"This column — frozen for now." Luo Jianping said, "Sign the transcript. Signed, we process the audit."
+
+Zhou Jingxiu stared at the sheet. Row sixty-three. Short by zero point three.
+
+"I can sign." He said, "My own copy."
+
+---
+
+He brought the transcript back to his office.
+
+Ten PM, only his office light on. He exported the system's one hundred seven scores, spread his own grade book beside it. Daily Grade thirty percent — his version, a semester's record: who questioned, who presented, whose notebook was spot-checked, whose paper showed growth, who slept all term but wrote a serious final — he entered each by hand.
+
+Reached Jiang Xiaoman's row, hesitated.
+
+Head-up Rate nineteen. Front-row Rate zero.
+
+He wrote: twenty-seven.
+
+One hundred seven rows, ninety minutes. Finished, he struck through the system column in red ink, added a line at the bottom:
+
+"Daily Grade for this course determined by instructor. System data for reference only, not sole basis. Zhou Jingxiu. Attached: full-class notebook spot-check records, assignment and paper comments, classroom Q&A logs — four documents total."
+
+Final stroke, the signature. He capped the pen, leaned back, stared at the ceiling. Chair scraping upstairs. He felt his pocket, pulled out his phone, messaged Chen Yuqin: Late tonight, reheat the noodles in the pot.
+
+Next morning, he submitted the transcript and four documents to Academic Affairs. Afternoon, Luo Jianping called, voice flat: "Old Zhou, reviewed your materials. Procedurally non-compliant. Returned. Teaching Excellence packet — don't prepare it. Retirement extension — department will study."
+
+"Fine." He said.
+
+"Don't blame me."
+
+"Don't." Zhou Jingxiu said, "Thirty-one years — first time writing Daily Grades this slowly."
+
+Two days later, Jiang Xiaoman appeared at his office door, clutching a stack of paper.
+
+"Professor, monitor said I can apply for a single-category award — need a recommendation letter."
+
+"Leave it, I'll write."
+
+She set the papers down, didn't leave, lingered.
+
+"Professor, heard your materials got returned."
+
+"Mm."
+
+"Because of me?"
+
+"No." Zhou Jingxiu said, "Because of me."
+
+Jiang Xiaoman lowered her head, gripped her bag strap. After a moment: "Professor, next semester — still teaching Song Ci?"
+
+"Still teaching."
+
+"Then I'll register again."
+
+---
+
+That night, Chen Yuqin on the sofa asked: "The eight thousand — gone?"
+
+"Gone."
+
+She knitted, two stitches, said: "My injection — next month can skip one. Doctor says, stable phase allows spacing."
+
+"No skipping."
+
+"Old Zhou—"
+
+"No skipping." He said, "I've got a way on my end."
+
+Her eyes reddened, she bent back to her knitting. A pause: "Tonight — get to sleep early."
+
+---
+
+Final class, January sixth.
+
+Cold out, Room 301's heating strong, glass fogged white. Full attendance, even the back row occupied. Jiang Xiaoman still by the window, notebook open. Phone on the desk corner, recording light a small red dot.
+
+Zhou Jingxiu finished the last chapter, closed his lecture notes.
+
+"Today doesn't count." He said.
+
+Laughter below. Heads lifted.
+
+He turned, took a fresh chalk stick, wrote on the blackboard: *Look back — the bleakness past; return — neither wind nor rain, neither storm nor shine.*
+
+Characters not small, one per grid line. Chalk on slate, a soft hiss. The final vertical stroke of "shine" — slow, drawn half an inch extra. Done, he returned the chalk to the tray, dusted his hands. Chalk dust on his cuff — he didn't brush it.
+
+"All of you — heads up. Look at these words."
+
+He turned. One hundred seven faces raised. Jiang Xiaoman too, head up, phone flipped screen-down on the desk. Snow falling outside, landing on the fogged glass, melting into rivulets.
+
+The corner camera's indicator light — glowing.
+
+No one looked down.
