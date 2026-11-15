@@ -147,6 +147,20 @@ class TestStages(unittest.TestCase):
         self.assertEqual(parsed[1][0], 2)
         self.assertEqual(parsed[1][1], "暗网追凶")
 
+    def test_project_resolves_numbered_folder(self):
+        import tempfile
+        with tempfile.TemporaryDirectory() as tmpdir:
+            pdir = os.path.join(tmpdir, "projects", "00_测试书")
+            os.makedirs(pdir)
+            with open(os.path.join(pdir, "project.json"), "w", encoding="utf-8") as f:
+                f.write('{"title": "测试书"}')
+            proj = stages.Project(tmpdir, "测试书")          # 旧名字
+            self.assertTrue(proj.exists())
+            self.assertEqual(proj.name, "00_测试书")
+            self.assertEqual(proj.config()["title"], "测试书")
+            exact = stages.Project(tmpdir, "00_测试书")      # 新名字
+            self.assertTrue(exact.exists())
+
     def test_project_state_and_usage(self):
         import tempfile
         with tempfile.TemporaryDirectory() as tmpdir:

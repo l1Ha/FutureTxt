@@ -57,7 +57,7 @@ FutureTxt/
 ├── tests/                     # 自动化单元测试套件（零外部依赖，一键运行）
 ├── web/                       # 免服务器 PWA 创作端（EPUB 打包、离线缓存、GitHub Pages）
 ├── benchmark_models.py        # 候选模型横测工具（延时 + 中文创作质量）
-├── projects/<项目名>/         # 每本小说一个独立工作区
+├── projects/NN_书名/          # 每本小说一个独立工作区（NN 为作品序号，00 起按顺序）
 │   ├── project.json           # 书名、题材关键词、章节数、字数、叙事视角等配置
 │   ├── state.json             # 阶段状态、逐章剧情摘要与 Token 用量追踪（断点续跑）
 │   ├── 00-创作概念.md          # Logline、三层冲突、思想实验、书名候选
@@ -95,6 +95,10 @@ python pipeline/run.py config --api-key sk-xxx \
 *或设置环境变量：`SCIWRITE_API_KEY`、`SCIWRITE_BASE_URL`、`SCIWRITE_MODEL`。*
 
 ### 3. 创建小说项目
+
+> **项目目录自动编号**：新项目落成 `projects/NN_书名/`（NN 从 00 起按顺序递增）；
+> 命令行里写带序号的目录名或不带序号的旧名都能定位到同一个项目。
+
 ```bash
 python pipeline/run.py init 赛博侦探 \
     --keywords "赛博朋克,侦探,记忆交易,社会分层" \

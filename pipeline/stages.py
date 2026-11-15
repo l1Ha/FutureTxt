@@ -343,6 +343,17 @@ class Project:
         self.root = root
         self.name = name
         self.dir = os.path.join(root, "projects", name)
+        # 兼容带序号前缀的项目目录（如 projects/00_意识纪元）：
+        # 用不带序号的旧名字也能定位到唯一匹配。
+        if not os.path.exists(os.path.join(self.dir, "project.json")):
+            base = os.path.join(root, "projects")
+            if os.path.isdir(base):
+                hits = [d for d in sorted(os.listdir(base))
+                        if d.endswith("_" + name)
+                        and os.path.exists(os.path.join(base, d, "project.json"))]
+                if len(hits) == 1:
+                    self.dir = os.path.join(base, hits[0])
+                    self.name = hits[0]
         self.cfg_path = os.path.join(self.dir, "project.json")
         self.state_path = os.path.join(self.dir, "state.json")
 

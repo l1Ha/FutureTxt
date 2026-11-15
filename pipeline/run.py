@@ -91,10 +91,24 @@ def cmd_config(args: argparse.Namespace) -> None:
     print(green(f"✓ 配置已保存到 {llm.config_path(ROOT)}"))
 
 
+def _next_project_index() -> int:
+    """下一个可用的作品序号（projects/NN_书名 的 NN，从 00 起）。"""
+    base = os.path.join(ROOT, "projects")
+    idx = []
+    if os.path.isdir(base):
+        for d in os.listdir(base):
+            if len(d) >= 3 and d[:2].isdigit() and d[2] == "_":
+                idx.append(int(d[:2]))
+    return (max(idx) + 1) if idx else 0
+
+
 def cmd_init(args: argparse.Namespace) -> None:
     proj = Project(ROOT, args.name)
     if proj.exists() and not args.overwrite:
         raise SystemExit(red(f"项目已存在：{proj.cfg_path}（如需重置请加 --overwrite）"))
+    if not proj.exists():
+        # 新作品自动编号：projects/NN_书名（旧称仍可通过后缀匹配定位）
+        proj = Project(ROOT, "%02d_%s" % (_next_project_index(), args.name))
     cfg = {
         "title": args.title or args.name,
         "keywords": [k.strip() for k in (args.keywords or "").split(",") if k.strip()],
@@ -118,7 +132,8 @@ def cmd_init(args: argparse.Namespace) -> None:
     os.makedirs(proj.chapters_dir(), exist_ok=True)
     os.makedirs(proj.reviews_dir(), exist_ok=True)
     print(green(f"✓ 项目已创建：{proj.cfg_path}"))
-    print(f"  下一步：{cyan('python pipeline/run.py run ' + args.name)}")
+    print(f"  目录序号：{bold(proj.name)}（用「{args.name}」也能定位）")
+    print(f"  下一步：{cyan('python pipeline/run.py run ' + proj.name)}")
 
 
 def _ensure_api(args: argparse.Namespace) -> dict:
