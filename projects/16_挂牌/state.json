@@ -1,0 +1,23 @@
+{
+  "stages": {
+    "assemble": "done",
+    "review": "done",
+    "continuity": "done"
+  },
+  "summaries": {},
+  "token_usage": {
+    "prompt_tokens": 13370,
+    "completion_tokens": 5978,
+    "total_tokens": 19348,
+    "by_stage": {
+      "review": {
+        "prompt_tokens": 13370,
+        "completion_tokens": 5978,
+        "total_tokens": 19348
+      }
+    }
+  },
+  "scores": {
+    "1": 3.0
+  }
+}

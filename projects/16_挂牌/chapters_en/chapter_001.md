@@ -1,0 +1,355 @@
+# Chapter 1: Listing
+
+The county-town apartment had been listed for eleven months. The first serious viewer offered 390,000. They had bought it for 720,000.
+
+On the viewing afternoon, Old Zhao led them upstairs. Old Zhao was the agent; he had run a storefront on this street for six years. He walked in praising the clean stairwell, then the good light, then pushed open the balcony windows to let the wind in.
+
+"Uncle, this is a young couple, back from Jiangzhou."
+
+The couple were twenty-seven or twenty-eight. The man wore a white shirt; the woman carried a handbag. They entered and measured the living room, then went to check the bathroom. The woman crouched and tapped the floor tiles, listening to the sound.
+
+Old Zhou followed behind, hands clasped behind his back. He knew this flat well enough to walk it blind: 120 square meters, three bedrooms, two bedrooms on the south side, a study on the north — his son Zhou Yuan's room. The wall still held rows of pencil marks recording height, and the doorframe too, from age three to eighteen.
+
+The woman asked: "Uncle, what year was the building built?"
+
+"2016."
+
+"And the renovation?"
+
+"2017."
+
+The young couple glanced at the wall, then at the pencil marks on the doorframe, said nothing.
+
+The woman went to the kitchen, pulled open a cabinet door, looked, closed it. On the balcony sat a pot of jasmine, tended by Liu Yulan; the leaves still showed some green. The woman asked: "Is this flower staying?"
+
+"Stays," Old Zhou said. "If you don't mind."
+
+The man gestured in the living room, positioning a sofa, then looked back at Old Zhou, a little embarrassed.
+
+After the viewing, the man spoke to Old Zhao in the stairwell. Old Zhao came up, wearing a smile that didn't quite reach his eyes.
+
+"Uncle, they're offering 390."
+
+"How much?"
+
+"390."
+
+Old Zhou stood on the balcony. Below lay the compound's concrete road; across from it a mom-and-pop shop where the owner's wife was sorting vegetables at the doorway. When he bought this flat, the down payment borrowed 110,000 from three relatives, took three years to repay. Those three years, he smoked three-yuan cigarettes every day. This flat was the only big thing he had ever done in his life.
+
+"I'm not selling," he said.
+
+"Uncle, I understand." Old Zhao said. "But let me tell you straight: your layout has over 140 other listings right now. You wouldn't sell at 560, wouldn't sell at 480, now they offer 390."
+
+"I bought at 360."
+
+"You bought at 360, but you can't sell." Old Zhao pulled the door shut, voice lower. "Uncle, I've been saying this for three years. Wait longer, and 390 will be gone too."
+
+---
+
+That evening, Old Zhou told his wife.
+
+Liu Yulan was washing dishes in the kitchen, water running. She didn't turn around.
+
+"Not selling," she said.
+
+"Not selling, what about Zhou Yuan?"
+
+"They're young, renting is fine."
+
+"Xiao Ya's mother brought it up." Old Zhou said. "Not asking for the flat, asking for the down payment."
+
+Liu Yulan turned off the tap. She dried her hands, came out, sat at the dining table, and laid it out for him:
+
+"This flat of ours, 720 in '16 — where did it come from? You got laid off, I worked at the supermarket, 2,800 a month. This flat is what we bought with our lives. You sell at 390 now, that's the first ten years wasted, the next ten years wasted. Old Zhou, we're not speculators. If the price drops we just live in it; living in it, it's still three bedrooms and two living rooms."
+
+"Live in it, and our son is gone."
+
+"Our son is in Jiangzhou."
+
+"Who takes care of us when we're old."
+
+Liu Yulan looked at him, for a while, then said: "You used to say when you were young, we'd retire back in the village. Then what happened."
+
+Old Zhou didn't answer. He turned on the TV; the news talked housing prices: first-tier rising, second- and third-tier falling. He listened halfway, set the remote down.
+
+---
+
+Zhou Yuan came back Saturday.
+
+Walked in calling Mom, then Dad, threw his bag on the sofa, dropped into a chair, legs stretched out. He did renovation supervision in Jiangzhou, came back three or four times a year, and when he did he just ate the family's noodles.
+
+After dinner, Old Zhou told him.
+
+"390," he said. "I'm thinking of selling, to help with your down payment."
+
+Zhou Yuan froze.
+
+"Sell for how much?"
+
+"390."
+
+"Bought for how much."
+
+"720."
+
+No one spoke at the table for a moment. Liu Yulan was in the inner room folding clothes, slowly.
+
+"Dad," Zhou Yuan said, "don't sell."
+
+"Don't sell, how short are you on the down payment?"
+
+"Twenty-some thousand. I'll save two more years."
+
+"Will Xiao Ya's mother give you two years?"
+
+Zhou Yuan lowered his head. His bag held the receipt for the three gold pieces, bought last month; his phone held a location map of a Jiangzhou development, a red circle drawn on the middle ring. He clenched both, said nothing.
+
+"Dad," he said, "I'm not coming back."
+
+"The flat's right here."
+
+"What would I come back for." Zhou Yuan looked up. "Delivery, factory, or wait till forty-five for internal retirement? Dad, factories hiring in the county now pay 3,500 a month. I come back, Xiao Ya comes back, we make 7,000 together, kid goes to school, what do I feed them with."
+
+"You make 12,000 in Jiangzhou, rent 3,800, how much left."
+
+"More than in the county."
+
+"How much more."
+
+"Two thousand."
+
+"Two thousand more, what about when you're forty."
+
+Zhou Yuan didn't answer. He stood, went to the balcony for a bit. Came back saying: "Dad, Xiao Ya and I talked, we'll register the marriage first, the flat can wait. Her mother's side, I'll go talk."
+
+"Can you talk them round?"
+
+"Even if I can't, I have to."
+
+Old Zhou looked at his son. Twenty-nine this year, hair thicker than Old Zhou's at that age, skin on his hands thinner, nails trimmed clean. Old Zhou suddenly remembered: the day this kid left for university at eighteen, he also stood by this table, said "Dad, I'm off." Back then Old Zhou waved, said "Go." This time he didn't want to wave.
+
+---
+
+The prospective mother-in-law came Wednesday.
+
+Met in Jiangzhou, a home-style restaurant on the fourth floor of a big mall. Old Zhou and Liu Yulan took the high-speed train early, an hour and a half. They arrived early, read the menu twice, decided on dishes. The mother-in-law arrived later, wearing a camel coat, permed hair, apologized first, said the hospital had an emergency.
+
+She sat, praised Xiao Ya first, then the kids' hardships, finally brought the matter to the table.
+
+"Old Zhou, I'll speak plainly, don't mind my directness." She said. "We're not asking for the flat, we're asking for an attitude. In Jiangzhou, renting works, but the kid needs school, school registration needs a flat. I'm not asking you to pay full, I'll put 300 toward the down payment. The rest, you make up."
+
+"You know our situation." Old Zhou said. "That county flat, can't get a price now."
+
+"How much can it get?"
+
+Old Zhou didn't answer. Liu Yulan chimed in: "390."
+
+The mother-in-law nodded, as if she already knew.
+
+"390," she said. "Plus your savings, plus our 300, it's enough. I know this sounds harsh. But if we don't calculate like this, my daughter marries over and starts twenty years of debt. I'm a mother, I can't say anything else."
+
+"I can't say anything else either." Liu Yulan said.
+
+The two mothers stared at each other for a moment. The fish arrived, steaming, no one picked up chopsticks.
+
+Old Zhou asked: "What if we don't sell?"
+
+The mother-in-law looked at him, slowly: "Then it's not that it can't be sold. It's that the two kids wait two more years, wait for Jiangzhou to rise two more years. Whose money works, only time works."
+
+Leaving the restaurant that day, it wasn't dark yet. Zhou Yuan took them to see his rental.
+
+Old building, six floors, no elevator, half the stairwell lights broken. The flat was a two-bedroom converted from something else; the other room housed a girl doing livestreaming, door shut. Zhou Yuan's room, ten square meters, a bed, a desk, computer and a half-drunk coffee on the desk, a rice cooker by the bed.
+
+"Just this, 3,800 a month." Zhou Yuan said.
+
+Liu Yulan sat on the bed edge, touched the quilt: "You cook yourself?"
+
+"Sometimes."
+
+Two shirts hung on the balcony, one white, one pale blue, both ironed.
+
+Old Zhou stood at the window looking out. Opposite was another old compound, pigeon lofts on the roof, pigeons perched on the iron frames. He said: "Not bad."
+
+---
+
+Back from Jiangzhou, Old Zhao messaged: Building 17 in the same compound, a unit closed last month at 385, cash buyer.
+
+"Uncle, I'll guarantee you a floor." Old Zhao said. "Your layout, 390 is their ceiling. The young couple are honest, money pooled from both sets of parents. If you sell, catch this wave."
+
+"Last time you said 400."
+
+"Last time was last time." Old Zhao said. "Listing price is the owner's number, transaction price is the buyer's number. The gap depends on who cracks first."
+
+That Friday, the buyer revised to 380. Reason blunt: Building next door closed at 385, they want 5,000 less because "Uncle's renovation is old."
+
+Old Li cornered him in the stairwell, asked if he'd sold. Old Li's flat had been listed eight months, dropped from 520 to 440, not a single viewing.
+
+"You're selling at 380?" Old Li stared. "Then my 440, who buys?"
+
+"Whoever needs it."
+
+"Who needs it." Old Li said. "Used to be villagers moving up, now it's young people fleeing to Jiangzhou. This building, six floors, one stairwell two units, twelve households, seven listed."
+
+He finished, squatted on the stairs smoking. Old Zhou stood beside him, lit one too.
+
+Evening, Zhou Yuan called, voice muffled: Xiao Ya's mother asking if the flat was decided. Zhou Yuan said he and Xiao Ya had a fight, Xiao Ya cried, said it wasn't her pushing, it was her mother.
+
+"Dad," Zhou Yuan said, "why don't you and Mom keep the flat. I'll rent here."
+
+Old Zhou listened, didn't speak. He sat on the sofa, one glance up and he saw the pencil marks on the doorframe. The lowest, age three, short; the highest, eighteen, up to his chest and a bit.
+
+He asked: "Son, which one do you want."
+
+Silence a few seconds on the phone.
+
+"Dad," Zhou Yuan said, "I want to live standing up."
+
+---
+
+That night, Old Zhou tallied at the dining table.
+
+Sell flat: 380. Savings: 213. In-laws: 300. Three sums: 893.
+
+Jiangzhou down payment 800, deed tax, maintenance fund, basic renovation, at least 100. Short: ten-odd thousand.
+
+He called his younger brother. Brother was back in the village farming ten-odd mu, answered while listening to the radio.
+
+"Lend me 20." Old Zhou said.
+
+"Sale money not enough?"
+
+"Not enough."
+
+"How much you signing for?"
+
+"38."
+
+Brother sighed at the other end: "Brother, '16 you bought the flat, I lent you 30. Today you sell, I lend you 20. This flat, our family went round for ten years."
+
+"I'll pay back."
+
+"Pay back what." Brother said. "Keep it for Zhou Yuan."
+
+Old Zhou said: "I'll write an IOU."
+
+He really wrote it. One sheet, 20, borrower Zhou Jianguo, date. Finished, he blew on the ink, folded it, pressed it inside the passbook.
+
+---
+
+Night before signing, the couple sat on the floor eating packed wontons.
+
+The dining table was sold; the sofa collected tomorrow morning. TV still on, volume low. Liu Yulan ate, then suddenly said: "Zhou Yuan's first grade, I took him. His schoolbag wider than him, walked to the building gate, turned back and waved at me."
+
+"I remember."
+
+"This building, we lived ten years."
+
+Old Zhou didn't answer. He finished the last wonton, snapped the lid on, said: "Tomorrow I go sign."
+
+Liu Yulan looked at him, didn't ask why, didn't stop him. She stacked the two empty boxes neatly, very neatly. After a while she said: "That pot of jasmine, tomorrow I'll move it to your brother's."
+
+Signing Saturday morning, at Old Zhao's storefront.
+
+Buyer came three: the young couple, and the man's father, sixty-ish, worn jacket, walked in and shook Old Zhou's hand, called him "Old Brother."
+
+Contract pre-printed by Old Zhao: Ninghe County, such-and-such compound, Building X, Unit 3, 3rd floor, 120.4 sqm, transaction price 380, deposit 50, balance paid on transfer day, transfer within 15 working days.
+
+Old Zhou read line by line. At "Seller shall cooperate with buyer in handover procedures, deliver all keys," he paused.
+
+The man's father leaned in, voice low: "Old Brother, truth is, we're not well off either. My son originally signed a reservation in Jiangzhou, lost 40 breaking it. This time, it's their own decision to come back to the county. Believe it or not, they're not the only ones coming back."
+
+"Believe it." Old Zhou said.
+
+"Your flat, we're not overpaying."
+
+"I'm selling at a loss."
+
+The father froze, then nodded: "True enough."
+
+Old Zhao laid out documents one by one: property deed, deed tax receipt, maintenance fund receipt, copy of original purchase contract. Old Zhou opened the deed, glanced at the registration date — March 2016. Closed it, pushed it back.
+
+Old Zhou picked up the pen. Old Zhao pushed the ink pad over. His hand hovered over the paper; the pen was a gel pen, barrel printed with the agency's ad, slippery in his grip.
+
+He thought a moment, thought of those pencil marks on the doorframe.
+
+Then he signed.
+
+Three characters, Zhou Jianguo, slower than usual. Finished, pressed thumbprint, red ink on his thumb, wiped twice before clean.
+
+Liu Yulan didn't come. She was home packing. Old Zhou returned, found her on the balcony, stuffing dried quilts into bags.
+
+"Signed?"
+
+"Signed."
+
+She "mm"-ed, flattened the bag, pressed air out with her knee, tied it tight. Done, she stood on the balcony, looked at the opposite building, said: "380."
+
+"380."
+
+"Fine." She said. "Go then, go."
+
+---
+
+Moving day was overcast.
+
+Twenty-three cardboard boxes, sixteen woven bags, plus an old wooden toolbox — eight-pound hammer, wrenches, screwdrivers, saved from his fertilizer factory years. Movers came two men, scuffed a gray streak up the stairwell.
+
+Buyer arrived afternoon, carrying a bucket of latex paint, two brushes. The woman entered first, walked a circle, said: "Uncle, we're repainting the walls."
+
+Liu Yulan was dragging the last bag to the door. She heard, stopped, looked at the pencil marks on the doorframe, said: "That… could you not paint?"
+
+The woman followed her gaze, hesitated. The man behind said: "Auntie, not intentional. Just the kid will write on walls later, I'm worried."
+
+"Paint it." Old Zhou said.
+
+He fished out the keys from his pocket, a bunch: front door, storage, water meter, mailbox. Counted them one by one, four. His hand paused a second on the keyring at the fourth. Spare key, cut for when Zhou Yuan forgot his key during school years.
+
+He handed the whole bunch over.
+
+The man's father took them, said: "Old Brother, come visit anytime after."
+
+"Not coming." Old Zhou said.
+
+He picked up the last bag, went downstairs. At the unit door he turned back to look at the third floor. Windows open, new buyers already rolling up sleeves painting.
+
+---
+
+The Jiangzhou rental was near his son's company, two-bedroom, 60 sqm, 4,200 a month. Old Zhou and wife took the second bedroom, room fit a bed, a wardrobe, a folding table.
+
+New flat handover not until the year after next. Zhou Yuan took them to see the site once. Development on the outer ring, sales office bright, flags on the sand table — blue sold out, red available. Sales girl waved a laser pointer, talked school district, subway, mall.
+
+Old Zhou asked: "Any discount?"
+
+Girl smiled: "Uncle, this project went up 200 last month."
+
+Out of the sales office, green netting around the site, tower cranes turning slow. Zhou Yuan said: "Dad, before it's built, you rent. Once it's done, we all move into the new place."
+
+Old Zhou watched the skeleton frames, one floor, two floors, three floors, not capped. He said: "Okay."
+
+Liu Yulan asked from behind: "Our flat's money, all in this?"
+
+"All in this." Zhou Yuan said.
+
+She didn't ask again.
+
+Third day after moving, Old Zhou finished organizing, found that keyring — after transfer, the agency took the old keys, only then he discovered he still had one in his pocket: the front door key, most worn, the one he used himself.
+
+He stood behind the door, looked around. On the landlord's key hook hung two new keys: one for this flat, one for the downstairs access control.
+
+He hung the old one up, next to the new.
+
+Liu Yulan came from the kitchen, saw.
+
+"That key still kept?"
+
+"Kept."
+
+"Kept for what door."
+
+Old Zhou didn't answer. He sat at the folding table, took out his phone, screen showed a photo Zhou Yuan sent: the Jiangzhou reservation contract, two names on it.
+
+Liu Yulan stood a moment, walked over, took the old key off the hook, pulled open the drawer, placed it at the very bottom, under a stack of manuals.
+
+Drawer shut.
+
+The flat was very quiet. Downstairs a child shouting, voice after voice, couldn't tell what they shouted.
