@@ -1,0 +1,290 @@
+个案 (English Edition)
+By FutureTxt AI Writer
+Scope: 1 chapters / ~14180 chars
+Generated: 2026-11-16
+================================================
+[ SYNOPSIS ]
+When the National Real-World Evidence Center launches a "Stock Drug Evidence Audit," Arsenic Trioxide (ATO)—the three-dollar cure that turned acute promyelocytic leukemia from a death sentence into a manageable disease—is graded Level D evidence and slated for delisting. The rationale: a thirty-year-old Phase III trial lacking informed consent, a control arm, and anything but handwritten ledgers. Simultaneously, Huayu Pharmaceutical fast-tracks ATL-01, a liposomal reformulation priced at 280,000 yuan per course, through the green channel on single-arm Phase II data. With a seven-day public notice ticking down, evaluator Shen Xu uncovers a dusty follow-up box in the archives: thirty-seven names circled in red by 1994 pioneer Lin Yuan, each annotated with decades of survival. As a six-year-old relapsed patient waits in the ward, Huayu’s compliance charts land on Shen’s desk, his mentor whispers that rewriting rules with elders’ lives makes textbook history, and a ninety-two-year-old survivor sits in a wheelchair outside the center gates. The ledger proves the cure works; the system demands a trial that never happened. Shen Xu has seven days to decide whether evidence serves the patient, or the patient serves the evidence.
+================================================
+
+
+
+==================== 个案 (English Edition) ====================
+
+Thirty-seven people were still alive. The system called it a case report.
+
+Shen Xu first saw the term in the review system's remarks column. Thirty-seven names, attached to two pages of scans, with a line of gray text typed beneath: **Non-randomized, non-blinded, no control group, case report, evidence weight not counted.**
+
+The scans came from a stack of handwritten ledgers. The ledger's owner was Han Songnian, ninety-five years old, residing in a nursing home in the city's west district. Thirty-odd years ago, at a county hospital, he had used arsenic trioxide—arsenic, essentially—to treat acute promyelocytic leukemia.
+
+The ledger was written in blue-black ink. The first page bore the date: March 1993. The first recorded name was Tu Youde, forty-one years old. A line of smaller script followed: *Pharmacy refused to dispense, said it was poison; signed and sealed, took three grams.*
+
+That regimen later entered textbooks, entered international guidelines, five-year survival rates above ninety percent, saved people by the hundred thousand. The drug was cheap, a full course cost 2,800 yuan.
+
+Now, that regimen was to be removed from the insurance catalog.
+
+There were four reasons, each harder than the last: no informed consent at the time, no control group, inconsistent efficacy endpoint definitions, incomplete follow-up. The review report gave it a Grade D. The disposition for Grade D: public notice for thirty days, then removal from catalog.
+
+Seven days later, the review meeting would convene. Shen Xu was one of the re-reviewers for this report. His job was called "evidence audit."
+
+Shen Xu was thirty-four, in his seventh year at this center. The center's full name: the National Center for Real-World Evidence Evaluation of Drugs. Its mission: audit old drugs—off-patent, cheap, still in use—re-measuring them against today's standards.
+
+This procedure was won by his mentor Zheng Shouye's generation. Twenty years ago, a batch of old drugs had falsified data, people died. Since then, any drug entering the catalog had to lay its evidence bare.
+
+Shen Xu knew the rules cold. Evidence had four grades: Grade A required randomized double-blind; Grade B required cohort control; Grade C was observational study; Grade D barely counted as evidence. Real-world evidence was a later loophole, weight capped at twenty percent.
+
+Han Songnian's ledger had thirty-seven red circles. He had drawn them himself, after the names. Shen Xu spent an afternoon reading the ledger, and understood the red circles: survived five years. Further on, after the red circles, more characters: ten years, twenty years, thirty years.
+
+The ledger's last two pages were blank.
+
+At four in the afternoon, slogans shouted from below the outpatient building. Shen Xu looked out the window: four or five family members holding signs, standing at the center's gate. The signs read: **"A three-yuan drug is still a drug."**
+
+The leader was a man in his thirties, dark and thin, wearing a food-delivery uniform, holding his sign highest. A security guard went to persuade him to leave; he wouldn't budge. He said his daughter was six, diagnosed last month. The doctor prescribed a regimen; the regimen contained a drug with a long name he couldn't remember. He remembered the price: first course, 28,000 yuan.
+
+If that old regimen were still in the catalog, the same disease, first course 2,800.
+
+Shen Xu went downstairs to buy water, passed by them. The man called out: "Comrade, you work here?"
+
+"Mm."
+
+"I'll ask you something." He leaned the sign against his leg, fished a crumpled regimen sheet from his pocket. "Two prices on this, a hundredfold difference. The doctor said both work. What does 'both work' mean?"
+
+Shen Xu looked at the sheet. First line: old regimen, 2,800. Second line: Anruiding, 280,000.
+
+"Means both can treat the disease," he said.
+
+"Then why a hundredfold difference?"
+
+"One's off-patent. One isn't."
+
+The man looked at him, as if he hadn't understood, and as if he had. He folded the sheet, stuffed it back in his pocket.
+
+"Comrade, I don't understand patents," he said. "I just want to ask: after your meeting in seven days, can my daughter still use the 2,800 one?"
+
+Shen Xu didn't answer. He didn't dare.
+
+The next day, the pre-hearing session. The company sent someone.
+
+Her name was Fang Li, Anrui Biologics' Medical Director, early forties, measured speech, complete materials. The new drug she brought was Anruiding. One molecular modification of the active ingredient, claimed to suppress arsenic trioxide's old flaw—cardiotoxicity—allowing outpatient use without hospitalization.
+
+Price: 280,000 per course. Green channel for innovative drugs, already had conditional approval.
+
+"I don't oppose Old Han," Fang Li said. "I oppose using a thirty-year-old case history as today's decision basis."
+
+She opened the projector, listed four points.
+
+First, survivorship bias. "The thirty-seven people in the ledger are the thirty-seven who lived. The ones who died in the same ward won't have circles drawn around their names. We don't know the total enrolled, don't know the denominator."
+
+Second, cardiotoxicity. "Arsenic trioxide prolongs QT interval, risk of sudden death. You give it to a six-year-old because it's cheap, not because it's safe."
+
+Third, informed consent. "The patients and families back then signed nothing. Using their data for decisions today is a second non-disclosure."
+
+Fourth, endpoints. "The red circles were drawn by Old Han himself. An endpoint with no unified definition, no independent assessment, no original imaging, cannot be called an endpoint."
+
+The conference room was silent. Nods all around.
+
+Shen Xu flipped through his notebook, stopped at a page. He asked a question: "Dr. Fang, your molecular modification—which site?"
+
+"The ligand," Fang Li said. "Makes it enter cells more easily."
+
+"So you know why it works." Shen Xu said.
+
+"Of course we know."
+
+"But thirty years ago, Old Han didn't know." Shen Xu said. "No control group, no endpoint definition, he couldn't even be sure arsenic was the active ingredient. He just tried. Thirty-seven people alive today. Dr. Fang, everything in your hands grew out of that ledger of his."
+
+Fang Li looked at him, paused two seconds.
+
+"Professor Shen," she said. "Grown from it doesn't mean it can't be surpassed."
+
+After the meeting, Zheng Shouye called Shen Xu to his office.
+
+Old Zheng was fifty-eight, near retirement. A family photo on the desk, a stainless steel mug used for ten years. He poured Shen Xu water.
+
+"That question you asked in the meeting—well done," he said. "Well done is useless. Do you know why rules are rules? Because twenty years ago someone faked old drug data, changed conclusions, people died. Since then, Grade D is Grade D, immovable."
+
+"This is different."
+
+"How?"
+
+Shen Xu pushed the ledger copies over: "These thirty-seven people, we verified door-to-door. The living, we saw in person. Their records, relapse logs, cardiac ultrasounds—we got them all. Is that loss to follow-up? That's thirty years of follow-up."
+
+Zheng Shouye turned two pages, closed it.
+
+"I can guess what you want to do," he said. "Real-world evidence weight capped at twenty percent. You want a retrospective old cohort to overturn a Grade D drug. Succeed, and every old drug can do this. Fail, and you own it. You're up for associate senior this year, I saw your materials—just short of a representative work. This report was supposed to be it."
+
+"Do you know where that twenty percent cap came from?" Old Zheng set the mug down.
+
+"Fear of fraud."
+
+"Not fear. It happened." He said, "Twenty years ago, an old diabetes drug got into the catalog on a batch of retrospective records. Two years later, re-audit: thirty-seven of those records were supplemented—not fabricated, *supplemented*. Dead patients' records rewritten as alive. In those two years, that drug killed eleven people. Since then, retrospective data capped at twenty percent. No one moves it."
+
+"This time is different." Shen Xu said. "This ledger records the dead too."
+
+"The ledger was written by one man."
+
+"He's ninety-five." Shen Xu said. "What would he be scheming for?"
+
+"If I sign by procedure."
+
+"Sign by procedure, you're clean, drug leaves catalog." Old Zheng took a sip. "The child's case, we both ache for it. But procedure wasn't written for people to ache."
+
+Shen Xu stood. At the door, Old Zheng spoke from behind:
+
+"If you sign, sign your own name. Not the center's."
+
+Shen Xu turned: "Difference?"
+
+"There is." Old Zheng said. "Sign the center's, the system was wrong. Sign yours, *you* were wrong."
+
+The nursing home, city west, third floor by the window.
+
+Han Songnian, ninety-five. Ears still worked, eyes didn't—he saw people by outline. Shen Xu laid the ledger copies on his knees. He touched them twice, said: "This isn't all."
+
+"How many more?"
+
+"One more volume." The old man said. "Don't take that one. Just read it here."
+
+The aide dragged a wooden box from under the bedside table. Inside lay a second ledger, paper yellower, edges moldy. Shen Xu opened the first page, hand freezing.
+
+The first ledger held fifty-two names.
+
+After the names, thirty-seven red circles. Fifteen black circles.
+
+After the black circles, some had a date, some a single character: *dead*.
+
+"They say my regimen has no denominator." The old man pushed his glasses up. "Denominator's right here. The dead, I recorded too. How many doses each took, which time they vomited, which time they fevered—all recorded. If I didn't record, I'd owe them."
+
+"The report says no informed consent back then."
+
+"There was." The old man said. "Verbal. Drug contains poison, might die, might recover, life or death up to fate. Willing ones signed up themselves. First to sign, Tu Youde. Said his brother died first, he'd try."
+
+Shen Xu turned to page four. Tu Youde, red circle, followed by: thirty years.
+
+"Old Han," he asked. "How did you know which dose was medicine, which was poison?"
+
+"Weighed it." The old man said. "A bit more, the person couldn't take it; a bit less, the disease couldn't take it. I added tael by tael, stopped when the disease retreated."
+
+"Medicine and poison, separated by a scale." He said. "Scale in human hands."
+
+"One more thing." The old man said. "First year, we lost nine. Drug stopped for three months. Families came to me, said Dr. Han, don't stop."
+
+"Why."
+
+The old man tapped the paper with a finger: "Because stopped, they didn't even have hope left."
+
+The hearing convened on the seventh morning.
+
+Fang Li brought three people, sat left. Shen Xu sat right, two ledgers on the table—one copy, one original. In the middle, the review panel, seven people, Director Wei presiding. Observers' seats held family members. Zhou Qiang in the front row, sign folded on his lap.
+
+Tu Youde was wheeled in. Ninety-two, dark blue zhongshan suit, buttons fastened to the top. He asked for the microphone, hand steady.
+
+"I was the fourth," he said. "My brother was the third, black circle. He died at thirty-one. I signed, continued treatment. Who forced me? No one. Dr. Han laid the ugly truth out front: this drug is poison, might not kill you but might ruin you. I said, take it anyway."
+
+He paused, looked at Fang Li.
+
+"You say we thirty-seven don't count because we survived by luck." He said. "Fine. Then what about the fifteen dead? They're in the book too. Do their lives count?"
+
+Fang Li didn't answer immediately. The air-conditioning hum suddenly seemed very loud.
+
+Shen Xu opened the second ledger, turned to the black-circle page, pushed it to the table center.
+
+"One supplementary fact." He said. "The review report writes 'denominator unclear.' Denominator's in this book. Fifty-two enrolled, fifteen dead, thirty-seven long-term survivors. Survivors' cardiac ultrasounds—we did door-to-door within a month, collected thirty-six, one lost. Two showed QT prolongation, both within safety limits, no sudden death."
+
+"Your 280,000-per-course drug," Tu Youde asked Fang Li again. "My grandson earns 70,000 a year. How many years of his life do you want him to sell?"
+
+"So our drug's entering the catalog too, in negotiation." Fang Li said. She pushed a document over. "Negotiated price, 198,000. Also, Anruiding's cardiac data—all yours, for long-term monitoring. Professor Shen wants a registry, I'll provide staff."
+
+She closed the file, voice lower.
+
+"I did ten years of hematology." She said. "Arsenic trioxide's QT toxicity—I've seen it. An eight-year-old child, second chemo cycle, heart stopped forty minutes, couldn't bring him back. That's why I switched to molecular work."
+
+"I'm in pharma, you can curse me." She said. "But if you keep this old drug, please keep the cardiac monitoring page too. Don't let the next child die on cheap."
+
+A hand rose in the observers' section. A woman in her fifties, steadying herself on the chair back as she stood.
+
+"My brother's on page three." She said. "Black circle, thirty-one. I don't blame Dr. Han. Back then no drugs, we gambled with lives. I just want to say: when you calculate weights, assign grades—can you count my brother as a number? He's not a denominator. He's my brother."
+
+The conference room fell silent. The stenographer typed the sentence into the minutes, not a word changed.
+
+Director Wei took off his glasses, wiped them.
+
+"Shen Xu," he asked. "Your opinion?"
+
+Shen Xu turned the report to the last page. His own supplementary opinion, three lines:
+
+One: Recommend recognizing the Han Songnian cohort as "Historical Cohort Long-Term Outcomes," upgrade evidence grade from D to C, as supplement to real-world evidence, weight not subject to twenty-percent cap. Two: Condition—establish prospective registry within five years, independent endpoint assessment, cardiac toxicity monitoring, annual re-review. Three: I personally sign responsibility for the above.
+
+"I recommend approval." He said.
+
+"Sign by procedure, it's a clean sign." Director Wei said. "Sign like this, you're staking your name. You're up for associate senior."
+
+"I know."
+
+Director Wei looked at him two seconds, capped his pen: "All in favor, raise hands."
+
+Seven hands. Seven raised. Old Zheng's slowest, highest.
+
+Meeting adjourned. People filed out. Old Zheng walked last, patted Shen Xu's shoulder: "Your associate senior, won't pass this year. Read your re-review opinion—recorded one item: preemptive signature, procedural violation."
+
+"Shifu—"
+
+"Record it." Old Zheng said. "I've followed procedure all my life. Today I'll break it once with you. I retire next month, you organize my farewell."
+
+That afternoon, the system updated. Shen Xu opened the report. The gray line in remarks was gone, replaced by new text:
+
+**New Category: Historical Cohort Long-Term Outcomes (Conditional).**
+
+He stared at the line a while, clicked save.
+
+Thirtieth day of public notice, catalog updated.
+
+Arsenic trioxide combination regimen: retained, marked "Conditional, Registry Re-review." Anruiding: included, negotiated price 198,000.
+
+Associate senior re-review result came in the twelfth lunar month: deferred. Two reasons: first, "preemptive signature"; second, "procedural irregularity."
+
+Old Zheng's farewell was in the canteen, two tables, one cake, one bouquet. Old Zheng carried his mug table to table pouring water, reached Shen Xu's table.
+
+"Try again next year," he said. "If you don't make it, I'll buy you a drink."
+
+"Shifu," Shen Xu asked. "Why did you raise your hand that day?"
+
+"I raised later than you." Old Zheng said. "Thirty years ago, a drug—I signed by procedure, signed the cheap one out of the catalog. Later that drug stopped production. I've regretted it to this day."
+
+On the regimen sheet at the children's hospital, both drugs listed. The doctor told Zhou Qiang: you decide. Zhou Qiang said: use the cheap one. Doctor said: okay.
+
+The nurse double-checked both regimen sheets, told Zhou Qiang: "This old drug, push slow, watch the cardiac monitor. If the child feels unwell, say so immediately."
+
+"Danger?"
+
+"Poisonous things all have danger." The nurse said. "That's why we watch."
+
+That afternoon, Xiao Yu got her first infusion. Clear liquid, drop by drop.
+
+"Dad, is this poison?"
+
+"It's medicine."
+
+"Medicine, why so cold?"
+
+"Cold means it won't hurt." Her dad said.
+
+She fell asleep. Her dad sat by the bed counting drops, counted to forty, lost count, started over.
+
+Shen Xu stood at the corridor's end. He held a document bag, inside the two ledger copies—the originals had gone to archives after the meeting.
+
+The archivist asked for a number. He said: Case report, fifty-two.
+
+The archivist wrote two characters on the box: 个案. Added parentheses, inside: 含死亡十五.
+
+Box pushed onto the shelf. Shen Xu stood before the shelf, watching. Many boxes on the shelves, each numbered, each with year, batch, headcount.
+
+Archivist asked if he wanted copies. He said yes. Archivist said, copies need numbers too.
+
+"Then number them." He said.
+
+The ledger's last page was blank. Old Han said, don't write that page, leave it.
+
+Leave it.
+
+For the ones who come after.

@@ -1,0 +1,30 @@
+{
+  "stages": {
+    "concept": "done",
+    "characters": "failed",
+    "review": "done",
+    "assemble": "done",
+    "continuity": "done"
+  },
+  "summaries": {},
+  "token_usage": {
+    "prompt_tokens": 26305,
+    "completion_tokens": 8522,
+    "total_tokens": 34827,
+    "by_stage": {
+      "concept": {
+        "prompt_tokens": 13279,
+        "completion_tokens": 3581,
+        "total_tokens": 16860
+      },
+      "review": {
+        "prompt_tokens": 13026,
+        "completion_tokens": 4941,
+        "total_tokens": 17967
+      }
+    }
+  },
+  "scores": {
+    "1": 3.0
+  }
+}
