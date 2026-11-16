@@ -353,6 +353,19 @@ def cmd_lint(args: argparse.Namespace) -> None:
     _lint_one(proj, args.chapter, args.write)
 
 
+def cmd_lessons(args: argparse.Namespace) -> None:
+    """创作教训簿：每完成一篇追加的经验规则（写作/审校前必读）。"""
+    path = os.path.join(ROOT, "knowledge", "09-质量规则", "03-创作教训簿.md")
+    text = stages.read(path)
+    if not text:
+        raise SystemExit(red("未找到创作教训簿：knowledge/09-质量规则/03-创作教训簿.md"))
+    if args.keyword:
+        lines = [ln for ln in text.splitlines() if args.keyword in ln]
+        print("\n".join(lines) if lines else yellow("没有匹配的教训。"))
+        return
+    print(text)
+
+
 def cmd_export(args: argparse.Namespace) -> None:
     proj = Project(ROOT, args.name)
     if not proj.exists():
@@ -500,6 +513,11 @@ def build_parser() -> argparse.ArgumentParser:
     ln.add_argument("--write", action="store_true", help="把报告写入各项目 reviews/文风体检.md")
     ln.add_argument("--fix", action="store_true", help="确定性填充词瘦身（删除微微/缓缓地/轻轻地等，原稿存 .bak）")
     ln.set_defaults(func=cmd_lint)
+
+    # lessons
+    lsn = sub.add_parser("lessons", help="创作教训簿：经验回流清单（写作/审校前必读）")
+    lsn.add_argument("keyword", nargs="?", help="可选：按关键词过滤，如 冲突 / 结尾 / 数字")
+    lsn.set_defaults(func=cmd_lessons)
 
     # export
     e = sub.add_parser("export", help="导出出版级电子书（EPUB 3.0 / 离线单文件 HTML 阅读器 / 规范排版 TXT）")

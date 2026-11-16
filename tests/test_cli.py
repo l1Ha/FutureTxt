@@ -47,6 +47,8 @@ class TestCliParser(unittest.TestCase):
             "status": ["status", "x"],
             "stats": ["stats", "x"],
             "audit": ["audit", "x"],
+            "lint": ["lint", "x"],
+            "lessons": ["lessons"],
             "export": ["export", "x"],
             "translate": ["translate", "x"],
         }

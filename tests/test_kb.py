@@ -30,6 +30,12 @@ class TestKB(unittest.TestCase):
         self.assertTrue("戴森" in content or "dyson" in content.lower())
         self.assertIsInstance(line_no, int)
 
+    def test_lessons_ledger_exists_and_injected(self):
+        p = os.path.join(ROOT, "knowledge", "09-质量规则", "03-创作教训簿.md")
+        self.assertTrue(os.path.exists(p), "创作教训簿缺失")
+        text = kb.load(ROOT, ["09-质量规则"], cap=200000)
+        self.assertIn("创作教训簿", text)
+
     def test_project_level_extra_modules(self):
         base = kb.stage_modules("concept", "short")
         self.assertIn("10-短篇写作", base)
