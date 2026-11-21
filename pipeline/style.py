@@ -122,10 +122,24 @@ LONG_SENTENCE = 50          # 汉字数；超过即"长句"
 VERY_LONG_PARAGRAPH = 300   # 非空白字符数
 DUP_SENTENCE_MIN = 14       # 重复句最短长度（归一化后）
 DUP_OPENING_LEN = 8         # 段首取样长度
+DUP_QUOTE_MIN = 3           # 重复台词最短长度（归一化后）
 NGRAM_SIZE = 4
 TRAIL_AFTER_END = 150       # 完结标记之后仍有的正文长度（超过即疑似"双结尾"）
 CHAPTER_SIM_MIN = 0.20      # 两章 5 字滑窗重叠度（含盖率）达到即"高度相似"
 SHINGLE_SIZE = 5
+
+# 功能性短应答：天然会重复出现，不计入"名句配额"
+FUNCTIONAL_LINES = frozenset({
+    "嗯", "好", "行", "对", "是", "不是", "不", "可以", "知道了", "我知道",
+    "我知道了", "我不知道", "没有", "有", "为什么", "怎么办", "什么事",
+    "怎么了", "然后呢", "接着说", "往下说", "说", "走", "等等", "别动",
+    "上来", "下去", "没事", "算了", "也是", "也对", "不客气",
+})
+
+# 称呼语（呼告句）：天然高频，不计入"名句配额"
+VOCATIVE_SUFFIX = ("师傅", "老师", "同志", "经理", "主任", "大夫", "姑娘",
+                   "先生", "阿姨", "大爷", "老哥", "大姐")
+
 
 END_MARKERS: Sequence[str] = (
     "（全文完）", "(全文完)", "【全文完】", "——全文完——", "（完）", "(完)",
@@ -295,6 +309,36 @@ def find_dup_sentences(chapters: Sequence[Tuple[int, str]]) -> List[Dict[str, An
                 "same_chapter": len(chs) == 1,
             })
     out.sort(key=lambda x: (-x["count"], -len(x["sentence"])))
+    return out
+
+
+def find_dup_quotes(chapters: Sequence[Tuple[int, str]]) -> List[Dict[str, Any]]:
+    """跨章重复台词（名句配额）：同一条「……」在两章以上出现。
+
+    规则来源：同一句高辨识度台词全书至多出现 1 次；角色口头禅与功能性应答豁免。
+    LLM 审校常把"全书只出现一次的短台词"误报成跨章重复，故此处提供机器判定。
+    """
+    groups: Dict[str, Dict[str, Any]] = {}
+    for ch, text in chapters:
+        for m in re.finditer(r"「([^」]{2,})」", text):
+            norm = _normalize(m.group(1))
+            if len(norm) < DUP_QUOTE_MIN or norm in FUNCTIONAL_LINES:
+                continue
+            if any(norm.endswith(v) for v in VOCATIVE_SUFFIX):
+                continue        # 称呼语，天然高频
+            item = groups.setdefault(norm, {"quote": m.group(1).strip(), "chapters": [], "count": 0})
+            item["chapters"].append(ch)
+            item["count"] += 1
+    out = []
+    for item in groups.values():
+        chs = sorted(set(item["chapters"]))
+        if len(chs) > 1:          # 只报跨章重复；同章重复由 dup_sentences 覆盖
+            out.append({
+                "quote": item["quote"][:60],
+                "chapters": chs,
+                "count": item["count"],
+            })
+    out.sort(key=lambda x: (-x["count"], -len(x["quote"])))
     return out
 
 
@@ -554,6 +598,7 @@ def analyze_project(proj: Any, chapter: Optional[int] = None) -> Dict[str, Any]:
         "tic_words": [],
         "top_ngrams": top_ngrams("\n".join(t for _n, t in chapter_texts)),
         "dup_sentences": find_dup_sentences(chapter_texts),
+        "dup_quotes": find_dup_quotes(chapter_texts),
         "dup_openings": find_dup_openings(chapter_texts),
         "end_marker_flags": [],
         "similar_chapters": find_similar_chapters(chapter_texts),
@@ -689,6 +734,14 @@ def format_report(res: Dict[str, Any], max_items: int = 12) -> str:
                                               o["opening"]))
         lines.append("")
 
+    quote_dups = res.get("dup_quotes") or []
+    if quote_dups:
+        lines.append("【低】跨章重复台词 %d 条（名句配额：全书至多 1 次；口头禅/应答可豁免）" % len(quote_dups))
+        for q in quote_dups[:6]:
+            lines.append("  ×%d（第%s章）「%s」" % (q["count"], "、".join(str(x) for x in q["chapters"]),
+                                                  q["quote"][:40]))
+        lines.append("")
+
     ngrams = res["top_ngrams"]
     if ngrams:
         lines.append("【低】高频四字串（术语或口头禅，请人工判断）")
@@ -748,6 +801,11 @@ def digest(res: Dict[str, Any], max_items: int = 6) -> str:
     if res["dup_sentences"] or res["dup_openings"]:
         lines.append("- 重复：整句 %d 组、段首 %d 组" % (
             len(res["dup_sentences"]), len(res["dup_openings"])))
+    quote_dups = res.get("dup_quotes") or []
+    if quote_dups:
+        lines.append("- 跨章重复台词 %d 条（名句配额）：%s" % (
+            len(quote_dups),
+            "、".join("「%s」×%d" % (q["quote"][:14], q["count"]) for q in quote_dups[:3])))
     end_flags = res.get("end_marker_flags") or []
     if end_flags:
         lines.append("- 收尾异常 %d 章（多重完结标记或完结后续写），优先删除后一套结尾"

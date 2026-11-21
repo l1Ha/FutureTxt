@@ -54,6 +54,26 @@ class TestStyleDetectors(unittest.TestCase):
         self.assertTrue(openings)
         self.assertGreaterEqual(openings[0]["count"], 3)
 
+    def test_dup_quotes_across_chapters(self):
+        """名句配额：同一句高辨识度台词跨章重复应被检出；功能性应答与称呼语豁免。"""
+        chapters = [
+            (1, "「下一条。」导播说。\n\n「我看见了。」他说。\n\n「许师傅。」他说。"),
+            (2, "「下一条。」导播说。\n\n「嗯。」他说。\n\n「许师傅。」他说。"),
+            (3, "「我看见了。」他说。"),
+        ]
+        dups = style.find_dup_quotes(chapters)
+        quoted = {d["quote"]: d for d in dups}
+        self.assertIn("下一条。", quoted)
+        self.assertEqual(quoted["下一条。"]["chapters"], [1, 2])
+        self.assertIn("我看见了。", quoted)
+        # 功能性应答「嗯。」与称呼语「许师傅。」不得报出
+        self.assertFalse(any("嗯" in q for q in quoted))
+        self.assertFalse(any("师傅" in q for q in quoted))
+
+    def test_dup_quotes_ignores_same_chapter_only(self):
+        chapters = [(1, "「写吧。」他说。\n\n「写吧。」他又说。")]
+        self.assertEqual(style.find_dup_quotes(chapters), [])
+
     def test_thin_fillers(self):
         text = "她微微点头，缓缓地笑了。一种说不出的感觉涌上来，某种无形的召唤在耳边响。"
         out, counts = style.thin_fillers(text)
